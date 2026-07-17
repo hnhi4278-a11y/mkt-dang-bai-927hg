@@ -15,10 +15,10 @@
     --paper: #fffdf9;
     --gold: #a9852f;
     --gold-deep: #8a6d24;
-    --stylist-bg: #f4ecd8;
-    --stylist-fg: #8a6d24;
-    --skinner-bg: #ece7f2;
-    --skinner-fg: #574a86;
+    --stylist-bg: #dbeafe;
+    --stylist-fg: #1d4ed8;
+    --skinner-bg: #fce7f3;
+    --skinner-fg: #be185d;
   }
   * { box-sizing: border-box; }
   body {
@@ -103,8 +103,8 @@
     :root {
       --ink: #f1ede4; --muted: #9c968a; --line: #35322b; --paper: #100f0d;
       --gold: #d4af5a; --gold-deep: #d4af5a;
-      --stylist-bg: #2e2818; --stylist-fg: #d4af5a;
-      --skinner-bg: #262038; --skinner-fg: #b6a6e0;
+      --stylist-bg: #1e3a5f; --stylist-fg: #93c5fd;
+      --skinner-bg: #4a1d3a; --skinner-fg: #f9a8d4;
     }
     .card { background: #171512; box-shadow: 0 12px 32px -22px rgba(0,0,0,0.6); }
     th { background: transparent; }
@@ -131,8 +131,8 @@
         {% for s in schedule %}
         <tr class="{{ 'today-row' if s.date == today else '' }}">
           <td>{{ s.date }}</td>
-          <td>{{ s.stylist }}</td>
-          <td>{{ s.skinner }}</td>
+          <td><span class="badge Stylist">{{ s.stylist }}</span></td>
+          <td><span class="badge Skinner">{{ s.skinner }}</span></td>
         </tr>
         {% endfor %}
       </tbody>
