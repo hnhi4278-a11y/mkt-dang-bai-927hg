@@ -3,67 +3,163 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Đăng bài MKT - Gửi link</title>
+<title>Đăng bài MKT · 927HG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { color-scheme: light dark; }
+  :root {
+    --ink: #1c1b19;
+    --muted: #8a8478;
+    --line: #e6e1d8;
+    --paper: #fffdf9;
+    --gold: #a9852f;
+    --gold-deep: #8a6d24;
+  }
   * { box-sizing: border-box; }
   body {
-    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
-    max-width: 480px;
+    font-family: "Jost", -apple-system, sans-serif;
+    max-width: 520px;
     margin: 0 auto;
-    padding: 20px 16px 60px;
-    background: #f4f5f7;
-    color: #1a1a1a;
+    padding: 48px 20px 70px;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
   }
-  @media (prefers-color-scheme: dark) {
-    body { background: #15161a; color: #e8e8ea; }
-    .card { background: #1f2024 !important; border-color: #34353b !important; }
-    input, select { background: #2a2b30 !important; color: #e8e8ea !important; border-color: #3d3e44 !important; }
-    .hint { color: #a0a0a8 !important; }
+  .eyebrow {
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 10px;
+    font-weight: 600;
   }
-  h1 { font-size: 1.25rem; margin: 0 0 4px; }
-  .sub { color: #666; font-size: 0.9rem; margin: 0 0 20px; }
+  h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 6px;
+    letter-spacing: 0.01em;
+  }
+  .sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin: 0 0 32px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 56px;
+    height: 2px;
+    background: var(--gold);
+    margin: 18px auto 32px;
+    opacity: 0.7;
+  }
   .card {
     background: #fff;
-    border: 1px solid #e2e3e7;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 16px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px 26px;
+    margin-bottom: 22px;
+    box-shadow: 0 12px 32px -20px rgba(30,25,15,0.25);
   }
-  .suggest { font-size: 0.9rem; line-height: 1.6; }
-  .suggest b { color: #2563eb; }
-  label { display: block; font-size: 0.85rem; font-weight: 600; margin: 14px 0 6px; }
-  label:first-child { margin-top: 0; }
+  .suggest {
+    text-align: center;
+  }
+  .suggest .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .suggest-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    font-size: 0.95rem;
+  }
+  .suggest-row .who { display: block; margin-top: 2px; font-family: "Playfair Display", serif; font-size: 1.05rem; font-weight: 700; color: var(--gold-deep); }
+  .suggest-row .tag { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 22px 0 8px;
+  }
+  label:first-of-type { margin-top: 0; }
   input, select {
     width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border: 1px solid #d0d2d8;
-    border-radius: 10px;
+    padding: 13px 4px;
+    font-size: 1.02rem;
+    font-family: "Jost", sans-serif;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--line);
+    border-radius: 0;
+    transition: border-color 0.2s;
   }
+  input:focus, select:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
+  }
+  select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 4px) 20px, calc(100% - 0px) 20px; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; }
+
   .btn {
     width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 700;
+    padding: 16px;
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
     border: none;
-    border-radius: 10px;
-    background: #2563eb;
+    border-radius: 2px;
+    background: var(--ink);
     color: #fff;
-    margin-top: 20px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background 0.2s;
   }
-  .hint { font-size: 0.8rem; color: #777; margin-top: 4px; }
-  a.report-link { display: block; text-align: center; margin-top: 14px; color: #2563eb; text-decoration: none; font-size: 0.9rem; }
+  .btn:hover { background: var(--gold-deep); }
+  .hint { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+  a.report-link {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid transparent;
+  }
+  a.report-link:hover { color: var(--gold-deep); border-bottom-color: var(--gold); }
+
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #f1ede4; --muted: #9c968a; --line: #38352e; --paper: #100f0d; --gold: #d4af5a; --gold-deep: #d4af5a; }
+    .card { background: #171512; box-shadow: 0 12px 32px -20px rgba(0,0,0,0.6); }
+    .btn { background: var(--gold-deep); color: #100f0d; }
+    .btn:hover { background: var(--gold); }
+  }
 </style>
 </head>
 <body>
-  <h1>📣 Gửi link bài đăng MKT</h1>
-  <p class="sub">927HG - stylist/skinner đăng bài xong thì vào đây điền link</p>
+  <div class="eyebrow">927HG · Marketing</div>
+  <h1>Gửi Link Bài Đăng</h1>
+  <p class="sub">Stylist &amp; Skinner đăng bài xong, vào đây điền link để lưu lại</p>
 
   <div class="card suggest">
-    <div>Gợi ý hôm nay ({{ today }}):</div>
-    <div>💇 Stylist: <b>{{ stylist_today }}</b></div>
-    <div>🧖 Skinner: <b>{{ skinner_today }}</b></div>
+    <div class="label">Gợi ý hôm nay · {{ today }}</div>
+    <div class="suggest-row">
+      <div><span class="tag">Stylist</span><span class="who">{{ stylist_today }}</span></div>
+      <div><span class="tag">Skinner</span><span class="who">{{ skinner_today }}</span></div>
+    </div>
   </div>
 
   <form class="card" method="post" action="{{ url_for('submit') }}">
@@ -72,14 +168,14 @@
 
     <label>Bộ phận</label>
     <select name="dept" id="dept" required>
-      <option value="">-- Chọn --</option>
+      <option value="">— Chọn —</option>
       <option value="Stylist">Stylist</option>
       <option value="Skinner">Skinner</option>
     </select>
 
     <label>Tên nhân sự</label>
     <select name="name" id="name" required>
-      <option value="">-- Chọn bộ phận trước --</option>
+      <option value="">— Chọn bộ phận trước —</option>
     </select>
 
     <label>Nền tảng đăng bài</label>
@@ -93,10 +189,10 @@
     <input type="url" name="link" placeholder="https://facebook.com/..." required>
     <div class="hint">Dán link công khai (xem được không cần đăng nhập)</div>
 
-    <button class="btn" type="submit">Gửi</button>
+    <button class="btn" type="submit">Gửi bài đăng</button>
   </form>
 
-  <a class="report-link" href="{{ url_for('report') }}">→ Xem báo cáo tổng hợp</a>
+  <a class="report-link" href="{{ url_for('report') }}">Xem báo cáo tổng hợp →</a>
 
 <script>
   const stylists = {{ stylists|tojson }};
@@ -108,10 +204,10 @@
     const list = deptEl.value === 'Stylist' ? stylists : (deptEl.value === 'Skinner' ? skinners : []);
     nameEl.innerHTML = '';
     if (!list.length) {
-      nameEl.innerHTML = '<option value="">-- Chọn bộ phận trước --</option>';
+      nameEl.innerHTML = '<option value="">— Chọn bộ phận trước —</option>';
       return;
     }
-    nameEl.innerHTML = '<option value="">-- Chọn tên --</option>' +
+    nameEl.innerHTML = '<option value="">— Chọn tên —</option>' +
       list.map(n => `<option value="${n}">${n}</option>`).join('');
   }
   deptEl.addEventListener('change', fillNames);
