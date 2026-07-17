@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Báo cáo đăng bài MKT - 927HG</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+    background: #f4f5f7;
+    color: #1a1a1a;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #15161a; color: #e8e8ea; }
+    .card, table { background: #1f2024 !important; border-color: #34353b !important; }
+    th { background: #2a2b30 !important; color: #cfd0d4 !important; }
+    tr:nth-child(even) td { background: #24252a !important; }
+    .empty-dept td { color: #666 !important; }
+  }
+  h1 { font-size: 1.3rem; margin: 0 0 4px; }
+  h2 { font-size: 1.05rem; margin: 28px 0 10px; }
+  .sub { color: #666; font-size: 0.9rem; margin: 0 0 20px; }
+  .ok-banner {
+    background: #dcfce7; border: 1px solid #86efac; color: #166534;
+    padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; margin-bottom: 16px;
+  }
+  .card {
+    background: #fff; border: 1px solid #e2e3e7; border-radius: 14px;
+    padding: 14px; overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid #ececf0; white-space: nowrap; }
+  th { background: #f7f7f9; font-weight: 700; color: #444; }
+  td.link a { color: #2563eb; text-decoration: none; }
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .badge.Stylist { background: #dbeafe; color: #1d4ed8; }
+  .badge.Skinner { background: #fce7f3; color: #be185d; }
+  @media (prefers-color-scheme: dark) {
+    .badge.Stylist { background: #1e3a5f; color: #93c5fd; }
+    .badge.Skinner { background: #4a1d3a; color: #f9a8d4; }
+  }
+  .top-link { display: inline-block; margin-bottom: 14px; color: #2563eb; text-decoration: none; font-size: 0.9rem; }
+  .today-row { font-weight: 700; }
+  .empty { color: #888; font-size: 0.9rem; padding: 16px; text-align: center; }
+</style>
+</head>
+<body>
+  <a class="top-link" href="{{ url_for('form') }}">← Gửi link bài đăng mới</a>
+  <h1>📊 Báo cáo đăng bài MKT - 927HG</h1>
+  <p class="sub">Ai đăng bài, ngày nào, bộ phận nào, link ở đâu — tất cả trong 1 bảng</p>
+
+  {% if ok %}
+  <div class="ok-banner">✅ Đã ghi nhận link bài đăng, cảm ơn bạn!</div>
+  {% endif %}
+
+  <h2>🗓️ Lịch gợi ý 14 ngày tới (1 stylist + 1 skinner mỗi ngày)</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Ngày</th><th>Stylist</th><th>Skinner</th></tr></thead>
+      <tbody>
+        {% for s in schedule %}
+        <tr class="{{ 'today-row' if s.date == today else '' }}">
+          <td>{{ s.date }}</td>
+          <td>{{ s.stylist }}</td>
+          <td>{{ s.skinner }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>✅ Bài đã đăng (thực tế)</h2>
+  <div class="card">
+    {% if rows %}
+    <table>
+      <thead>
+        <tr><th>Ngày</th><th>Tên nhân sự</th><th>Bộ phận</th><th>Nền tảng</th><th>Link</th></tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.date }}</td>
+          <td>{{ r.name }}</td>
+          <td><span class="badge {{ r.dept }}">{{ r.dept }}</span></td>
+          <td>{{ r.platform }}</td>
+          <td class="link"><a href="{{ r.link }}" target="_blank" rel="noopener">Xem bài →</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty">Chưa có ai gửi link. Bấm "Gửi link bài đăng mới" ở trên để bắt đầu.</div>
+    {% endif %}
+  </div>
+</body>
+</html>

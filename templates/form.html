@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đăng bài MKT - Gửi link</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+    background: #f4f5f7;
+    color: #1a1a1a;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #15161a; color: #e8e8ea; }
+    .card { background: #1f2024 !important; border-color: #34353b !important; }
+    input, select { background: #2a2b30 !important; color: #e8e8ea !important; border-color: #3d3e44 !important; }
+    .hint { color: #a0a0a8 !important; }
+  }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; }
+  .sub { color: #666; font-size: 0.9rem; margin: 0 0 20px; }
+  .card {
+    background: #fff;
+    border: 1px solid #e2e3e7;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .suggest { font-size: 0.9rem; line-height: 1.6; }
+  .suggest b { color: #2563eb; }
+  label { display: block; font-size: 0.85rem; font-weight: 600; margin: 14px 0 6px; }
+  label:first-child { margin-top: 0; }
+  input, select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #d0d2d8;
+    border-radius: 10px;
+  }
+  .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #fff;
+    margin-top: 20px;
+  }
+  .hint { font-size: 0.8rem; color: #777; margin-top: 4px; }
+  a.report-link { display: block; text-align: center; margin-top: 14px; color: #2563eb; text-decoration: none; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+  <h1>📣 Gửi link bài đăng MKT</h1>
+  <p class="sub">927HG - stylist/skinner đăng bài xong thì vào đây điền link</p>
+
+  <div class="card suggest">
+    <div>Gợi ý hôm nay ({{ today }}):</div>
+    <div>💇 Stylist: <b>{{ stylist_today }}</b></div>
+    <div>🧖 Skinner: <b>{{ skinner_today }}</b></div>
+  </div>
+
+  <form class="card" method="post" action="{{ url_for('submit') }}">
+    <label>Ngày đăng bài</label>
+    <input type="date" name="date" value="{{ today }}" required>
+
+    <label>Bộ phận</label>
+    <select name="dept" id="dept" required>
+      <option value="">-- Chọn --</option>
+      <option value="Stylist">Stylist</option>
+      <option value="Skinner">Skinner</option>
+    </select>
+
+    <label>Tên nhân sự</label>
+    <select name="name" id="name" required>
+      <option value="">-- Chọn bộ phận trước --</option>
+    </select>
+
+    <label>Nền tảng đăng bài</label>
+    <select name="platform" required>
+      {% for p in platforms %}
+      <option value="{{ p }}">{{ p }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Link bài đăng</label>
+    <input type="url" name="link" placeholder="https://facebook.com/..." required>
+    <div class="hint">Dán link công khai (xem được không cần đăng nhập)</div>
+
+    <button class="btn" type="submit">Gửi</button>
+  </form>
+
+  <a class="report-link" href="{{ url_for('report') }}">→ Xem báo cáo tổng hợp</a>
+
+<script>
+  const stylists = {{ stylists|tojson }};
+  const skinners = {{ skinners|tojson }};
+  const deptEl = document.getElementById('dept');
+  const nameEl = document.getElementById('name');
+
+  function fillNames() {
+    const list = deptEl.value === 'Stylist' ? stylists : (deptEl.value === 'Skinner' ? skinners : []);
+    nameEl.innerHTML = '';
+    if (!list.length) {
+      nameEl.innerHTML = '<option value="">-- Chọn bộ phận trước --</option>';
+      return;
+    }
+    nameEl.innerHTML = '<option value="">-- Chọn tên --</option>' +
+      list.map(n => `<option value="${n}">${n}</option>`).join('');
+  }
+  deptEl.addEventListener('change', fillNames);
+  fillNames();
+</script>
+</body>
+</html>
