@@ -9,11 +9,9 @@ app = Flask(__name__)
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "submissions.json")
 
-# Thứ tự xoay vòng: bắt đầu từ người đã làm thực tế ngày 2026-07-17 (Nguyễn Hoàng Kha),
-# phần còn lại giữ nguyên thứ tự cũ nối vào sau để công bằng cho các vòng kế tiếp.
+# Thứ tự xoay vòng: Thành, Khanh, Nguyễn Hoàng Kha đã làm rồi (tính đến 2026-07-17)
+# nên dồn xuống cuối, người chưa làm lên trước.
 STYLISTS = [
-    "Nguyễn Hoàng Kha",
-    "Huỳnh Bá Thành",
     "Võ Văn Trí",
     "Phạm Văn Phát",
     "Huỳnh Văn Kha",
@@ -21,12 +19,13 @@ STYLISTS = [
     "Trần Nhất Duyên",
     "Trương Phúc Tỷ",
     "Phùng Văn Đỗ Đạt",
+    "Huỳnh Bá Thành",
     "Nguyễn Chí Khanh",
+    "Nguyễn Hoàng Kha",
 ]
 
-# Bắt đầu từ Nguyễn Thị Thúy Hằng (đã làm thực tế ngày 2026-07-17)
+# Nguyễn Thị Thúy Hằng đã làm rồi (tính đến 2026-07-17) nên dồn xuống cuối.
 SKINNERS = [
-    "Nguyễn Thị Thúy Hằng",
     "Nguyễn Thị Kim Ngân",
     "Ngô Thị Ngọc Ánh",
     "Nguyễn Hoàng Triệu Vy",
@@ -35,6 +34,7 @@ SKINNERS = [
     "Đỗ Thị Linh",
     "Ngô Thuỳ Phương",
     "Cao Thị Kim Chi",
+    "Nguyễn Thị Thúy Hằng",
 ]
 
 PLATFORMS = ["Facebook", "TikTok", "Instagram", "Zalo", "Khác"]
