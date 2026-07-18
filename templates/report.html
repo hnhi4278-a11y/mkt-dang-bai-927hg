@@ -96,6 +96,9 @@
   }
   .badge.Stylist { background: var(--stylist-bg); color: var(--stylist-fg); }
   .badge.Skinner { background: var(--skinner-bg); color: var(--skinner-fg); }
+  .badge.done { opacity: 0.55; }
+  .status-done { font-size: 0.72rem; color: #16a34a; margin-left: 6px; font-weight: 600; }
+  .status-pending { font-size: 0.72rem; color: var(--muted); margin-left: 6px; }
   .today-row td { background: #fbf7ec; font-weight: 600; }
   .empty { color: var(--muted); font-size: 0.9rem; padding: 30px; text-align: center; }
 
@@ -131,8 +134,14 @@
         {% for s in schedule %}
         <tr class="{{ 'today-row' if s.date == today else '' }}">
           <td>{{ s.date }}</td>
-          <td><span class="badge Stylist">{{ s.stylist }}</span></td>
-          <td><span class="badge Skinner">{{ s.skinner }}</span></td>
+          <td>
+            <span class="badge Stylist {{ 'done' if s.stylist_done else '' }}">{{ s.stylist }}</span>
+            {% if s.stylist_done %}<span class="status-done">✓ đã nộp</span>{% else %}<span class="status-pending">chưa nộp</span>{% endif %}
+          </td>
+          <td>
+            <span class="badge Skinner {{ 'done' if s.skinner_done else '' }}">{{ s.skinner }}</span>
+            {% if s.skinner_done %}<span class="status-done">✓ đã nộp</span>{% else %}<span class="status-pending">chưa nộp</span>{% endif %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

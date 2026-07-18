@@ -39,6 +39,10 @@ SKINNERS = [
 
 PLATFORMS = ["Facebook", "TikTok", "Instagram", "Zalo", "Khác"]
 
+# Cặp của mỗi ngày cố định theo vị trí trong danh sách, neo từ hôm nay -
+# không đổi trong ngày dù 1 trong 2 người đã nộp bài trước.
+SCHEDULE_ANCHOR = date(2026, 7, 18)
+
 
 def load_submissions():
     with open(DATA_PATH, encoding="utf-8") as f:
@@ -50,41 +54,38 @@ def save_submissions(rows):
         json.dump(rows, f, ensure_ascii=False, indent=2)
 
 
-def build_queue(pool, rows):
-    """Ai chưa từng đăng bài xếp trước (theo thứ tự gốc), ai đã đăng rồi thì
-    dồn ra sau theo ngày đăng gần nhất - làm rồi thì bị loại khỏi lượt kế tiếp
-    cho tới khi mọi người khác đã đến lượt."""
-    last_posted = {}
-    for r in rows:
-        n = r["name"]
-        if n in pool and (n not in last_posted or r["date"] > last_posted[n]):
-            last_posted[n] = r["date"]
-    never = [n for n in pool if n not in last_posted]
-    posted = sorted((n for n in pool if n in last_posted), key=lambda n: last_posted[n])
-    return never + posted
+def posted_set(rows):
+    """Tập (date, name) đã có link nộp - dùng để đánh dấu trạng thái, không
+    dùng để đổi cặp của ngày đó."""
+    return {(r["date"], r["name"]) for r in rows}
+
+
+def suggested_for(d: date):
+    offset = (d - SCHEDULE_ANCHOR).days
+    stylist = STYLISTS[offset % len(STYLISTS)]
+    skinner = SKINNERS[offset % len(SKINNERS)]
+    return stylist, skinner
 
 
 def suggested_schedule(days=14, start: date = None):
     start = start or date.today()
     rows = load_submissions()
-    stylist_queue = build_queue(STYLISTS, rows)
-    skinner_queue = build_queue(SKINNERS, rows)
+    done = posted_set(rows)
     out = []
     for i in range(days):
         d = start + timedelta(days=i)
+        stylist, skinner = suggested_for(d)
+        iso = d.isoformat()
         out.append(
             {
-                "date": d.isoformat(),
-                "stylist": stylist_queue[i % len(stylist_queue)],
-                "skinner": skinner_queue[i % len(skinner_queue)],
+                "date": iso,
+                "stylist": stylist,
+                "stylist_done": (iso, stylist) in done,
+                "skinner": skinner,
+                "skinner_done": (iso, skinner) in done,
             }
         )
     return out
-
-
-def suggested_for(d: date):
-    s = suggested_schedule(days=1, start=d)[0]
-    return s["stylist"], s["skinner"]
 
 
 @app.route("/", methods=["GET"])
