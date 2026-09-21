@@ -21,12 +21,18 @@ Welcome to your Remotion project!
   length (see `src/ThirtyShineReel/clips.ts`):
 
   ```console
-  npx remotion render ThirtyShineReel out/30shine-reel.mp4 --crf=30
+  npx remotion render ThirtyShineReel out/30shine-reel.mp4 --crf=30 --color-space=bt709
   ```
 
   `--crf=30` trades a bit of quality for a much smaller file (a straight
   render came out ~40MB for 22s at 1080×1920; crf=30 brought that to ~6MB).
   Drop the flag for max quality.
+
+  `--color-space=bt709` matters: without it, Remotion tags the output as
+  full-range/unspecified colorimetry, which some phones and messaging apps
+  (WhatsApp/Zalo/Messenger previews, some Android/iOS players) fail to open
+  or play. `bt709` matches how normal camera footage is tagged and is the
+  broadly-compatible choice.
 
 - **ThirtyShinePromo** — vertical (1080×1920, 9:16) 30Shine promo overlay,
   transparent background, ~8s: brand name fades in, tagline zooms in,

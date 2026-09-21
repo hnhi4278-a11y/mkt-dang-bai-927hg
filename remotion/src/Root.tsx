@@ -19,9 +19,10 @@ export const RemotionRoot: React.FC = () => {
     <>
       {/* Final edited reel: the 4 salon clips in public/footage, each with
           a burned-in caption (bold white + colored outline, TikTok-caption
-          style). Render with: npx remotion render ThirtyShineReel out/30shine-reel.mp4
-          Needs the clip-1..4.mov files in remotion/public/footage/ (not
-          committed to git — see README). */}
+          style). Render with: npx remotion render ThirtyShineReel out/30shine-reel.mp4 --color-space=bt709
+          (the color-space flag matters — see README). Needs the
+          clip-1..4.mov files in remotion/public/footage/ (not committed to
+          git — see README). */}
       <Composition
         id="ThirtyShineReel"
         component={ThirtyShineReel}
