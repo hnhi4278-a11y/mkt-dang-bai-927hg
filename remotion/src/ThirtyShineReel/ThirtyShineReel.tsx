@@ -56,10 +56,13 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
 
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
+      <Audio src={staticFile("sfx/bg-music.wav")} volume={0.4} />
+
       {CLIPS.map((clip, i) => (
         <Sequence key={clip.src} from={clipStarts[i]} durationInFrames={clip.frames}>
           <OffthreadVideo
             src={staticFile(clip.src)}
+            muted
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
           <Caption
