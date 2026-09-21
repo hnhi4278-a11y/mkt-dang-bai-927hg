@@ -6,12 +6,34 @@ import { MarketingVideo } from "./MarketingVideo/MarketingVideo";
 import { marketingVideoSchema } from "./MarketingVideo/schema";
 import { FadeText } from "./FadeText/FadeText";
 import { fadeTextSchema } from "./FadeText/schema";
+import { ThirtyShinePromo } from "./ThirtyShinePromo/ThirtyShinePromo";
+import { thirtyShinePromoSchema } from "./ThirtyShinePromo/schema";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Vertical (9:16) 30Shine promo overlay, transparent background.
+          Render with: npx remotion render ThirtyShinePromo out/30shine-promo.mov --codec=prores --prores-profile=4444 --image-format=png --pixel-format=yuva444p10le */}
+      <Composition
+        id="ThirtyShinePromo"
+        component={ThirtyShinePromo}
+        durationInFrames={240}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={thirtyShinePromoSchema}
+        defaultProps={{
+          brand: "30SHINE",
+          tagline: "ĐẸP TRAI KHÔNG CẦN ĐỢI ✂️",
+          services: "Cắt tóc • Gội thư giãn • Chăm sóc da",
+          cta: "GHÉ 30SHINE 927 HẬU GIANG – QUẬN 6",
+          accentColor: "#FF6A00",
+          textColor: "#FFFFFF",
+        }}
+      />
+
       {/* Simple fade-in / hold 2s / fade-out text, transparent background.
           Render with: npx remotion render FadeText out/fade-text.mov --codec=prores --prores-profile=4444
           See README for a transparent .webm alternative. */}

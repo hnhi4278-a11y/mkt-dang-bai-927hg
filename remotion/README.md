@@ -13,6 +13,23 @@ Welcome to your Remotion project!
 
 ## Compositions
 
+- **ThirtyShinePromo** — vertical (1080×1920, 9:16) 30Shine promo overlay,
+  transparent background, ~8s: brand name fades in, tagline zooms in,
+  services list fades in, then a CTA pill — each beat holds ~2s before the
+  next. Meant to be composited over real salon footage in an editor. Text,
+  colors and the four lines are editable in Remotion Studio's sidebar or via
+  `--props`:
+
+  ```console
+  npx remotion render ThirtyShinePromo out/30shine-promo.mov \
+    --codec=prores --prores-profile=4444 \
+    --image-format=png --pixel-format=yuva444p10le
+  ```
+
+  Uses local system fonts (Liberation Sans, bold) rather than Google Fonts —
+  no network needed at render time, and it has full Vietnamese glyph
+  coverage.
+
 - **FadeText** — simple 1920×1080, transparent-background clip: text fades
   in (1s), holds (2s), then fades out (1s). Timings and text are editable in
   Remotion Studio's sidebar, or per-render via `--props`. Transparency needs
