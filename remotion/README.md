@@ -13,6 +13,27 @@ Welcome to your Remotion project!
 
 ## Compositions
 
+- **FadeText** — simple 1920×1080, transparent-background clip: text fades
+  in (1s), holds (2s), then fades out (1s). Timings and text are editable in
+  Remotion Studio's sidebar, or per-render via `--props`. Transparency needs
+  an alpha-capable codec/pixel format, since the default H.264 mp4 output
+  has no alpha channel:
+
+  ```console
+  # ProRes 4444 .mov — opens with alpha in Premiere/After Effects/Final Cut/DaVinci
+  npx remotion render FadeText out/fade-text.mov \
+    --codec=prores --prores-profile=4444 \
+    --image-format=png --pixel-format=yuva444p10le
+
+  # VP8 .webm — transparent, plays in browsers
+  npx remotion render FadeText out/fade-text.webm \
+    --codec=vp8 --image-format=png --pixel-format=yuva420p
+  ```
+
+  Regular video players and image viewers don't understand alpha and will
+  show the transparent area as solid black or white — check in a video
+  editor, or composite it over another clip, to see the transparency.
+
 - **MarketingVideo** — vertical (1080×1920, 9:16) marketing/promo template with
   an animated title, subtitle and call-to-action, ready for Facebook, TikTok,
   Instagram and Zalo posts. Text and colors are editable live in Remotion

@@ -4,12 +4,35 @@ import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { MarketingVideo } from "./MarketingVideo/MarketingVideo";
 import { marketingVideoSchema } from "./MarketingVideo/schema";
+import { FadeText } from "./FadeText/FadeText";
+import { fadeTextSchema } from "./FadeText/schema";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Simple fade-in / hold 2s / fade-out text, transparent background.
+          Render with: npx remotion render FadeText out/fade-text.mov --codec=prores --prores-profile=4444
+          See README for a transparent .webm alternative. */}
+      <Composition
+        id="FadeText"
+        component={FadeText}
+        durationInFrames={120}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={fadeTextSchema}
+        defaultProps={{
+          text: "Xin chào!",
+          color: "#FFFFFF",
+          fontSize: 120,
+          fadeInFrames: 30,
+          holdFrames: 60,
+          fadeOutFrames: 30,
+        }}
+      />
+
       {/* Vertical (9:16) template for Facebook/TikTok/Instagram/Zalo posts.
           Render with: npx remotion render MarketingVideo
           Customize text/colors per-render with --props, see README. */}
