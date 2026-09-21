@@ -8,12 +8,40 @@ import { FadeText } from "./FadeText/FadeText";
 import { fadeTextSchema } from "./FadeText/schema";
 import { ThirtyShinePromo } from "./ThirtyShinePromo/ThirtyShinePromo";
 import { thirtyShinePromoSchema } from "./ThirtyShinePromo/schema";
+import { ThirtyShineReel } from "./ThirtyShineReel/ThirtyShineReel";
+import { thirtyShineReelSchema } from "./ThirtyShineReel/schema";
+import { TOTAL_FRAMES } from "./ThirtyShineReel/clips";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Final edited reel: the 4 salon clips in public/footage, each with
+          a burned-in caption (bold white + colored outline, TikTok-caption
+          style). Render with: npx remotion render ThirtyShineReel out/30shine-reel.mp4
+          Needs the clip-1..4.mov files in remotion/public/footage/ (not
+          committed to git — see README). */}
+      <Composition
+        id="ThirtyShineReel"
+        component={ThirtyShineReel}
+        durationInFrames={TOTAL_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={thirtyShineReelSchema}
+        defaultProps={{
+          captions: [
+            "30SHINE",
+            "ĐẸP TRAI KHÔNG CẦN ĐỢI ✂️",
+            "Cắt tóc • Gội thư giãn • Chăm sóc da",
+            "GHÉ 30SHINE 927 HẬU GIANG – QUẬN 6",
+          ] as [string, string, string, string],
+          accentColor: "#12358A",
+          textColor: "#FFFFFF",
+        }}
+      />
+
       {/* Vertical (9:16) 30Shine promo overlay, transparent background.
           Render with: npx remotion render ThirtyShinePromo out/30shine-promo.mov --codec=prores --prores-profile=4444 --image-format=png --pixel-format=yuva444p10le */}
       <Composition

@@ -1,6 +1,6 @@
 import { AbsoluteFill, Sequence } from "remotion";
 import { TextBeat } from "./TextBeat";
-import { displayFontFamily, bodyFontFamily } from "./fonts";
+import { displayFontFamily, bodyFontFamily } from "../fonts";
 import type { ThirtyShinePromoProps } from "./schema";
 
 const textShadow = "0 4px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.6)";

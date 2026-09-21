@@ -13,6 +13,21 @@ Welcome to your Remotion project!
 
 ## Compositions
 
+- **ThirtyShineReel** — final edited reel: the 4 salon clips in
+  `public/footage/` (not committed — see `public/footage/README.md`), each
+  with a burned-in caption in the TikTok-caption look (bold white fill,
+  thick colored outline via `-webkit-text-stroke`), one caption per clip.
+  Keeps the clips' original audio. Frame-accurate to each clip's exact
+  length (see `src/ThirtyShineReel/clips.ts`):
+
+  ```console
+  npx remotion render ThirtyShineReel out/30shine-reel.mp4 --crf=30
+  ```
+
+  `--crf=30` trades a bit of quality for a much smaller file (a straight
+  render came out ~40MB for 22s at 1080×1920; crf=30 brought that to ~6MB).
+  Drop the flag for max quality.
+
 - **ThirtyShinePromo** — vertical (1080×1920, 9:16) 30Shine promo overlay,
   transparent background, ~8s: brand name fades in, tagline zooms in,
   services list fades in, then a CTA pill — each beat holds ~2s before the
