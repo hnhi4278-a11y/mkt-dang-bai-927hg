@@ -8,4 +8,12 @@ export const CLIPS = [
   { src: "footage/clip-4.mov", frames: 137 },
 ] as const;
 
-export const TOTAL_FRAMES = CLIPS.reduce((sum, clip) => sum + clip.frames, 0);
+export const CLIPS_TOTAL_FRAMES = CLIPS.reduce(
+  (sum, clip) => sum + clip.frames,
+  0,
+);
+
+// Closing end-card, after the footage.
+export const OUTRO_FRAMES = 90;
+
+export const TOTAL_FRAMES = CLIPS_TOTAL_FRAMES + OUTRO_FRAMES;

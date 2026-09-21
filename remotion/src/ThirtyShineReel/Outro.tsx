@@ -1,0 +1,128 @@
+import {
+  AbsoluteFill,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { displayFontFamily, bodyFontFamily } from "../fonts";
+
+type OutroProps = {
+  readonly headline: string;
+  readonly subline: string;
+  readonly cta: string;
+  readonly highlightColor: string;
+  readonly textColor: string;
+  readonly fadeInFrames: number;
+  readonly holdFrames: number;
+  readonly fadeToBlackFrames: number;
+};
+
+// Closing end-card: leaves the busy footage behind for a clean, readable
+// call-to-action on a solid brand-colored background, with an orange CTA
+// pill for a clear next step.
+export const Outro: React.FC<OutroProps> = ({
+  headline,
+  subline,
+  cta,
+  highlightColor,
+  textColor,
+  fadeInFrames,
+  holdFrames,
+  fadeToBlackFrames,
+}) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const bgOpacity = interpolate(frame, [0, fadeInFrames], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const pop = spring({ frame, fps, config: { damping: 200 } });
+  const scale = interpolate(pop, [0, 1], [0.85, 1]);
+  const textOpacity = interpolate(frame, [0, fadeInFrames], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const ctaPop = spring({
+    frame: frame - fadeInFrames - 10,
+    fps,
+    config: { damping: 200 },
+  });
+  const ctaScale = interpolate(ctaPop, [0, 1], [0.8, 1]);
+  const ctaOpacity = interpolate(ctaPop, [0, 1], [0, 1]);
+
+  const totalFrames = fadeInFrames + holdFrames;
+  const blackOpacity = interpolate(
+    frame,
+    [totalFrames - fadeToBlackFrames, totalFrames],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+
+  return (
+    <AbsoluteFill
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        background: `linear-gradient(160deg, rgba(11,11,15,${bgOpacity}) 0%, rgba(18,53,138,${bgOpacity}) 100%)`,
+      }}
+    >
+      <div
+        style={{
+          opacity: textOpacity,
+          transform: `scale(${scale})`,
+          textAlign: "center",
+          padding: "0 80px",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: displayFontFamily,
+            fontWeight: 900,
+            fontSize: 74,
+            color: textColor,
+            lineHeight: 1.2,
+            textShadow: "0 6px 20px rgba(0,0,0,0.5)",
+          }}
+        >
+          {headline}
+        </div>
+        <div
+          style={{
+            marginTop: 24,
+            fontFamily: bodyFontFamily,
+            fontWeight: 800,
+            fontSize: 38,
+            color: textColor,
+            opacity: 0.92,
+          }}
+        >
+          {subline}
+        </div>
+        <div
+          style={{
+            opacity: ctaOpacity,
+            transform: `scale(${ctaScale})`,
+            marginTop: 44,
+            display: "inline-block",
+            backgroundColor: highlightColor,
+            color: "#0B0B0B",
+            fontFamily: bodyFontFamily,
+            fontWeight: 900,
+            fontSize: 40,
+            letterSpacing: 1,
+            padding: "22px 52px",
+            borderRadius: 999,
+            boxShadow: "0 14px 40px rgba(0,0,0,0.45)",
+          }}
+        >
+          {cta}
+        </div>
+      </div>
+      <AbsoluteFill style={{ backgroundColor: "black", opacity: blackOpacity }} />
+    </AbsoluteFill>
+  );
+};

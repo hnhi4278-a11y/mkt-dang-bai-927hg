@@ -17,8 +17,14 @@ Welcome to your Remotion project!
   `public/footage/` (not committed — see `public/footage/README.md`), each
   with a burned-in caption in the TikTok-caption look (bold white fill,
   thick colored outline via `-webkit-text-stroke`), one caption per clip.
-  Keeps the clips' original audio. Frame-accurate to each clip's exact
-  length (see `src/ThirtyShineReel/clips.ts`):
+  Keeps the clips' original audio, plus generated sound effects layered on
+  top (`public/sfx/`, synthesized locally — no licensing/network dependency):
+  a whoosh on every cut, a pop when each caption appears, and a chime going
+  into the outro. The services clip also gets a highlighted combo badge
+  (`comboHighlight` prop) on top of its caption, and after the 4 clips a
+  closing end-card (`Outro.tsx`) with a headline, subline and an orange CTA
+  pill. Frame-accurate to each clip's exact length (see
+  `src/ThirtyShineReel/clips.ts`):
 
   ```console
   npx remotion render ThirtyShineReel out/30shine-reel.mp4 --crf=30 --color-space=bt709
