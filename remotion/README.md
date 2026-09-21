@@ -11,6 +11,22 @@
 
 Welcome to your Remotion project!
 
+## Compositions
+
+- **MarketingVideo** — vertical (1080×1920, 9:16) marketing/promo template with
+  an animated title, subtitle and call-to-action, ready for Facebook, TikTok,
+  Instagram and Zalo posts. Text and colors are editable live in Remotion
+  Studio's sidebar, or per-render:
+
+  ```console
+  npx remotion render MarketingVideo out/video.mp4 --props='{"title":"Ưu đãi cuối tuần","subtitle":"Giảm 20% cho khách mới","cta":"Đặt lịch ngay"}'
+  ```
+
+- **HelloWorld** / **OnlyLogo** — the default Remotion starter examples, kept
+  for reference; feel free to delete `src/HelloWorld.tsx`,
+  `src/HelloWorld/` and their `<Composition>` entries in `src/Root.tsx`
+  once you no longer need them.
+
 ## Commands
 
 **Install Dependencies**

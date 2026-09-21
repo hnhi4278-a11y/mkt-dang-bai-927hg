@@ -2,12 +2,35 @@ import "./index.css";
 import { Composition } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
+import { MarketingVideo } from "./MarketingVideo/MarketingVideo";
+import { marketingVideoSchema } from "./MarketingVideo/schema";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Vertical (9:16) template for Facebook/TikTok/Instagram/Zalo posts.
+          Render with: npx remotion render MarketingVideo
+          Customize text/colors per-render with --props, see README. */}
+      <Composition
+        id="MarketingVideo"
+        component={MarketingVideo}
+        durationInFrames={240}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={marketingVideoSchema}
+        defaultProps={{
+          title: "Ưu đãi hôm nay",
+          subtitle: "Ghé salon để trải nghiệm dịch vụ mới nhất",
+          cta: "Xem ngay",
+          backgroundColorFrom: "#7C3AED",
+          backgroundColorTo: "#DB2777",
+          accentColor: "#111827",
+        }}
+      />
+
       <Composition
         // You can take the "id" to render a video:
         // npx remotion render HelloWorld
