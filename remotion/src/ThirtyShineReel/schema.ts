@@ -7,10 +7,10 @@ export const thirtyShineReelSchema = z.object({
   outroHeadline: z.string(),
   outroSubline: z.string(),
   outroCta: z.string(),
-  // Caption outline color (matches the reference TikTok clip's navy stroke).
-  strokeColor: zColor(),
-  // Brand accent for the combo badge and the outro CTA pill.
-  highlightColor: zColor(),
+  // Single brand navy, sampled from the salon's own reference photos —
+  // used for the caption outline, the combo badge text and the outro
+  // background/CTA text. Keep this the only blue in the composition.
+  brandColor: zColor(),
   textColor: zColor(),
 });
 

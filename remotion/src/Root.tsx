@@ -18,9 +18,11 @@ export const RemotionRoot: React.FC = () => {
   return (
     <>
       {/* Final edited reel: the 4 salon clips in public/footage, each with
-          a burned-in caption (bold white + colored outline, TikTok-caption
+          a burned-in caption (bold white + navy outline, TikTok-caption
           style), sound effects on cuts/text pops, a highlighted combo badge
-          over the services clip, and a closing CTA end-card.
+          over the services clip, and a closing CTA end-card. brandColor is
+          sampled from the salon's own reference photos (staff uniform) —
+          keep it the only blue in the composition, no cyan/neon/purple.
           Render with: npx remotion render ThirtyShineReel out/30shine-reel.mp4 --color-space=bt709
           (the color-space flag matters — see README). Needs the
           clip-1..4.mov files in remotion/public/footage/ (not committed to
@@ -44,8 +46,7 @@ export const RemotionRoot: React.FC = () => {
           outroHeadline: "GHÉ 30SHINE",
           outroSubline: "927 Hậu Giang – Quận 6",
           outroCta: "ĐẶT LỊCH NGAY",
-          strokeColor: "#12358A",
-          highlightColor: "#FF6A00",
+          brandColor: "#181D54",
           textColor: "#FFFFFF",
         }}
       />

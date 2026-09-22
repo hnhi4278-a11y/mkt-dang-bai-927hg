@@ -7,11 +7,22 @@ import {
 } from "remotion";
 import { displayFontFamily, bodyFontFamily } from "../fonts";
 
+// Lightens a #rrggbb color by mixing in white, for a subtle same-hue
+// gradient instead of fading toward black/gray.
+function lighten(hex: string, amount: number): string {
+  const n = parseInt(hex.replace("#", ""), 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  const mix = (c: number) => Math.round(c + (255 - c) * amount);
+  return `rgb(${mix(r)}, ${mix(g)}, ${mix(b)})`;
+}
+
 type OutroProps = {
   readonly headline: string;
   readonly subline: string;
   readonly cta: string;
-  readonly highlightColor: string;
+  readonly brandColor: string;
   readonly textColor: string;
   readonly fadeInFrames: number;
   readonly holdFrames: number;
@@ -19,13 +30,13 @@ type OutroProps = {
 };
 
 // Closing end-card: leaves the busy footage behind for a clean, readable
-// call-to-action on a solid brand-colored background, with an orange CTA
-// pill for a clear next step.
+// call-to-action on a solid brand-navy background, with a white CTA pill
+// (bold navy text) for a clear next step.
 export const Outro: React.FC<OutroProps> = ({
   headline,
   subline,
   cta,
-  highlightColor,
+  brandColor,
   textColor,
   fadeInFrames,
   holdFrames,
@@ -67,7 +78,8 @@ export const Outro: React.FC<OutroProps> = ({
       style={{
         justifyContent: "center",
         alignItems: "center",
-        background: `linear-gradient(160deg, rgba(11,11,15,${bgOpacity}) 0%, rgba(18,53,138,${bgOpacity}) 100%)`,
+        opacity: bgOpacity,
+        background: `linear-gradient(160deg, ${brandColor} 0%, ${lighten(brandColor, 0.22)} 100%)`,
       }}
     >
       <div
@@ -108,8 +120,8 @@ export const Outro: React.FC<OutroProps> = ({
             transform: `scale(${ctaScale})`,
             marginTop: 44,
             display: "inline-block",
-            backgroundColor: highlightColor,
-            color: "#0B0B0B",
+            backgroundColor: "#FFFFFF",
+            color: brandColor,
             fontFamily: bodyFontFamily,
             fontWeight: 900,
             fontSize: 40,

@@ -16,20 +16,26 @@ Welcome to your Remotion project!
 - **ThirtyShineReel** — final edited reel: the 4 salon clips in
   `public/footage/` (not committed — see `public/footage/README.md`), each
   with a burned-in caption in the TikTok-caption look (bold white fill,
-  thick colored outline via `-webkit-text-stroke`), one caption per clip.
-  The clips' own audio is muted (`OffthreadVideo muted`) — the source had an
-  unusable stuttering take of dialogue — and replaced by a synthesized
-  upbeat background track plus sound effects, all in `public/sfx/`
-  (generated locally with Python's `wave` module — no licensing/network
-  dependency, see `scripts/` note below): a whoosh on every cut, a pop when
-  each caption appears, a chime going into the outro, and `bg-music.wav`
+  thick navy outline via `-webkit-text-stroke`), one caption per clip, kept
+  inside the TikTok safe zone (clear of the bottom UI strip and the
+  right-side icon column). The single `brandColor` (default `#181D54`) is
+  sampled from the salon's own reference photos (staff uniform) and is the
+  only blue used anywhere — caption outline, the combo badge text and the
+  outro background/CTA text — no cyan/neon/purple substitutes. The clips'
+  own audio is muted (`OffthreadVideo muted`) — the source had an unusable
+  stuttering take of dialogue — and replaced by a synthesized upbeat
+  background track plus sound effects, all in `public/sfx/` (generated
+  locally with Python's `wave` module — no licensing/network dependency, see
+  `scripts/` note below): a whoosh on every cut, a pop when each caption
+  appears, a chime going into the outro, and `bg-music.wav`
   (kick/hihat/bass/pluck loop) under the whole thing. The services clip also
-  gets a highlighted combo badge (`comboHighlight` prop) on top of its
-  caption, and after the 4 clips a closing end-card (`Outro.tsx`) with a
-  headline, subline and an orange CTA pill. Frame-accurate to each clip's
-  exact length (see `src/ThirtyShineReel/clips.ts`); `bg-music.wav` is
-  generated to match the total duration exactly (currently 25.2s — regenerate
-  it if you change the footage or outro length).
+  gets a highlighted combo badge (`comboHighlight` prop, white chip + bold
+  navy text) on top of its caption, and after the 4 clips a closing end-card
+  (`Outro.tsx`) with a headline, subline and a white CTA pill with bold navy
+  text. Frame-accurate to each clip's exact length (see
+  `src/ThirtyShineReel/clips.ts`); `bg-music.wav` is generated to match the
+  total duration exactly (currently 25.2s — regenerate it if you change the
+  footage or outro length).
 
   ```console
   npx remotion render ThirtyShineReel out/30shine-reel.mp4 --crf=30 --color-space=bt709

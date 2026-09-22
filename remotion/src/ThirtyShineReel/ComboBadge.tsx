@@ -47,8 +47,10 @@ export const ComboBadge: React.FC<ComboBadgeProps> = ({
   );
 
   return (
+    // Stays well clear of the top status-bar/tab area and inset from both
+    // sides (TikTok safe zone).
     <AbsoluteFill
-      style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 280 }}
+      style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 300 }}
     >
       <div
         style={{
@@ -56,14 +58,16 @@ export const ComboBadge: React.FC<ComboBadgeProps> = ({
           transform: `scale(${scale})`,
           fontFamily: displayFontFamily,
           fontWeight: 900,
-          fontSize: 62,
+          fontSize: 60,
           letterSpacing: 1,
-          color: "#0B0B0B",
-          backgroundColor: accentColor,
-          padding: "20px 44px",
+          color: accentColor,
+          backgroundColor: "#FFFFFF",
+          padding: "18px 44px",
           borderRadius: 20,
           boxShadow: "0 14px 40px rgba(0,0,0,0.5)",
           textTransform: "uppercase",
+          maxWidth: 880,
+          textAlign: "center",
         }}
       >
         {text}

@@ -23,8 +23,7 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
   outroHeadline,
   outroSubline,
   outroCta,
-  strokeColor,
-  highlightColor,
+  brandColor,
   textColor,
 }) => {
   const clipStarts: number[] = [];
@@ -67,7 +66,7 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
           />
           <Caption
             text={captions[i]}
-            accentColor={strokeColor}
+            accentColor={brandColor}
             textColor={textColor}
             fadeInFrames={FADE_FRAMES}
             holdFrames={clip.frames - FADE_FRAMES * 2}
@@ -76,7 +75,7 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
           {i === COMBO_CLIP_INDEX && (
             <ComboBadge
               text={comboHighlight}
-              accentColor={highlightColor}
+              accentColor={brandColor}
               delayFrames={COMBO_DELAY_FRAMES}
               holdFrames={clip.frames - COMBO_DELAY_FRAMES - FADE_FRAMES}
               fadeOutFrames={FADE_FRAMES}
@@ -90,7 +89,7 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
           headline={outroHeadline}
           subline={outroSubline}
           cta={outroCta}
-          highlightColor={highlightColor}
+          brandColor={brandColor}
           textColor={textColor}
           fadeInFrames={15}
           holdFrames={OUTRO_FRAMES - 15}

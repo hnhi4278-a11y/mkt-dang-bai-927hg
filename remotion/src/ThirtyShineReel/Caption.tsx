@@ -31,22 +31,26 @@ export const Caption: React.FC<CaptionProps> = ({
   );
 
   return (
+    // TikTok safe zone: the bottom ~260px and a ~150px strip on the right
+    // are covered by the caption/username/action-button UI, so the text
+    // block stays centered, clear of the bottom edge and inset from both
+    // sides well past that right-side column.
     <AbsoluteFill
-      style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 220 }}
+      style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 270 }}
     >
       <div
         style={{
           opacity,
           fontFamily: bodyFontFamily,
           fontWeight: 900,
-          fontSize: 58,
+          fontSize: 56,
           lineHeight: 1.3,
           textAlign: "center",
           color: textColor,
           WebkitTextStroke: `9px ${accentColor}`,
           paintOrder: "stroke fill",
-          padding: "0 64px",
-          maxWidth: 980,
+          padding: "0 96px",
+          maxWidth: 900,
         }}
       >
         {text}
