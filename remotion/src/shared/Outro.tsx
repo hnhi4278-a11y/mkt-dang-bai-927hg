@@ -22,6 +22,7 @@ type OutroProps = {
   readonly headline: string;
   readonly subline: string;
   readonly cta: string;
+  readonly phone: string;
   readonly brandColor: string;
   readonly textColor: string;
   readonly fadeInFrames: number;
@@ -36,6 +37,7 @@ export const Outro: React.FC<OutroProps> = ({
   headline,
   subline,
   cta,
+  phone,
   brandColor,
   textColor,
   fadeInFrames,
@@ -64,6 +66,11 @@ export const Outro: React.FC<OutroProps> = ({
   });
   const ctaScale = interpolate(ctaPop, [0, 1], [0.8, 1]);
   const ctaOpacity = interpolate(ctaPop, [0, 1], [0, 1]);
+
+  const phoneOpacity = interpolate(frame, [fadeInFrames + 22, fadeInFrames + 32], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   const totalFrames = fadeInFrames + holdFrames;
   const blackOpacity = interpolate(
@@ -132,6 +139,20 @@ export const Outro: React.FC<OutroProps> = ({
           }}
         >
           {cta}
+        </div>
+        <div
+          style={{
+            opacity: phoneOpacity,
+            marginTop: 26,
+            fontFamily: bodyFontFamily,
+            fontWeight: 800,
+            fontSize: 34,
+            letterSpacing: 1,
+            color: textColor,
+            textShadow: "0 4px 14px rgba(0,0,0,0.5)",
+          }}
+        >
+          📞 {phone}
         </div>
       </div>
       <AbsoluteFill style={{ backgroundColor: "black", opacity: blackOpacity }} />

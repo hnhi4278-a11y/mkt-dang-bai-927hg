@@ -23,6 +23,7 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
   outroHeadline,
   outroSubline,
   outroCta,
+  outroPhone,
   brandColor,
   textColor,
 }) => {
@@ -89,6 +90,7 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
           headline={outroHeadline}
           subline={outroSubline}
           cta={outroCta}
+          phone={outroPhone}
           brandColor={brandColor}
           textColor={textColor}
           fadeInFrames={15}

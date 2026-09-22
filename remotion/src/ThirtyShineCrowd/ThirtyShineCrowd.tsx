@@ -24,6 +24,7 @@ export const ThirtyShineCrowd: React.FC<ThirtyShineCrowdProps> = ({
   outroHeadline,
   outroSubline,
   outroCta,
+  outroPhone,
   brandColor,
   textColor,
 }) => {
@@ -93,6 +94,7 @@ export const ThirtyShineCrowd: React.FC<ThirtyShineCrowdProps> = ({
           headline={outroHeadline}
           subline={outroSubline}
           cta={outroCta}
+          phone={outroPhone}
           brandColor={brandColor}
           textColor={textColor}
           fadeInFrames={15}

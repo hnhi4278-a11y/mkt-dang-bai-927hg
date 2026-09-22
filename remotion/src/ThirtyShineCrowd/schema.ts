@@ -7,6 +7,7 @@ export const thirtyShineCrowdSchema = z.object({
   outroHeadline: z.string(),
   outroSubline: z.string(),
   outroCta: z.string(),
+  outroPhone: z.string(),
   brandColor: zColor(),
   textColor: zColor(),
 });

@@ -39,6 +39,7 @@ export const RemotionRoot: React.FC = () => {
           outroHeadline: "GHÉ 30SHINE",
           outroSubline: "927 Hậu Giang – Quận 6",
           outroCta: "ĐẶT LỊCH NGAY",
+          outroPhone: "0909 933 141",
           brandColor: "#181D54",
           textColor: "#FFFFFF",
         }}
@@ -73,6 +74,7 @@ export const RemotionRoot: React.FC = () => {
           outroHeadline: "GHÉ 30SHINE",
           outroSubline: "927 Hậu Giang – Quận 6",
           outroCta: "ĐẶT LỊCH NGAY",
+          outroPhone: "0909 933 141",
           brandColor: "#181D54",
           textColor: "#FFFFFF",
         }}
