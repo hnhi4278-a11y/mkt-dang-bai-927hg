@@ -1,12 +1,15 @@
-"""Regenerate the synthesized background music loop in public/sfx/bg-music.wav.
+"""Regenerate a synthesized background music loop in public/sfx/.
 
 No external dependencies (stdlib only). The duration must match the
-ThirtyShineReel composition's total length exactly (TOTAL_FRAMES / fps in
-src/ThirtyShineReel/clips.ts) or the track will cut short or leave silence
-at the end.
+target composition's total length exactly (TOTAL_FRAMES / fps) or the
+track will cut short or leave silence at the end.
 
 Usage:
-    python3 scripts/gen_music.py [duration_seconds]
+    python3 scripts/gen_music.py [duration_seconds] [output_filename]
+
+Examples:
+    python3 scripts/gen_music.py 25.2                    # -> bg-music.wav
+    python3 scripts/gen_music.py 15.5 bg-music-crowd.wav
 """
 
 import wave
@@ -19,7 +22,7 @@ import sys
 SR = 44100
 BPM = 128
 BEAT = 60.0 / BPM  # seconds per beat
-OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "public", "sfx", "bg-music.wav")
+OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "public", "sfx")
 
 
 def write_wav(path, samples):
@@ -143,6 +146,9 @@ def build(total_duration):
 
 if __name__ == "__main__":
     duration = float(sys.argv[1]) if len(sys.argv) > 1 else 25.2
+    filename = sys.argv[2] if len(sys.argv) > 2 else "bg-music.wav"
+    out_path = os.path.join(OUT_DIR, filename)
     track = build(duration)
-    write_wav(OUT_PATH, track)
-    print("done", len(track) / SR, "s ->", OUT_PATH)
+    os.makedirs(OUT_DIR, exist_ok=True)
+    write_wav(out_path, track)
+    print("done", len(track) / SR, "s ->", out_path)

@@ -6,7 +6,10 @@ dist
 # Ignore the output video from Git but not videos you import into src/.
 out
 
-# Raw footage the client uploads for a specific edit (e.g. ThirtyShineReel) —
-# not committed, see public/footage/README.md.
+# Raw footage/photos the client uploads for a specific edit — not
+# committed, see public/footage/README.md and public/photos/README.md.
 public/footage/*.mov
 public/footage/*.mp4
+public/photos/*.jpg
+public/photos/*.jpeg
+public/photos/*.png

@@ -7,7 +7,7 @@ import {
 } from "remotion";
 import { displayFontFamily } from "../fonts";
 
-type ComboBadgeProps = {
+type BadgeProps = {
   readonly text: string;
   readonly accentColor: string;
   readonly delayFrames: number;
@@ -15,9 +15,9 @@ type ComboBadgeProps = {
   readonly fadeOutFrames: number;
 };
 
-// A highlighted service-package chip that pops in on top of the regular
-// caption, so the exact combo to book stands out at a glance.
-export const ComboBadge: React.FC<ComboBadgeProps> = ({
+// A highlighted white chip (bold navy text) that pops in on top of the
+// frame, e.g. a combo package name or a social-proof callout.
+export const Badge: React.FC<BadgeProps> = ({
   text,
   accentColor,
   delayFrames,

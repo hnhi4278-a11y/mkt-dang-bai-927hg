@@ -13,6 +13,21 @@ Welcome to your Remotion project!
 
 ## Compositions
 
+- **ThirtyShineCrowd** — photo-slideshow reel: 5 photos in `public/photos/`
+  (not committed — see `public/photos/README.md`), each with a slow
+  Ken Burns zoom/pan (`src/shared/KenBurns.tsx`), a caption on the first and
+  last photo only (kept clean per "ít chữ"), a whoosh on every cut, and the
+  same closing CTA end-card as `ThirtyShineReel`. Uses its own background
+  track (`public/sfx/bg-music-crowd.wav`) sized to its own length:
+
+  ```console
+  npx remotion render ThirtyShineCrowd out/30shine-crowd.mp4 --crf=30 --color-space=bt709
+  ```
+
+  `Caption`, `Badge` and `Outro` now live in `src/shared/` so both this and
+  `ThirtyShineReel` use the same brand look — see that composition's entry
+  below for what `brandColor` means and why `--color-space=bt709` matters.
+
 - **ThirtyShineReel** — final edited reel: the 4 salon clips in
   `public/footage/` (not committed — see `public/footage/README.md`), each
   with a burned-in caption in the TikTok-caption look (bold white fill,

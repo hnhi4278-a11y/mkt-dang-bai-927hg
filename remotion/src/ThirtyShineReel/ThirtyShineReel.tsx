@@ -1,8 +1,8 @@
 import { AbsoluteFill, Audio, OffthreadVideo, Sequence, staticFile } from "remotion";
 import { CLIPS, CLIPS_TOTAL_FRAMES, OUTRO_FRAMES } from "./clips";
-import { Caption } from "./Caption";
-import { ComboBadge } from "./ComboBadge";
-import { Outro } from "./Outro";
+import { Caption } from "../shared/Caption";
+import { Badge } from "../shared/Badge";
+import { Outro } from "../shared/Outro";
 import type { ThirtyShineReelProps } from "./schema";
 
 const FADE_FRAMES = 15;
@@ -73,7 +73,7 @@ export const ThirtyShineReel: React.FC<ThirtyShineReelProps> = ({
             fadeOutFrames={FADE_FRAMES}
           />
           {i === COMBO_CLIP_INDEX && (
-            <ComboBadge
+            <Badge
               text={comboHighlight}
               accentColor={brandColor}
               delayFrames={COMBO_DELAY_FRAMES}

@@ -11,12 +11,39 @@ import { thirtyShinePromoSchema } from "./ThirtyShinePromo/schema";
 import { ThirtyShineReel } from "./ThirtyShineReel/ThirtyShineReel";
 import { thirtyShineReelSchema } from "./ThirtyShineReel/schema";
 import { TOTAL_FRAMES } from "./ThirtyShineReel/clips";
+import { ThirtyShineCrowd } from "./ThirtyShineCrowd/ThirtyShineCrowd";
+import { thirtyShineCrowdSchema } from "./ThirtyShineCrowd/schema";
+import { TOTAL_FRAMES as CROWD_TOTAL_FRAMES } from "./ThirtyShineCrowd/photos";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Photo-slideshow reel: 5 busy-salon photos in public/photos (not
+          committed — see public/photos/README.md), each with a slow Ken
+          Burns zoom/pan, a caption on the first and last photo, sfx on
+          each cut, and the same closing CTA end-card as ThirtyShineReel.
+          Render with: npx remotion render ThirtyShineCrowd out/30shine-crowd.mp4 --color-space=bt709 */}
+      <Composition
+        id="ThirtyShineCrowd"
+        component={ThirtyShineCrowd}
+        durationInFrames={CROWD_TOTAL_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={thirtyShineCrowdSchema}
+        defaultProps={{
+          introCaption: "30SHINE",
+          socialProofCaption: "LUÔN ĐÔNG KHÁCH MỖI NGÀY",
+          outroHeadline: "GHÉ 30SHINE",
+          outroSubline: "927 Hậu Giang – Quận 6",
+          outroCta: "ĐẶT LỊCH NGAY",
+          brandColor: "#181D54",
+          textColor: "#FFFFFF",
+        }}
+      />
+
       {/* Final edited reel: the 4 salon clips in public/footage, each with
           a burned-in caption (bold white + navy outline, TikTok-caption
           style), sound effects on cuts/text pops, a highlighted combo badge
