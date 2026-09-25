@@ -28,7 +28,10 @@ Welcome to your Remotion project!
   bouncing "Chốt đơn ngay 👇" pointer before the CTA (`PointerArrow.tsx`),
   and a glowing/pulsing CTA pill in the outro (`Outro`'s `pulseCta` prop).
   Deliberately no price/discount/stock-count overlays — those need real
-  numbers from the client, never invented:
+  numbers from the client, never invented. No address/phone either: this
+  runs on the client's own separate affiliate TikTok channel, unrelated to
+  the 30Shine 927 Hậu Giang branch (`Outro`'s `subline`/`phone` are now
+  optional — it skips rendering a line when the text is empty):
 
   ```console
   npx remotion render GlanzenPromo out/glanzen-promo.mp4 --crf=30 --color-space=bt709

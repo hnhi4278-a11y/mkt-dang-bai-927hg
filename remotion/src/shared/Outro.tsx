@@ -20,9 +20,9 @@ function lighten(hex: string, amount: number): string {
 
 type OutroProps = {
   readonly headline: string;
-  readonly subline: string;
+  readonly subline?: string;
   readonly cta: string;
-  readonly phone: string;
+  readonly phone?: string;
   readonly brandColor: string;
   readonly textColor: string;
   readonly fadeInFrames: number;
@@ -120,18 +120,20 @@ export const Outro: React.FC<OutroProps> = ({
         >
           {headline}
         </div>
-        <div
-          style={{
-            marginTop: 24,
-            fontFamily: bodyFontFamily,
-            fontWeight: 800,
-            fontSize: 38,
-            color: textColor,
-            opacity: 0.92,
-          }}
-        >
-          {subline}
-        </div>
+        {subline && (
+          <div
+            style={{
+              marginTop: 24,
+              fontFamily: bodyFontFamily,
+              fontWeight: 800,
+              fontSize: 38,
+              color: textColor,
+              opacity: 0.92,
+            }}
+          >
+            {subline}
+          </div>
+        )}
         <div
           style={{
             opacity: ctaOpacity,
@@ -151,20 +153,22 @@ export const Outro: React.FC<OutroProps> = ({
         >
           {cta}
         </div>
-        <div
-          style={{
-            opacity: phoneOpacity,
-            marginTop: 26,
-            fontFamily: bodyFontFamily,
-            fontWeight: 800,
-            fontSize: 34,
-            letterSpacing: 1,
-            color: textColor,
-            textShadow: "0 4px 14px rgba(0,0,0,0.5)",
-          }}
-        >
-          📞 {phone}
-        </div>
+        {phone && (
+          <div
+            style={{
+              opacity: phoneOpacity,
+              marginTop: 26,
+              fontFamily: bodyFontFamily,
+              fontWeight: 800,
+              fontSize: 34,
+              letterSpacing: 1,
+              color: textColor,
+              textShadow: "0 4px 14px rgba(0,0,0,0.5)",
+            }}
+          >
+            📞 {phone}
+          </div>
+        )}
       </div>
       <AbsoluteFill style={{ backgroundColor: "black", opacity: blackOpacity }} />
     </AbsoluteFill>

@@ -30,6 +30,10 @@ export const RemotionRoot: React.FC = () => {
           shot, and the same closing CTA end-card pattern. brandColor here
           is sampled from the tin itself (red), not the salon's navy — this
           is a single-product spotlight, not a channel/brand reel.
+          No address/phone: this runs on the client's own separate
+          affiliate TikTok channel, unrelated to the 30Shine 927 Hậu Giang
+          branch — outroSubline/outroPhone are left empty (Outro skips
+          rendering a line when its text is empty).
           Render with: npx remotion render GlanzenPromo out/glanzen-promo.mp4 --color-space=bt709 */}
       <Composition
         id="GlanzenPromo"
@@ -48,9 +52,9 @@ export const RemotionRoot: React.FC = () => {
           ] as [string, string, string, string],
           hookBadge: "LIMITED",
           outroHeadline: "SÁP GLÄNZEN",
-          outroSubline: "Có tại 30Shine 927 Hậu Giang",
+          outroSubline: "",
           outroCta: "MUA NGAY",
-          outroPhone: "0909 933 141",
+          outroPhone: "",
           brandColor: "#AE2930",
           textColor: "#FFFFFF",
         }}
