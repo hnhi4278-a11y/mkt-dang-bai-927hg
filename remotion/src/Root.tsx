@@ -18,12 +18,23 @@ import { GlanzenPromo } from "./GlanzenPromo/GlanzenPromo";
 import { glanzenPromoSchema } from "./GlanzenPromo/schema";
 import { TOTAL_FRAMES as GLANZEN_TOTAL_FRAMES } from "./GlanzenPromo/photos";
 import { MascotDemo } from "./Mascot/MascotDemo";
+import { MascotOptions } from "./Mascot/MascotOptions";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* 2x2 comparison sheet of mascot concepts (still image only). */}
+      <Composition
+        id="MascotOptions"
+        component={MascotOptions}
+        durationInFrames={1}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+
       {/* Demo of a code-drawn (pure SVG, no AI-generated imagery) shopping-
           bag mascot for a resale/affiliate channel: flies in per beat with
           a bouncy overshoot, keeps gently bobbing (never fully static),

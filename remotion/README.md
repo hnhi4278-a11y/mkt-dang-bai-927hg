@@ -28,6 +28,16 @@ Welcome to your Remotion project!
   for now since this was a quick concept pitch; turn the beat list into
   props if it's worth making reusable later.
 
+  Three more character concepts to pick from, all sharing the same
+  face-drawing language: `BagMascotStyled.tsx` (the bag + bandana +
+  sunglasses), `HoodieBlob.tsx` (round blob in a hoodie), `ParcelMascot.tsx`
+  (a shipping-box character with tape/label/party-flag). `MascotOptions.tsx`
+  is a still-only 2×2 comparison sheet:
+
+  ```console
+  npx remotion still MascotOptions out/mascot-options.png
+  ```
+
 - **GlanzenPromo** — single-product spotlight: 4 close-up photos of the
   Glänzen clay wax tin in `public/photos/` (not committed), Ken Burns per
   photo, one caption per shot using the real label copy (matte finish/
