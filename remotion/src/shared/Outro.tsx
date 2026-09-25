@@ -28,6 +28,9 @@ type OutroProps = {
   readonly fadeInFrames: number;
   readonly holdFrames: number;
   readonly fadeToBlackFrames: number;
+  // Continuous pulse on the CTA pill after it pops in — draws the eye,
+  // affiliate/product-ad style. Off by default.
+  readonly pulseCta?: boolean;
 };
 
 // Closing end-card: leaves the busy footage behind for a clean, readable
@@ -43,6 +46,7 @@ export const Outro: React.FC<OutroProps> = ({
   fadeInFrames,
   holdFrames,
   fadeToBlackFrames,
+  pulseCta = false,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -64,8 +68,15 @@ export const Outro: React.FC<OutroProps> = ({
     fps,
     config: { damping: 200 },
   });
-  const ctaScale = interpolate(ctaPop, [0, 1], [0.8, 1]);
+  const ctaPulse =
+    pulseCta && frame > fadeInFrames + 20
+      ? 1 + Math.sin((frame - fadeInFrames - 20) * 0.25) * 0.05
+      : 1;
+  const ctaScale = interpolate(ctaPop, [0, 1], [0.8, 1]) * ctaPulse;
   const ctaOpacity = interpolate(ctaPop, [0, 1], [0, 1]);
+  const ctaGlow = pulseCta
+    ? 0.3 + Math.max(0, Math.sin((frame - fadeInFrames - 20) * 0.25)) * 0.4
+    : 0;
 
   const phoneOpacity = interpolate(frame, [fadeInFrames + 22, fadeInFrames + 32], [0, 1], {
     extrapolateLeft: "clamp",
@@ -135,7 +146,7 @@ export const Outro: React.FC<OutroProps> = ({
             letterSpacing: 1,
             padding: "22px 52px",
             borderRadius: 999,
-            boxShadow: "0 14px 40px rgba(0,0,0,0.45)",
+            boxShadow: `0 14px 40px rgba(0,0,0,0.45), 0 0 ${40 * ctaGlow}px ${12 * ctaGlow}px rgba(255,255,255,${0.7 * ctaGlow})`,
           }}
         >
           {cta}

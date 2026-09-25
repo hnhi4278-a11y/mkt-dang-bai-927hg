@@ -4,6 +4,8 @@ import { KenBurns } from "../shared/KenBurns";
 import { Caption } from "../shared/Caption";
 import { Badge } from "../shared/Badge";
 import { Outro } from "../shared/Outro";
+import { PulseTag } from "./PulseTag";
+import { PointerArrow } from "./PointerArrow";
 import type { GlanzenPromoProps } from "./schema";
 
 const FADE_FRAMES = 15;
@@ -11,6 +13,8 @@ const BADGE_DELAY_FRAMES = 15;
 // Photo index (0-based) that gets the "LIMITED" hook badge — the opening
 // shot, for a scarcity hook in the first beat.
 const HOOK_PHOTO_INDEX = 0;
+// Last photo gets the bouncing pointer, right before the CTA end-card.
+const POINTER_PHOTO_INDEX = PHOTOS.length - 1;
 
 type SfxCue = {
   readonly frame: number;
@@ -55,6 +59,7 @@ export const GlanzenPromo: React.FC<GlanzenPromoProps> = ({
             src={staticFile(src)}
             durationInFrames={PHOTO_DURATION}
             panDirection={i % 2 === 0 ? "left" : "right"}
+            punchIn
           />
           <Caption
             text={captions[i]}
@@ -63,7 +68,9 @@ export const GlanzenPromo: React.FC<GlanzenPromoProps> = ({
             fadeInFrames={FADE_FRAMES}
             holdFrames={PHOTO_DURATION - FADE_FRAMES * 2}
             fadeOutFrames={FADE_FRAMES}
+            punchy
           />
+          <PulseTag text="🔥 HOT" accentColor={brandColor} />
           {i === HOOK_PHOTO_INDEX && (
             <Badge
               text={hookBadge}
@@ -71,6 +78,14 @@ export const GlanzenPromo: React.FC<GlanzenPromoProps> = ({
               delayFrames={BADGE_DELAY_FRAMES}
               holdFrames={PHOTO_DURATION - BADGE_DELAY_FRAMES - FADE_FRAMES}
               fadeOutFrames={FADE_FRAMES}
+            />
+          )}
+          {i === POINTER_PHOTO_INDEX && (
+            <PointerArrow
+              text="Chốt đơn ngay"
+              accentColor={brandColor}
+              fadeInFrames={20}
+              holdFrames={PHOTO_DURATION - 20}
             />
           )}
         </Sequence>
@@ -87,6 +102,7 @@ export const GlanzenPromo: React.FC<GlanzenPromoProps> = ({
           fadeInFrames={15}
           holdFrames={OUTRO_FRAMES - 15}
           fadeToBlackFrames={12}
+          pulseCta
         />
       </Sequence>
 

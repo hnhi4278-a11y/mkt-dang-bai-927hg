@@ -4,6 +4,10 @@ type KenBurnsProps = {
   readonly src: string;
   readonly durationInFrames: number;
   readonly panDirection?: "left" | "right";
+  // Adds a fast "snap" zoom-out in the first ~10 frames on top of the
+  // slow pan/zoom, for a punchier cut — the kind affiliate/product-ad
+  // edits use instead of a plain hard cut. Off by default.
+  readonly punchIn?: boolean;
 };
 
 // Slow zoom-in with a slight horizontal pan, so a still photo reads as
@@ -12,6 +16,7 @@ export const KenBurns: React.FC<KenBurnsProps> = ({
   src,
   durationInFrames,
   panDirection = "left",
+  punchIn = false,
 }) => {
   const frame = useCurrentFrame();
   const progress = interpolate(frame, [0, durationInFrames], [0, 1], {
@@ -19,7 +24,14 @@ export const KenBurns: React.FC<KenBurnsProps> = ({
     extrapolateRight: "clamp",
   });
 
-  const scale = interpolate(progress, [0, 1], [1.0, 1.15]);
+  const baseScale = interpolate(progress, [0, 1], [1.0, 1.15]);
+  const punch = punchIn
+    ? interpolate(frame, [0, 10], [0.22, 0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 0;
+  const scale = baseScale + punch;
   const panPx = interpolate(
     progress,
     [0, 1],

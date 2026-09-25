@@ -1,4 +1,4 @@
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { bodyFontFamily } from "../fonts";
 
 type CaptionProps = {
@@ -8,6 +8,9 @@ type CaptionProps = {
   readonly fadeInFrames: number;
   readonly holdFrames: number;
   readonly fadeOutFrames: number;
+  // Bouncy scale-in entrance instead of a plain fade — more energetic,
+  // affiliate/product-ad style. Off by default.
+  readonly punchy?: boolean;
 };
 
 // TikTok-style burned-in caption: bold white fill with a thick colored
@@ -19,8 +22,10 @@ export const Caption: React.FC<CaptionProps> = ({
   fadeInFrames,
   holdFrames,
   fadeOutFrames,
+  punchy = false,
 }) => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const totalFrames = fadeInFrames + holdFrames + fadeOutFrames;
 
   const opacity = interpolate(
@@ -29,6 +34,14 @@ export const Caption: React.FC<CaptionProps> = ({
     [0, 1, 1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
+
+  const bounce = spring({
+    frame,
+    fps,
+    config: { damping: 9, stiffness: 160, mass: 0.5 },
+    durationInFrames: fadeInFrames,
+  });
+  const scale = punchy ? interpolate(bounce, [0, 1], [0.4, 1]) : 1;
 
   return (
     // TikTok safe zone: the bottom ~260px and a ~150px strip on the right
@@ -41,6 +54,7 @@ export const Caption: React.FC<CaptionProps> = ({
       <div
         style={{
           opacity,
+          transform: `scale(${scale})`,
           fontFamily: bodyFontFamily,
           fontWeight: 900,
           fontSize: 56,

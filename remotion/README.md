@@ -21,11 +21,22 @@ Welcome to your Remotion project!
   end-card pattern as the other compositions. `brandColor` here is sampled
   from the tin itself (`#AE2930`, red) rather than the salon's navy — this
   is a product ad, not a channel/brand reel, so it takes on the product's
-  own color:
+  own color. Also layers on the affiliate/product-ad motion language: a
+  snap zoom-punch on every cut (`KenBurns`'s `punchIn` prop), a bouncy
+  scale-in on the captions instead of a plain fade (`Caption`'s `punchy`
+  prop), a continuously-pulsing "🔥 HOT" corner tag (`PulseTag.tsx`), a
+  bouncing "Chốt đơn ngay 👇" pointer before the CTA (`PointerArrow.tsx`),
+  and a glowing/pulsing CTA pill in the outro (`Outro`'s `pulseCta` prop).
+  Deliberately no price/discount/stock-count overlays — those need real
+  numbers from the client, never invented:
 
   ```console
   npx remotion render GlanzenPromo out/glanzen-promo.mp4 --crf=30 --color-space=bt709
   ```
+
+  The `punchIn` / `punchy` / `pulseCta` props default to `false`, so
+  `ThirtyShineReel` and `ThirtyShineCrowd` keep their calmer, brand-reel
+  look unchanged — GlanzenPromo is the only composition that opts in.
 
 - **ThirtyShineCrowd** — photo-slideshow reel: 5 photos in `public/photos/`
   (not committed — see `public/photos/README.md`), each with a slow
