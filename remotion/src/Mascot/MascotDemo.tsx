@@ -1,5 +1,6 @@
 import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
 import { MascotBeat } from "./MascotBeat";
+import { BagMascotStyled } from "./BagMascotStyled";
 import { displayFontFamily, bodyFontFamily } from "../fonts";
 
 const BEAT = 75; // 2.5s @ 30fps
@@ -88,7 +89,13 @@ const DemoBeat: React.FC<Beat> = ({ title, sub, expression, flyFrom }) => {
   return (
     <AbsoluteFill>
       <BeatCaption title={title} sub={sub} frame={frame} />
-      <MascotBeat expression={expression} flyFrom={flyFrom} delayFrames={0} bodyColor={PINK} />
+      <MascotBeat
+        expression={expression}
+        flyFrom={flyFrom}
+        delayFrames={0}
+        bodyColor={PINK}
+        character={BagMascotStyled}
+      />
     </AbsoluteFill>
   );
 };

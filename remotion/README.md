@@ -13,10 +13,13 @@ Welcome to your Remotion project!
 
 ## Compositions
 
-- **MascotDemo** — a code-drawn (pure SVG, `src/Mascot/BagMascot.tsx`) shopping-
-  bag mascot for a resale/affiliate channel — no photos needed, no AI-generated
-  imagery. Flies in per beat with a bouncy overshoot (`MascotBeat.tsx`) and
-  keeps gently bobbing so it's never fully static; swaps expression
+- **MascotDemo** — a code-drawn (pure SVG) mascot for a resale/affiliate
+  channel — no photos needed, no AI-generated imagery. The chosen design is
+  the "dressed up" bag: `BagMascot.tsx` (base shape) wrapped by
+  `BagMascotStyled.tsx`, which layers on a knotted bandana and sunglasses.
+  Flies in per beat with a bouncy overshoot (`MascotBeat.tsx`, which takes a
+  `character` prop so it can render any of the mascot variants) and keeps
+  gently bobbing so it's never fully static; swaps expression
   (`cheer` / `surprised` / `point`) per beat. `MascotDemo.tsx` is a 4-beat
   demo reel (comic-sketch frame, yellow highlight captions) showing it off:
 
@@ -28,11 +31,10 @@ Welcome to your Remotion project!
   for now since this was a quick concept pitch; turn the beat list into
   props if it's worth making reusable later.
 
-  Three more character concepts to pick from, all sharing the same
-  face-drawing language: `BagMascotStyled.tsx` (the bag + bandana +
-  sunglasses), `HoodieBlob.tsx` (round blob in a hoodie), `ParcelMascot.tsx`
+  Two other character concepts were pitched and not chosen, kept around for
+  reference: `HoodieBlob.tsx` (round blob in a hoodie), `ParcelMascot.tsx`
   (a shipping-box character with tape/label/party-flag). `MascotOptions.tsx`
-  is a still-only 2×2 comparison sheet:
+  is a still-only 2×2 comparison sheet showing all four side by side:
 
   ```console
   npx remotion still MascotOptions out/mascot-options.png

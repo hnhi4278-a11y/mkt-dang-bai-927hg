@@ -3,6 +3,12 @@ import { BagMascot, type Expression } from "./BagMascot";
 
 type FlyFrom = "bottom" | "left" | "right";
 
+type MascotCharacterProps = {
+  readonly expression: Expression;
+  readonly bodyColor?: string;
+  readonly bounce?: number;
+};
+
 type MascotBeatProps = {
   readonly expression: Expression;
   readonly flyFrom: FlyFrom;
@@ -10,6 +16,7 @@ type MascotBeatProps = {
   readonly size?: number;
   readonly bodyColor?: string;
   readonly bottomOffset?: number;
+  readonly character?: React.FC<MascotCharacterProps>;
 };
 
 // Flies the mascot in from off-screen with a bouncy overshoot, then keeps
@@ -22,6 +29,7 @@ export const MascotBeat: React.FC<MascotBeatProps> = ({
   size = 340,
   bodyColor = "#FF2E63",
   bottomOffset = 60,
+  character: Character = BagMascot,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -58,7 +66,7 @@ export const MascotBeat: React.FC<MascotBeatProps> = ({
           transform: `translate(${x}px, ${yFly + idleBob}px) rotate(${idleTilt}deg)`,
         }}
       >
-        <BagMascot expression={expression} bodyColor={bodyColor} bounce={bounce} />
+        <Character expression={expression} bodyColor={bodyColor} bounce={bounce} />
       </div>
     </AbsoluteFill>
   );

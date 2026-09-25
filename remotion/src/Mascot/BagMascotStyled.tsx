@@ -2,18 +2,27 @@ import { BagMascot, type Expression } from "./BagMascot";
 
 type BagMascotStyledProps = {
   readonly expression: Expression;
+  readonly bodyColor?: string;
   readonly bounce?: number;
+  readonly armPointDeg?: number;
 };
 
 // Same bag mascot, dressed up: a knotted bandana across the top and a pair
-// of cool sunglasses — the "with clothes" option.
+// of cool sunglasses — the chosen "with clothes" option.
 export const BagMascotStyled: React.FC<BagMascotStyledProps> = ({
   expression,
+  bodyColor = "#FF2E63",
   bounce = 0,
+  armPointDeg = -35,
 }) => {
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
-      <BagMascot expression={expression} bounce={bounce} />
+      <BagMascot
+        expression={expression}
+        bodyColor={bodyColor}
+        bounce={bounce}
+        armPointDeg={armPointDeg}
+      />
       <svg
         viewBox="0 0 300 320"
         width="100%"
