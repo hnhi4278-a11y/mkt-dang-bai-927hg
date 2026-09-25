@@ -14,12 +14,48 @@ import { TOTAL_FRAMES } from "./ThirtyShineReel/clips";
 import { ThirtyShineCrowd } from "./ThirtyShineCrowd/ThirtyShineCrowd";
 import { thirtyShineCrowdSchema } from "./ThirtyShineCrowd/schema";
 import { TOTAL_FRAMES as CROWD_TOTAL_FRAMES } from "./ThirtyShineCrowd/photos";
+import { GlanzenPromo } from "./GlanzenPromo/GlanzenPromo";
+import { glanzenPromoSchema } from "./GlanzenPromo/schema";
+import { TOTAL_FRAMES as GLANZEN_TOTAL_FRAMES } from "./GlanzenPromo/photos";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Product spotlight: 4 close-up photos of the Glänzen clay wax tin
+          in public/photos (not committed), Ken Burns per photo, a caption
+          per shot using the real label copy (matte finish/strong hold,
+          Kaolin formula, ingredients), a "LIMITED" hook badge on the first
+          shot, and the same closing CTA end-card pattern. brandColor here
+          is sampled from the tin itself (red), not the salon's navy — this
+          is a single-product spotlight, not a channel/brand reel.
+          Render with: npx remotion render GlanzenPromo out/glanzen-promo.mp4 --color-space=bt709 */}
+      <Composition
+        id="GlanzenPromo"
+        component={GlanzenPromo}
+        durationInFrames={GLANZEN_TOTAL_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={glanzenPromoSchema}
+        defaultProps={{
+          captions: [
+            "SÁP GLÄNZEN – BẢN GIỚI HẠN",
+            "Chất sáp mềm, tán đều tay",
+            "Bơ hạt mỡ • Dầu oliu • Jojoba dưỡng tóc mỗi lần vuốt",
+            "Matte Finish • Strong Hold – giữ nếp cả ngày",
+          ] as [string, string, string, string],
+          hookBadge: "LIMITED",
+          outroHeadline: "SÁP GLÄNZEN",
+          outroSubline: "Có tại 30Shine 927 Hậu Giang",
+          outroCta: "MUA NGAY",
+          outroPhone: "0909 933 141",
+          brandColor: "#AE2930",
+          textColor: "#FFFFFF",
+        }}
+      />
+
       {/* Photo-slideshow reel: 5 busy-salon photos in public/photos (not
           committed — see public/photos/README.md), each with a slow Ken
           Burns zoom/pan, a caption on the first and last photo, sfx on

@@ -13,6 +13,20 @@ Welcome to your Remotion project!
 
 ## Compositions
 
+- **GlanzenPromo** — single-product spotlight: 4 close-up photos of the
+  Glänzen clay wax tin in `public/photos/` (not committed), Ken Burns per
+  photo, one caption per shot using the real label copy (matte finish/
+  strong hold, Kaolin formula, ingredients — no invented claims), a
+  "LIMITED" hook badge on the opening shot, and the same closing CTA
+  end-card pattern as the other compositions. `brandColor` here is sampled
+  from the tin itself (`#AE2930`, red) rather than the salon's navy — this
+  is a product ad, not a channel/brand reel, so it takes on the product's
+  own color:
+
+  ```console
+  npx remotion render GlanzenPromo out/glanzen-promo.mp4 --crf=30 --color-space=bt709
+  ```
+
 - **ThirtyShineCrowd** — photo-slideshow reel: 5 photos in `public/photos/`
   (not committed — see `public/photos/README.md`), each with a slow
   Ken Burns zoom/pan (`src/shared/KenBurns.tsx`), a caption on the first and
