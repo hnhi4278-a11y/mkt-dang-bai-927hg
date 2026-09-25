@@ -1,0 +1,247 @@
+# Remotion video
+
+<p align="center">
+  <a href="https://github.com/remotion-dev/logo">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
+      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
+    </picture>
+  </a>
+</p>
+
+Welcome to your Remotion project!
+
+## Compositions
+
+- **MascotDemo** — a code-drawn (pure SVG) mascot for a resale/affiliate
+  channel — no photos needed, no AI-generated imagery. The chosen design is
+  the "dressed up" bag: `BagMascot.tsx` (base shape) wrapped by
+  `BagMascotStyled.tsx`, which layers on a knotted bandana and sunglasses.
+  Flies in per beat with a bouncy overshoot (`MascotBeat.tsx`, which takes a
+  `character` prop so it can render any of the mascot variants) and keeps
+  gently bobbing so it's never fully static; swaps expression
+  (`cheer` / `surprised` / `point`) per beat. `MascotDemo.tsx` is a 4-beat
+  demo reel (comic-sketch frame, yellow highlight captions) showing it off:
+
+  ```console
+  npx remotion render MascotDemo out/mascot-demo.mp4 --color-space=bt709
+  ```
+
+  No footage/photos, no schema — everything is hardcoded in `MascotDemo.tsx`
+  for now since this was a quick concept pitch; turn the beat list into
+  props if it's worth making reusable later.
+
+  Two other character concepts were pitched and not chosen, kept around for
+  reference: `HoodieBlob.tsx` (round blob in a hoodie), `ParcelMascot.tsx`
+  (a shipping-box character with tape/label/party-flag). `MascotOptions.tsx`
+  is a still-only 2×2 comparison sheet showing all four side by side:
+
+  ```console
+  npx remotion still MascotOptions out/mascot-options.png
+  ```
+
+- **GlanzenReview** — real-voice product review: the client's own recorded
+  narration (`public/audio/glanzen-review.m4a`, not committed — see
+  `public/audio/README.md`) plays as the actual audio track, the
+  "Túi phụ kiện" mascot (`BagMascotStyled`) sits docked in the corner for
+  the whole clip (`ReviewMascot.tsx` — flies in once, then reacts with a
+  bounce + expression swap at each beat instead of flying off-screen like
+  `MascotBeat`), captions matching the script fade in synced to speech, and
+  the same 4 Glänzen photos Ken-Burns behind it. Beat boundaries are
+  estimated by word-count proportion against the recording's measured
+  duration (no word-level timestamps) — see `src/GlanzenReview/beats.ts`;
+  re-time it by ear if a caption/reaction drifts from the actual voice. No
+  background music — the real voice is the focus, not an ad jingle.
+
+  ```console
+  npx remotion render GlanzenReview out/glanzen-review.mp4 --color-space=bt709
+  ```
+
+  If you re-record with a different script or pacing, update the `words`/
+  `caption`/`expression` list in `beats.ts` and its `AUDIO_DURATION_SECONDS`
+  to match the new file (get it with `ffprobe -show_entries format=duration`).
+
+- **GlanzenPromo** — single-product spotlight: 4 close-up photos of the
+  Glänzen clay wax tin in `public/photos/` (not committed), Ken Burns per
+  photo, one caption per shot using the real label copy (matte finish/
+  strong hold, Kaolin formula, ingredients — no invented claims), a
+  "LIMITED" hook badge on the opening shot, and the same closing CTA
+  end-card pattern as the other compositions. `brandColor` here is sampled
+  from the tin itself (`#AE2930`, red) rather than the salon's navy — this
+  is a product ad, not a channel/brand reel, so it takes on the product's
+  own color. Also layers on the affiliate/product-ad motion language: a
+  snap zoom-punch on every cut (`KenBurns`'s `punchIn` prop), a bouncy
+  scale-in on the captions instead of a plain fade (`Caption`'s `punchy`
+  prop), a continuously-pulsing "🔥 HOT" corner tag (`PulseTag.tsx`), a
+  bouncing "Chốt đơn ngay 👇" pointer before the CTA (`PointerArrow.tsx`),
+  and a glowing/pulsing CTA pill in the outro (`Outro`'s `pulseCta` prop).
+  Deliberately no price/discount/stock-count overlays — those need real
+  numbers from the client, never invented. No address/phone either: this
+  runs on the client's own separate affiliate TikTok channel, unrelated to
+  the 30Shine 927 Hậu Giang branch (`Outro`'s `subline`/`phone` are now
+  optional — it skips rendering a line when the text is empty):
+
+  ```console
+  npx remotion render GlanzenPromo out/glanzen-promo.mp4 --crf=30 --color-space=bt709
+  ```
+
+  The `punchIn` / `punchy` / `pulseCta` props default to `false`, so
+  `ThirtyShineReel` and `ThirtyShineCrowd` keep their calmer, brand-reel
+  look unchanged — GlanzenPromo is the only composition that opts in.
+
+- **ThirtyShineCrowd** — photo-slideshow reel: 5 photos in `public/photos/`
+  (not committed — see `public/photos/README.md`), each with a slow
+  Ken Burns zoom/pan (`src/shared/KenBurns.tsx`), a caption on the first and
+  last photo only (kept clean per "ít chữ"), a whoosh on every cut, and the
+  same closing CTA end-card as `ThirtyShineReel`. Uses its own background
+  track (`public/sfx/bg-music-crowd.wav`) sized to its own length:
+
+  ```console
+  npx remotion render ThirtyShineCrowd out/30shine-crowd.mp4 --crf=30 --color-space=bt709
+  ```
+
+  `Caption`, `Badge` and `Outro` now live in `src/shared/` so both this and
+  `ThirtyShineReel` use the same brand look — see that composition's entry
+  below for what `brandColor` means and why `--color-space=bt709` matters.
+
+- **ThirtyShineReel** — final edited reel: the 4 salon clips in
+  `public/footage/` (not committed — see `public/footage/README.md`), each
+  with a burned-in caption in the TikTok-caption look (bold white fill,
+  thick navy outline via `-webkit-text-stroke`), one caption per clip, kept
+  inside the TikTok safe zone (clear of the bottom UI strip and the
+  right-side icon column). The single `brandColor` (default `#181D54`) is
+  sampled from the salon's own reference photos (staff uniform) and is the
+  only blue used anywhere — caption outline, the combo badge text and the
+  outro background/CTA text — no cyan/neon/purple substitutes. The clips'
+  own audio is muted (`OffthreadVideo muted`) — the source had an unusable
+  stuttering take of dialogue — and replaced by a synthesized upbeat
+  background track plus sound effects, all in `public/sfx/` (generated
+  locally with Python's `wave` module — no licensing/network dependency, see
+  `scripts/` note below): a whoosh on every cut, a pop when each caption
+  appears, a chime going into the outro, and `bg-music.wav`
+  (kick/hihat/bass/pluck loop) under the whole thing. The services clip also
+  gets a highlighted combo badge (`comboHighlight` prop, white chip + bold
+  navy text) on top of its caption, and after the 4 clips a closing end-card
+  (`Outro.tsx`) with a headline, subline and a white CTA pill with bold navy
+  text. Frame-accurate to each clip's exact length (see
+  `src/ThirtyShineReel/clips.ts`); `bg-music.wav` is generated to match the
+  total duration exactly (currently 25.2s — regenerate it if you change the
+  footage or outro length).
+
+  ```console
+  npx remotion render ThirtyShineReel out/30shine-reel.mp4 --crf=30 --color-space=bt709
+  ```
+
+  `--crf=30` trades a bit of quality for a much smaller file (a straight
+  render came out ~40MB for 22s at 1080×1920; crf=30 brought that to ~6MB).
+  Drop the flag for max quality.
+
+  `--color-space=bt709` matters: without it, Remotion tags the output as
+  full-range/unspecified colorimetry, which some phones and messaging apps
+  (WhatsApp/Zalo/Messenger previews, some Android/iOS players) fail to open
+  or play. `bt709` matches how normal camera footage is tagged and is the
+  broadly-compatible choice.
+
+- **ThirtyShinePromo** — vertical (1080×1920, 9:16) 30Shine promo overlay,
+  transparent background, ~8s: brand name fades in, tagline zooms in,
+  services list fades in, then a CTA pill — each beat holds ~2s before the
+  next. Meant to be composited over real salon footage in an editor. Text,
+  colors and the four lines are editable in Remotion Studio's sidebar or via
+  `--props`:
+
+  ```console
+  npx remotion render ThirtyShinePromo out/30shine-promo.mov \
+    --codec=prores --prores-profile=4444 \
+    --image-format=png --pixel-format=yuva444p10le
+  ```
+
+  Uses local system fonts (Liberation Sans, bold) rather than Google Fonts —
+  no network needed at render time, and it has full Vietnamese glyph
+  coverage.
+
+- **FadeText** — simple 1920×1080, transparent-background clip: text fades
+  in (1s), holds (2s), then fades out (1s). Timings and text are editable in
+  Remotion Studio's sidebar, or per-render via `--props`. Transparency needs
+  an alpha-capable codec/pixel format, since the default H.264 mp4 output
+  has no alpha channel:
+
+  ```console
+  # ProRes 4444 .mov — opens with alpha in Premiere/After Effects/Final Cut/DaVinci
+  npx remotion render FadeText out/fade-text.mov \
+    --codec=prores --prores-profile=4444 \
+    --image-format=png --pixel-format=yuva444p10le
+
+  # VP8 .webm — transparent, plays in browsers
+  npx remotion render FadeText out/fade-text.webm \
+    --codec=vp8 --image-format=png --pixel-format=yuva420p
+  ```
+
+  Regular video players and image viewers don't understand alpha and will
+  show the transparent area as solid black or white — check in a video
+  editor, or composite it over another clip, to see the transparency.
+
+- **MarketingVideo** — vertical (1080×1920, 9:16) marketing/promo template with
+  an animated title, subtitle and call-to-action, ready for Facebook, TikTok,
+  Instagram and Zalo posts. Text and colors are editable live in Remotion
+  Studio's sidebar, or per-render:
+
+  ```console
+  npx remotion render MarketingVideo out/video.mp4 --props='{"title":"Ưu đãi cuối tuần","subtitle":"Giảm 20% cho khách mới","cta":"Đặt lịch ngay"}'
+  ```
+
+- **HelloWorld** / **OnlyLogo** — the default Remotion starter examples, kept
+  for reference; feel free to delete `src/HelloWorld.tsx`,
+  `src/HelloWorld/` and their `<Composition>` entries in `src/Root.tsx`
+  once you no longer need them.
+
+## Commands
+
+**Install Dependencies**
+
+```console
+npm i
+```
+
+**Start Preview**
+
+```console
+npm run dev
+```
+
+**Render video**
+
+```console
+npx remotion render
+```
+
+> In this sandboxed Claude Code environment, Remotion's own Chrome Headless
+> Shell download is blocked by the network policy. Point Remotion at the
+> Chromium that's already installed for Playwright instead:
+>
+> ```console
+> REMOTION_BROWSER_EXECUTABLE=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell npx remotion render
+> ```
+>
+> This isn't needed on a normal machine with unrestricted network access.
+
+**Upgrade Remotion**
+
+```console
+npx remotion upgrade
+```
+
+## Docs
+
+Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
+
+## Help
+
+We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
+
+## Issues
+
+Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
+
+## License
+
+Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
