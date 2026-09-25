@@ -40,6 +40,27 @@ Welcome to your Remotion project!
   npx remotion still MascotOptions out/mascot-options.png
   ```
 
+- **GlanzenReview** — real-voice product review: the client's own recorded
+  narration (`public/audio/glanzen-review.m4a`, not committed — see
+  `public/audio/README.md`) plays as the actual audio track, the
+  "Túi phụ kiện" mascot (`BagMascotStyled`) sits docked in the corner for
+  the whole clip (`ReviewMascot.tsx` — flies in once, then reacts with a
+  bounce + expression swap at each beat instead of flying off-screen like
+  `MascotBeat`), captions matching the script fade in synced to speech, and
+  the same 4 Glänzen photos Ken-Burns behind it. Beat boundaries are
+  estimated by word-count proportion against the recording's measured
+  duration (no word-level timestamps) — see `src/GlanzenReview/beats.ts`;
+  re-time it by ear if a caption/reaction drifts from the actual voice. No
+  background music — the real voice is the focus, not an ad jingle.
+
+  ```console
+  npx remotion render GlanzenReview out/glanzen-review.mp4 --color-space=bt709
+  ```
+
+  If you re-record with a different script or pacing, update the `words`/
+  `caption`/`expression` list in `beats.ts` and its `AUDIO_DURATION_SECONDS`
+  to match the new file (get it with `ffprobe -show_entries format=duration`).
+
 - **GlanzenPromo** — single-product spotlight: 4 close-up photos of the
   Glänzen clay wax tin in `public/photos/` (not committed), Ken Burns per
   photo, one caption per shot using the real label copy (matte finish/

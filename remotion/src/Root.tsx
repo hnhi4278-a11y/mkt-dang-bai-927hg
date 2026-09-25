@@ -19,12 +19,29 @@ import { glanzenPromoSchema } from "./GlanzenPromo/schema";
 import { TOTAL_FRAMES as GLANZEN_TOTAL_FRAMES } from "./GlanzenPromo/photos";
 import { MascotDemo } from "./Mascot/MascotDemo";
 import { MascotOptions } from "./Mascot/MascotOptions";
+import { GlanzenReview } from "./GlanzenReview/GlanzenReview";
+import { TOTAL_FRAMES as GLANZEN_REVIEW_TOTAL_FRAMES } from "./GlanzenReview/beats";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Real voiceover review + mascot reacting in the corner. Needs
+          public/audio/glanzen-review.m4a (not committed — see
+          public/audio/README.md) and the same 4 glanzen-*.jpg photos as
+          GlanzenPromo. Beat timing/captions/expressions in
+          src/GlanzenReview/beats.ts.
+          Render with: npx remotion render GlanzenReview out/glanzen-review.mp4 --color-space=bt709 */}
+      <Composition
+        id="GlanzenReview"
+        component={GlanzenReview}
+        durationInFrames={GLANZEN_REVIEW_TOTAL_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+
       {/* 2x2 comparison sheet of mascot concepts (still image only). */}
       <Composition
         id="MascotOptions"

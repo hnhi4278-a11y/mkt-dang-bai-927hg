@@ -11,6 +11,9 @@ type CaptionProps = {
   // Bouncy scale-in entrance instead of a plain fade — more energetic,
   // affiliate/product-ad style. Off by default.
   readonly punchy?: boolean;
+  // Smaller size for longer, narration-length captions (voiceover
+  // subtitles) where the default punchy short-hook size would overflow.
+  readonly fontSize?: number;
 };
 
 // TikTok-style burned-in caption: bold white fill with a thick colored
@@ -23,6 +26,7 @@ export const Caption: React.FC<CaptionProps> = ({
   holdFrames,
   fadeOutFrames,
   punchy = false,
+  fontSize = 56,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -57,7 +61,7 @@ export const Caption: React.FC<CaptionProps> = ({
           transform: `scale(${scale})`,
           fontFamily: bodyFontFamily,
           fontWeight: 900,
-          fontSize: 56,
+          fontSize,
           lineHeight: 1.3,
           textAlign: "center",
           color: textColor,

@@ -13,3 +13,6 @@ public/footage/*.mp4
 public/photos/*.jpg
 public/photos/*.jpeg
 public/photos/*.png
+public/audio/*.m4a
+public/audio/*.mp3
+public/audio/*.wav
