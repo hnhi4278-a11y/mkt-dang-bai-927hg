@@ -17,12 +17,26 @@ import { TOTAL_FRAMES as CROWD_TOTAL_FRAMES } from "./ThirtyShineCrowd/photos";
 import { GlanzenPromo } from "./GlanzenPromo/GlanzenPromo";
 import { glanzenPromoSchema } from "./GlanzenPromo/schema";
 import { TOTAL_FRAMES as GLANZEN_TOTAL_FRAMES } from "./GlanzenPromo/photos";
+import { MascotDemo } from "./Mascot/MascotDemo";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* Demo of a code-drawn (pure SVG, no AI-generated imagery) shopping-
+          bag mascot for a resale/affiliate channel: flies in per beat with
+          a bouncy overshoot, keeps gently bobbing (never fully static),
+          swaps expression (cheer/surprised/point). See src/Mascot/.
+          Render with: npx remotion render MascotDemo out/mascot-demo.mp4 --color-space=bt709 */}
+      <Composition
+        id="MascotDemo"
+        component={MascotDemo}
+        durationInFrames={300}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
       {/* Product spotlight: 4 close-up photos of the Glänzen clay wax tin
           in public/photos (not committed), Ken Burns per photo, a caption
           per shot using the real label copy (matte finish/strong hold,

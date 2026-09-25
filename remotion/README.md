@@ -13,6 +13,21 @@ Welcome to your Remotion project!
 
 ## Compositions
 
+- **MascotDemo** — a code-drawn (pure SVG, `src/Mascot/BagMascot.tsx`) shopping-
+  bag mascot for a resale/affiliate channel — no photos needed, no AI-generated
+  imagery. Flies in per beat with a bouncy overshoot (`MascotBeat.tsx`) and
+  keeps gently bobbing so it's never fully static; swaps expression
+  (`cheer` / `surprised` / `point`) per beat. `MascotDemo.tsx` is a 4-beat
+  demo reel (comic-sketch frame, yellow highlight captions) showing it off:
+
+  ```console
+  npx remotion render MascotDemo out/mascot-demo.mp4 --color-space=bt709
+  ```
+
+  No footage/photos, no schema — everything is hardcoded in `MascotDemo.tsx`
+  for now since this was a quick concept pitch; turn the beat list into
+  props if it's worth making reusable later.
+
 - **GlanzenPromo** — single-product spotlight: 4 close-up photos of the
   Glänzen clay wax tin in `public/photos/` (not committed), Ken Burns per
   photo, one caption per shot using the real label copy (matte finish/
