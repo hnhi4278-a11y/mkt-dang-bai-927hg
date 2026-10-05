@@ -17,14 +17,22 @@ const faces: [string, string, string, string][] = [
 ];
 
 if (typeof document !== 'undefined') {
-  const handle = delayRender('fonts');
-  Promise.all(
+  const handle = delayRender('fonts', {timeoutInMilliseconds: 60000});
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    continueRender(handle);
+  };
+  Promise.allSettled(
     faces.map(([family, weight, file, unicodeRange]) => {
       const f = new FontFace(family, `url(${staticFile('fonts/' + file)}) format('woff2')`, {weight, unicodeRange});
       (document.fonts as unknown as {add: (f: FontFace) => void}).add(f);
       return f.load();
     }),
-  ).then(() => continueRender(handle), () => continueRender(handle));
+  ).then(finish);
+  // never let a stuck font request block a frame
+  setTimeout(finish, 8000);
 }
 
 export const DISPLAY = "'Dancing Script', cursive";
