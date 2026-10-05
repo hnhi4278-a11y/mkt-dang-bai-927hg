@@ -1,0 +1,18 @@
+{
+  "name": "video-moc-nhi",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render src/index.ts DuongDenMocNhi out/duong-den-moc-nhi.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.357",
+    "@remotion/paths": "^4.0.357",
+    "@remotion/transitions": "^4.0.357",
+    "@types/react": "^18.3.31",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.357",
+    "typescript": "^5.9.3"
+  }
+}
