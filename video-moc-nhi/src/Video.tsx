@@ -252,7 +252,7 @@ const Storefront: React.FC = () => {
       </div>
       {/* parked bikes */}
       {[0, 1, 2].map((i) => (
-        <div key={i} style={{position: 'absolute', left: 130 + i * 290, top: 1480, transform: `translateX(${Math.sin((frame + i * 20) / 30) * 3}px)`}}>
+        <div key={i} style={{position: 'absolute', left: 130 + i * 290, top: 1270, transform: `translateX(${Math.sin((frame + i * 20) / 30) * 3}px)`}}>
           <Icon name="bike" size={200} color="#2b302f" stroke={1.6} />
         </div>
       ))}
