@@ -22,11 +22,12 @@ export const Grain: React.FC<{opacity?: number}> = ({opacity = 0.09}) => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{pointerEvents: 'none', mixBlendMode: 'overlay', opacity}}>
-      <svg width="100%" height="100%">
+      {/* low-res noise scaled up: same look, a fraction of the filter cost */}
+      <svg width="270" height="480" style={{width: '100%', height: '100%'}} preserveAspectRatio="none">
         <filter id="grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed={frame % 8} />
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed={frame % 8} />
         </filter>
-        <rect width="100%" height="100%" filter="url(#grain)" />
+        <rect width="270" height="480" filter="url(#grain)" />
       </svg>
     </AbsoluteFill>
   );
