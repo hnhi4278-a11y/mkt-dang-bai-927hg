@@ -1,0 +1,9 @@
+stt,thang,noi_dung
+1,T9/2026,"Phiếu nước T9 đang copy y nguyên T8 (cùng kỳ, cùng chỉ số đồng hồ, cùng số tiền)."
+2,T9/2026,Tiền nước trong phần CHI (3.541.210 đ) không khớp phiếu nước (3.950.937 đ).
+3,T9/2026,"Vật tư 10.190.612 đ, gấp đôi các tháng gần đây: kiểm tra có nhập hàng dự trữ không."
+4,T8/2026,Ghi cả hóa đơn nước 3.950.937 đ trong khi phần 671 theo đồng hồ chỉ 1.463.310 đ (chủ nhà 63%).
+5,T7/2026,MP ngoài 1.312.000 đ có trong bảng chi tiết nhưng chưa cộng vào Thu khác.
+6,T7–T9/2026,"TOPUP trừ VAT không thống nhất: T7 trừ 10%, T8–T9 trừ 8%, trước đó không trừ."
+7,Từ T10/2025,Quỹ chung 30% để trống; dòng Thuế trống cả 15 tháng.
+8,Tổng,"Ô tổng lợi nhuận trên sheet gốc mới cộng đến T6/2026, thiếu T7–T9/2026."
