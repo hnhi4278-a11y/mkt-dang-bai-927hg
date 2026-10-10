@@ -312,8 +312,8 @@ const DATA={"salon":"927 HG","dates":["2026-08-26","2026-08-27","2026-08-28","20
       const biggest=[['Thiếu ảnh',m.rc.img_miss],['Thời gian',m.rc.time],['Ảnh sai',m.rc.img_bad],['Giá DV<50K',m.rc.svc]].sort((a,b)=>b[1]-a[1])[0];
       $('kpis').innerHTML=[
         {c:'',lab:'Lượt khách (hóa đơn)',val:nf(m.tot),sub:m.days.length+' ngày có khách'},
-        {c:'k-good',lab:'Đạt chuẩn',val:m.rate.toFixed(1)+'%',sub:nf(m.dat)+' lượt'},
-        {c:'k-crit',lab:'Chưa đạt',val:(100-m.rate).toFixed(1)+'%',sub:nf(m.fail)+' lượt cần xử lý'},
+        {c:'k-good',lab:'Khách đạt chuẩn',val:nf(m.dat),sub:m.rate.toFixed(1)+'% tổng lượt'},
+        {c:'k-crit',lab:'Khách CHƯA đạt chuẩn',val:nf(m.fail),sub:(100-m.rate).toFixed(1)+'% · cần xử lý'},
         {c:'k-warn',lab:'Lỗi phổ biến nhất',val:biggest[0],sub:nf(biggest[1])+' bill'},
       ].map(k=>`<div class="kpi ${k.c}"><div class="lab">${k.lab}</div><div class="val tnum">${k.val}</div><div class="sub">${k.sub}</div></div>`).join('');
     }
