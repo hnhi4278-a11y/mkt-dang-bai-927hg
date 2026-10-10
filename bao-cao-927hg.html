@@ -90,6 +90,14 @@ canvas{max-width:100%;}
 .rbar .fill{height:100%;border-radius:7px;transition:width .3s;}
 .rbar .vv{flex:none;width:92px;text-align:right;font-size:13px;font-weight:700;color:var(--ink-2);}
 
+.rsum{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;display:flex;gap:12px;flex-wrap:wrap;}
+.rsum .box{flex:1;min-width:190px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--surface-2);}
+.rsum .box.hl{border-color:var(--crit);background:var(--crit-bg);}
+.rsum .box .bl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-2);}
+.rsum .box.hl .bl{color:var(--crit);}
+.rsum .box .bv{font-size:24px;font-weight:800;margin-top:4px;line-height:1;}
+.rsum .box.hl .bv{color:var(--crit);}
+.rsum .box .bd{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5;}
 .lg{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:12.5px;color:var(--ink-2);}
 .lg span{display:inline-flex;align-items:center;gap:6px;}
 .dot{width:11px;height:11px;border-radius:3px;flex:none;}
@@ -200,6 +208,7 @@ details.def .dc b{color:var(--ink);}
           </div>
         </div>
       </div>
+      <div class="rsum" id="reasonSummary"></div>
     </div>
   </section>
 
@@ -289,6 +298,9 @@ const DATA={"salon":"927 HG","dates":["2026-08-26","2026-08-27","2026-08-28","20
     // reasons
     const rc={img_miss:0,img_bad:0,time:0,svc:0};
     fails.forEach(f=>{if(f.im===0)rc.img_miss++;if(f.im===2)rc.img_bad++;if(f.tm===2)rc.time++;if(f.sv===2)rc.svc++;});
+    // lỗi ngoài "thiếu ảnh": bill có ≥1 lỗi khác (thời gian / ảnh sai / giá DV)
+    const nonImg=fails.filter(f=>f.tm===2||f.im===2||f.sv===2).length;
+    const onlyImgMiss=fails.filter(f=>f.im===0&&f.tm!==2&&f.sv!==2).length;
     // daily
     const dayMap={};
     agg.forEach(a=>{const k=a[0];(dayMap[k]=dayMap[k]||[0,0]);dayMap[k][0]++;dayMap[k][1]+=a[1];});
@@ -299,7 +311,7 @@ const DATA={"salon":"927 HG","dates":["2026-08-26","2026-08-27","2026-08-28","20
     fails.forEach(f=>{if(f.im===0||f.im===2)sm[f.s].img++;if(f.tm===2)sm[f.s].time++;});
     const stylists=Object.keys(sm).map(s=>({name:STYL[s],...sm[s]})).filter(s=>s.fail>0)
       .map(s=>({...s,rate:+(s.fail/s.tot*100).toFixed(0)})).sort((a,b)=>b.fail-a.fail);
-    return {tot,dat,fail,rate,rc,days,stylists,fails};
+    return {tot,dat,fail,rate,rc,nonImg,onlyImgMiss,days,stylists,fails};
   }
 
   function render(){
@@ -327,6 +339,11 @@ const DATA={"salon":"927 HG","dates":["2026-08-26","2026-08-27","2026-08-28","20
     ];
     const rmax=Math.max(...R.map(r=>r.v),1);
     $('reasonBars').innerHTML=R.map(r=>`<div class="rbar"><div class="nm">${r.nm}</div><div class="track"><div class="fill" style="width:${r.v?Math.max(r.v/rmax*100,2):0}%;background:${r.col}"></div></div><div class="vv tnum">${nf(r.v)} bill</div></div>`).join('');
+
+    // tổng lỗi ngoài thiếu ảnh
+    $('reasonSummary').innerHTML=
+      `<div class="box hl"><div class="bl">⚠️ Lỗi ngoài "thiếu ảnh"</div><div class="bv tnum">${nf(m.nonImg)}</div><div class="bd">bill chưa đạt vì lý do khác (thời gian / ảnh sai / giá DV)<br>gồm: thời gian ${nf(m.rc.time)} · ảnh sai ${nf(m.rc.img_bad)} · giá DV ${nf(m.rc.svc)}</div></div>`
+      +`<div class="box"><div class="bl">📷 Chỉ do thiếu ảnh</div><div class="bv tnum">${nf(m.onlyImgMiss)}</div><div class="bd">bill chưa đạt đơn thuần vì thiếu ảnh phục vụ — khắc phục bằng thao tác chụp &amp; up ảnh.</div></div>`;
 
     // donut
     const dd=[m.dat,m.fail];
