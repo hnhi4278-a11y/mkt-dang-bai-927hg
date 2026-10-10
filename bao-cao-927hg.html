@@ -1,0 +1,315 @@
+<title>Khách Tiêu Chuẩn 927 HG</title>
+<style>
+/* Layout: sticky brand header → KPI tiles → trend → reasons → staff → bill table. Navy brand accent, reserved status colors for pass/fail. */
+:root{
+  --plane:#f4f6f9; --surface:#ffffff; --surface-2:#f8fafc;
+  --ink:#0f1b2d; --ink-2:#51607a; --muted:#8a97ab;
+  --line:#e3e8f0; --line-2:#eef2f7;
+  --navy:#0b3a82; --navy-2:#1559b8; --accent:#2a78d6;
+  --good:#0ca30c; --good-ink:#077a07; --warn:#e08a00; --crit:#d03b3b;
+  --good-bg:#e8f6e8; --crit-bg:#fbe9e9; --warn-bg:#fdf3e0;
+  --r:14px; --sh:0 1px 2px rgba(15,27,45,.06),0 4px 16px rgba(15,27,45,.05);
+  --font:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --plane:#0c0f14; --surface:#161b24; --surface-2:#1b222d;
+  --ink:#eef2f8; --ink-2:#b2bdcf; --muted:#7e8aa0;
+  --line:#28303d; --line-2:#20272f;
+  --navy:#5a9bf0; --navy-2:#4a8ae8; --accent:#3987e5;
+  --good:#2bbd2b; --good-ink:#5fd25f; --warn:#f0a929; --crit:#e66767;
+  --good-bg:#102a10; --crit-bg:#2d1414; --warn-bg:#2a2010;
+  --sh:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.35);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --plane:#0c0f14; --surface:#161b24; --surface-2:#1b222d;
+  --ink:#eef2f8; --ink-2:#b2bdcf; --muted:#7e8aa0;
+  --line:#28303d; --line-2:#20272f;
+  --navy:#5a9bf0; --navy-2:#4a8ae8; --accent:#3987e5;
+  --good:#2bbd2b; --good-ink:#5fd25f; --warn:#f0a929; --crit:#e66767;
+  --good-bg:#102a10; --crit-bg:#2d1414; --warn-bg:#2a2010;
+  --sh:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--plane);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%;}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:0 48px;}
+h1,h2,h3{margin:0;text-wrap:balance;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(100deg,var(--navy),var(--navy-2));color:#fff;box-shadow:0 2px 12px rgba(11,58,130,.25);}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header{background:linear-gradient(100deg,#13233c,#1a3356);}}
+:root[data-theme="dark"] header{background:linear-gradient(100deg,#13233c,#1a3356);}
+.hd{max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:21px;flex:none;}
+.hd .t1{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.82;font-weight:600;}
+.hd .t2{font-size:19px;font-weight:800;line-height:1.15;}
+.hd .meta{margin-left:auto;text-align:right;font-size:12px;opacity:.9;line-height:1.5;}
+.hd .pill{display:inline-block;background:rgba(255,255,255,.16);border-radius:999px;padding:3px 10px;font-weight:700;font-size:12px;}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);}
+.kpi.k-good::before{background:var(--good);} .kpi.k-crit::before{background:var(--crit);} .kpi.k-warn::before{background:var(--warn);}
+.kpi .lab{font-size:12px;color:var(--ink-2);font-weight:700;letter-spacing:.02em;text-transform:uppercase;}
+.kpi .val{font-size:clamp(22px,3vw,30px);font-weight:800;margin-top:6px;line-height:1;letter-spacing:-.01em;}
+.kpi .sub{font-size:12px;color:var(--muted);margin-top:6px;}
+.kpi.k-good .val{color:var(--good-ink);} .kpi.k-crit .val{color:var(--crit);}
+
+/* sections */
+section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);margin-top:16px;overflow:hidden;}
+.sh{padding:14px 18px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.sh h2{font-size:15px;font-weight:800;color:var(--ink);letter-spacing:.01em;}
+.sh .tag{font-size:12px;color:var(--muted);font-weight:600;}
+.sh .sp{margin-left:auto;}
+.sb{padding:16px 18px;}
+.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center;}
+.chart-box{position:relative;width:100%;}
+canvas{max-width:100%;}
+
+/* reason bars */
+.rbar{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-2);}
+.rbar:last-child{border-bottom:0;}
+.rbar .nm{flex:none;width:150px;font-size:13.5px;font-weight:600;color:var(--ink);}
+.rbar .track{flex:1;height:14px;background:var(--line-2);border-radius:7px;overflow:hidden;min-width:0;}
+.rbar .fill{height:100%;border-radius:7px;}
+.rbar .vv{flex:none;width:92px;text-align:right;font-size:13px;font-weight:700;color:var(--ink-2);}
+
+/* legend */
+.lg{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:12.5px;color:var(--ink-2);}
+.lg span{display:inline-flex;align-items:center;gap:6px;}
+.dot{width:11px;height:11px;border-radius:3px;flex:none;}
+
+/* table */
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.tools input,.tools select{font:inherit;font-size:13px;padding:7px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);color:var(--ink);}
+.tools input{min-width:150px;}
+.tools input:focus,.tools select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,120,214,.16);}
+.tscroll{overflow-x:auto;}
+table.dt{width:100%;border-collapse:collapse;font-size:13px;min-width:680px;}
+table.dt th,table.dt td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap;}
+table.dt th{position:sticky;top:0;background:var(--surface-2);color:var(--ink-2);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;z-index:1;cursor:pointer;user-select:none;}
+table.dt tbody tr:hover{background:var(--surface-2);}
+.rz{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap;}
+.rz.img{background:var(--warn-bg);color:var(--warn);} .rz.time{background:var(--crit-bg);color:var(--crit);} .rz.both{background:#efe6fb;color:#6250d6;} .rz.other{background:var(--line-2);color:var(--ink-2);}
+:root[data-theme="dark"] .rz.both{background:#241d3d;color:#9085e9;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rz.both{background:#241d3d;color:#9085e9;}}
+.muted-cell{color:var(--muted);}
+.empty-cell{color:var(--crit);font-weight:600;}
+.pager{display:flex;align-items:center;gap:12px;justify-content:flex-end;padding:11px 18px;font-size:13px;color:var(--ink-2);flex-wrap:wrap;}
+.pager button{font:inherit;font-size:13px;padding:6px 13px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--ink);cursor:pointer;}
+.pager button:disabled{opacity:.4;cursor:default;}
+
+/* staff */
+.staff{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-2);}
+.staff:last-child{border-bottom:0;}
+.staff .rank{flex:none;width:26px;height:26px;border-radius:8px;background:var(--surface-2);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;}
+.staff .nm{flex:1;min-width:0;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.staff .meta{flex:none;font-size:12px;color:var(--muted);}
+.staff .cnt{flex:none;width:58px;text-align:right;font-weight:800;color:var(--crit);}
+
+/* action cards */
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.act{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--surface-2);}
+.act .n{width:24px;height:24px;border-radius:7px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin-bottom:9px;}
+.act h3{font-size:14px;margin-bottom:5px;}
+.act p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.55;}
+
+details.def{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);}
+details.def summary{padding:14px 18px;font-weight:800;font-size:14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;}
+details.def summary::-webkit-details-marker{display:none;}
+details.def summary::after{content:"▸";margin-left:auto;color:var(--muted);transition:transform .2s;}
+details.def[open] summary::after{transform:rotate(90deg);}
+details.def .dc{padding:4px 18px 18px;font-size:13.5px;line-height:1.75;color:var(--ink-2);}
+details.def .dc b{color:var(--ink);}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px;line-height:1.7;}
+
+@media(max-width:760px){
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .grid2{grid-template-columns:1fr;}
+  .acts{grid-template-columns:1fr;}
+  .rbar .nm{width:120px;font-size:12.5px;}
+  .rbar .vv{width:78px;}
+  .hd .meta{margin-left:0;text-align:left;width:100%;}
+}
+</style>
+
+<header>
+  <div class="hd">
+    <div class="logo">✂️</div>
+    <div>
+      <div class="t1">Báo cáo khách tiêu chuẩn</div>
+      <div class="t2">Salon 927 HG</div>
+    </div>
+    <div class="meta">
+      <span class="pill" id="hdRange">—</span><br>
+      <span id="hdNote">Dữ liệu nội bộ 30Shine</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <div class="sh"><h2>Xu hướng tỷ lệ đạt theo ngày</h2><span class="tag" id="trendTag"></span></div>
+    <div class="sb"><div class="chart-box" style="height:260px"><canvas id="cTrend"></canvas></div></div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Lý do khiến bill chưa đạt</h2><span class="tag">Một bill có thể dính nhiều lỗi</span></div>
+    <div class="sb">
+      <div class="grid2">
+        <div id="reasonBars"></div>
+        <div>
+          <div class="chart-box" style="height:200px"><canvas id="cDonut"></canvas></div>
+          <div class="lg">
+            <span><i class="dot" style="background:var(--good)"></i> Đạt chuẩn</span>
+            <span><i class="dot" style="background:var(--crit)"></i> Chưa đạt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Nhân viên có bill chưa đạt</h2><span class="tag">Xếp theo số bill chưa đạt</span></div>
+    <div class="sb" id="staffList"></div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <h2>Danh sách bill chưa đạt</h2>
+      <div class="sp"></div>
+      <div class="tools">
+        <select id="fReason">
+          <option value="">Tất cả lý do</option>
+          <option value="Thiếu ảnh">Thiếu ảnh</option>
+          <option value="Thời gian">Thời gian lệch chuẩn</option>
+          <option value="Ảnh sai">Ảnh sai</option>
+        </select>
+        <input id="fSearch" placeholder="Tìm BillId / thợ / ngày...">
+      </div>
+    </div>
+    <div class="tscroll"><table class="dt" id="billTbl"></table></div>
+    <div class="pager" id="billPager"></div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Việc cần làm để cải thiện</h2></div>
+    <div class="sb">
+      <div class="acts">
+        <div class="act"><div class="n">1</div><h3>Chuẩn hóa ảnh phục vụ</h3><p>Bill có cắt bắt buộc chụp &amp; up ảnh phục vụ ngay tại ghế. Đây là lý do lớn nhất khiến bill rớt chuẩn ở salon.</p></div>
+        <div class="act"><div class="n">2</div><h3>Kiểm soát thời gian</h3><p>Rà các ca "quá nhanh" — thời gian thực tế dưới 70% chuẩn. Cột thời gian trong bảng ghi rõ số phút thực / chuẩn.</p></div>
+        <div class="act"><div class="n">3</div><h3>Gán đúng tên thợ</h3><p>Phần lớn bill chưa đạt rơi vào nhóm không gắn Stylist. Bắt buộc gán thợ cho mỗi bill để quy trách nhiệm và đo lường.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <details class="def">
+    <summary>📋 Điều kiện để 1 bill được tính là khách tiêu chuẩn</summary>
+    <div class="dc">
+      <p><b>Có Topup trả trước</b> → luôn tính là tiêu chuẩn, không xét thêm.</p>
+      <p><b>Bị loại:</b> chỉ bán sản phẩm (không dịch vụ); chỉ có dịch vụ LRT; hoặc LRT kèm dịch vụ khác nhưng tổng dịch vụ khác &lt; 50.000đ.</p>
+      <p><b>Các trường hợp còn lại</b> phải đủ cả 3 điều kiện:</p>
+      <p>• <b>Giá trị bill:</b> tổng tiền dịch vụ (trước giảm, không tính sản phẩm &amp; LRT) ≥ <b>50.000đ</b>.<br>
+      • <b>Ảnh phục vụ:</b> bill có <b>cắt</b> bắt buộc có ảnh; chỉ gội / dịch vụ khác thì không bắt buộc.<br>
+      • <b>Thời gian phục vụ:</b> tổng thời gian thực tế nằm trong <b>70%–300%</b> so với thời gian chuẩn của các dịch vụ trong bill.</p>
+    </div>
+  </details>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+const DATA={"salon": "927 HG", "range": ["2026-08-26", "2026-10-09"], "tot": 4602, "dat": 4380, "fail": 222, "rate": 95.2, "reasons": {"img_miss": 145, "img_bad": 4, "time": 103, "svc": 0}, "combos": [{"k": "Thiếu ảnh", "v": 119}, {"k": "Thời gian", "v": 73}, {"k": "Thiếu ảnh + Thời gian", "v": 26}, {"k": "Ảnh sai + Thời gian", "v": 4}], "daily": [{"date": "2026-08-26", "tot": 82, "dat": 78, "rate": 95.1}, {"date": "2026-08-27", "tot": 82, "dat": 79, "rate": 96.3}, {"date": "2026-08-28", "tot": 95, "dat": 90, "rate": 94.7}, {"date": "2026-08-29", "tot": 160, "dat": 152, "rate": 95.0}, {"date": "2026-08-30", "tot": 126, "dat": 121, "rate": 96.0}, {"date": "2026-08-31", "tot": 104, "dat": 98, "rate": 94.2}, {"date": "2026-09-01", "tot": 95, "dat": 89, "rate": 93.7}, {"date": "2026-09-02", "tot": 98, "dat": 92, "rate": 93.9}, {"date": "2026-09-03", "tot": 90, "dat": 86, "rate": 95.6}, {"date": "2026-09-04", "tot": 100, "dat": 98, "rate": 98.0}, {"date": "2026-09-05", "tot": 117, "dat": 113, "rate": 96.6}, {"date": "2026-09-06", "tot": 128, "dat": 123, "rate": 96.1}, {"date": "2026-09-07", "tot": 73, "dat": 72, "rate": 98.6}, {"date": "2026-09-08", "tot": 92, "dat": 88, "rate": 95.7}, {"date": "2026-09-09", "tot": 67, "dat": 61, "rate": 91.0}, {"date": "2026-09-10", "tot": 61, "dat": 59, "rate": 96.7}, {"date": "2026-09-11", "tot": 87, "dat": 85, "rate": 97.7}, {"date": "2026-09-12", "tot": 162, "dat": 152, "rate": 93.8}, {"date": "2026-09-13", "tot": 150, "dat": 142, "rate": 94.7}, {"date": "2026-09-14", "tot": 85, "dat": 83, "rate": 97.6}, {"date": "2026-09-15", "tot": 94, "dat": 90, "rate": 95.7}, {"date": "2026-09-16", "tot": 95, "dat": 92, "rate": 96.8}, {"date": "2026-09-17", "tot": 93, "dat": 89, "rate": 95.7}, {"date": "2026-09-18", "tot": 98, "dat": 92, "rate": 93.9}, {"date": "2026-09-19", "tot": 145, "dat": 138, "rate": 95.2}, {"date": "2026-09-20", "tot": 142, "dat": 137, "rate": 96.5}, {"date": "2026-09-21", "tot": 84, "dat": 80, "rate": 95.2}, {"date": "2026-09-22", "tot": 46, "dat": 43, "rate": 93.5}, {"date": "2026-09-23", "tot": 77, "dat": 72, "rate": 93.5}, {"date": "2026-09-24", "tot": 83, "dat": 78, "rate": 94.0}, {"date": "2026-09-25", "tot": 75, "dat": 68, "rate": 90.7}, {"date": "2026-09-26", "tot": 153, "dat": 147, "rate": 96.1}, {"date": "2026-09-27", "tot": 173, "dat": 171, "rate": 98.8}, {"date": "2026-09-28", "tot": 91, "dat": 87, "rate": 95.6}, {"date": "2026-09-29", "tot": 83, "dat": 77, "rate": 92.8}, {"date": "2026-09-30", "tot": 78, "dat": 68, "rate": 87.2}, {"date": "2026-10-01", "tot": 94, "dat": 91, "rate": 96.8}, {"date": "2026-10-02", "tot": 98, "dat": 92, "rate": 93.9}, {"date": "2026-10-03", "tot": 184, "dat": 176, "rate": 95.7}, {"date": "2026-10-04", "tot": 177, "dat": 170, "rate": 96.0}, {"date": "2026-10-05", "tot": 65, "dat": 61, "rate": 93.8}, {"date": "2026-10-06", "tot": 84, "dat": 81, "rate": 96.4}, {"date": "2026-10-07", "tot": 81, "dat": 79, "rate": 97.5}, {"date": "2026-10-08", "tot": 63, "dat": 57, "rate": 90.5}, {"date": "2026-10-09", "tot": 92, "dat": 83, "rate": 90.2}], "stylists": [{"name": "(trống)", "tot": 714, "fail": 140, "rate": 19.6, "img": 140, "time": 24}, {"name": "20172-Nguyễn Hoàng Kha", "tot": 515, "fail": 12, "rate": 2.3, "img": 1, "time": 12}, {"name": "3503-Trần Nhất Duyên", "tot": 172, "fail": 12, "rate": 7.0, "img": 1, "time": 11}, {"name": "21280-Huỳnh Bá Thành", "tot": 367, "fail": 11, "rate": 3.0, "img": 0, "time": 11}, {"name": "3850-Trương Phúc Tỷ", "tot": 499, "fail": 10, "rate": 2.0, "img": 0, "time": 10}, {"name": "12256-Phạm Văn Phát", "tot": 515, "fail": 10, "rate": 1.9, "img": 2, "time": 9}, {"name": "21126-Huỳnh Văn Kha", "tot": 464, "fail": 8, "rate": 1.7, "img": 1, "time": 8}, {"name": "9809-Nguyễn Chí Khanh", "tot": 433, "fail": 8, "rate": 1.8, "img": 0, "time": 8}, {"name": "2014-Võ Văn Trí", "tot": 576, "fail": 7, "rate": 1.2, "img": 2, "time": 6}, {"name": "21403-Võ Quốc Trọng", "tot": 347, "fail": 4, "rate": 1.2, "img": 2, "time": 4}], "bills": [{"date": "2026-08-26", "bill": 25161664, "cus": 3334867, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-26", "bill": 25163640, "cus": 235364, "stylist": "12256-Phạm Văn Phát", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thời gian lệch chuẩn", "tnote": "17p / chuẩn 40p = 42% quá nhanh"}, {"date": "2026-08-26", "bill": 25163332, "cus": 3495658, "stylist": "2014-Võ Văn Trí", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-26", "bill": 25164475, "cus": 2481807, "stylist": "21280-Huỳnh Bá Thành", "skinner": "10779-Nguyễn Thị Kim Ngân ", "reason": "Thời gian lệch chuẩn", "tnote": "26p / chuẩn 40p = 65% quá nhanh"}, {"date": "2026-08-27", "bill": 25168857, "cus": 5996753, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-27", "bill": 25169295, "cus": 5106225, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-08-27", "bill": 25169355, "cus": 5996720, "stylist": "21280-Huỳnh Bá Thành", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thời gian lệch chuẩn", "tnote": "31p / chuẩn 135p = 23% quá nhanh"}, {"date": "2026-08-28", "bill": 25170008, "cus": 3495658, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-28", "bill": 25172489, "cus": 5634706, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-28", "bill": 25173204, "cus": 683812, "stylist": "(trống)", "skinner": "10779-Nguyễn Thị Kim Ngân ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-28", "bill": 25171718, "cus": 4095416, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-28", "bill": 25171121, "cus": 4968028, "stylist": "21403-Võ Quốc Trọng", "skinner": "19735-Cao Thị Kim Chi", "reason": "Ảnh sai + Thời gian lệch chuẩn", "tnote": "20p / chuẩn 40p = 50% quá nhanh"}, {"date": "2026-08-29", "bill": 25177910, "cus": 4907674, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-29", "bill": 25176777, "cus": 4771919, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-29", "bill": 25178232, "cus": 5620428, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-29", "bill": 25177052, "cus": 5740831, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-29", "bill": 25179677, "cus": 5962357, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "12p / chuẩn 20p = 60% quá nhanh"}, {"date": "2026-08-29", "bill": 25180456, "cus": 4807573, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "13p / chuẩn 20p = 65% quá nhanh"}, {"date": "2026-08-29", "bill": 25180156, "cus": 3415110, "stylist": "21280-Huỳnh Bá Thành", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thời gian lệch chuẩn", "tnote": "24p / chuẩn 40p = 60% quá nhanh"}, {"date": "2026-08-29", "bill": 25176208, "cus": 3098621, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-08-30", "bill": 25186912, "cus": 5432616, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-30", "bill": 25186645, "cus": 150299, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-30", "bill": 25185733, "cus": 5273096, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-30", "bill": 25185731, "cus": 5273096, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-30", "bill": 25183572, "cus": 5913780, "stylist": "21126-Huỳnh Văn Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "13p / chuẩn 20p = 65% quá nhanh"}, {"date": "2026-08-31", "bill": 25189917, "cus": 2165505, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-31", "bill": 25191095, "cus": 2559616, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-08-31", "bill": 25187046, "cus": 5998689, "stylist": "21126-Huỳnh Văn Kha", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thời gian lệch chuẩn", "tnote": "24p / chuẩn 40p = 60% quá nhanh"}, {"date": "2026-08-31", "bill": 25187415, "cus": 5946898, "stylist": "3850-Trương Phúc Tỷ", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-08-31", "bill": 25191377, "cus": 2441325, "stylist": "3850-Trương Phúc Tỷ", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "13p / chuẩn 20p = 65% quá nhanh"}, {"date": "2026-08-31", "bill": 25188558, "cus": 5998825, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thời gian lệch chuẩn", "tnote": "18p / chuẩn 40p = 45% quá nhanh"}, {"date": "2026-09-01", "bill": 25191774, "cus": 2823532, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-01", "bill": 25195453, "cus": 1326994, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-01", "bill": 25194147, "cus": 4511700, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 30p = 0% quá nhanh"}, {"date": "2026-09-01", "bill": 25195427, "cus": 5999769, "stylist": "21280-Huỳnh Bá Thành", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "131p / chuẩn 30p = 437% quá lâu"}, {"date": "2026-09-01", "bill": 25194234, "cus": 5358486, "stylist": "3503-Trần Nhất Duyên", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "63p / chuẩn 20p = 315% quá lâu"}, {"date": "2026-09-01", "bill": 25194233, "cus": 5545130, "stylist": "3503-Trần Nhất Duyên", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "94p / chuẩn 20p = 470% quá lâu"}, {"date": "2026-09-02", "bill": 25196751, "cus": 4526742, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-02", "bill": 25200384, "cus": 5660553, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-02", "bill": 25199748, "cus": 2156791, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-02", "bill": 25196548, "cus": 6000067, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-02", "bill": 25196039, "cus": 5430919, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "12p / chuẩn 20p = 60% quá nhanh"}, {"date": "2026-09-02", "bill": 25195928, "cus": 3436375, "stylist": "21280-Huỳnh Bá Thành", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "13p / chuẩn 20p = 65% quá nhanh"}, {"date": "2026-09-03", "bill": 25200637, "cus": 5497416, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "1p / chuẩn 30p = 3% quá nhanh"}, {"date": "2026-09-03", "bill": 25204435, "cus": 6000596, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-03", "bill": 25204857, "cus": 6001137, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-03", "bill": 25201328, "cus": 262540, "stylist": "12256-Phạm Văn Phát", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-04", "bill": 25207271, "cus": 3765580, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-04", "bill": 25206047, "cus": 3381982, "stylist": "3850-Trương Phúc Tỷ", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thời gian lệch chuẩn", "tnote": "25p / chuẩn 40p = 62% quá nhanh"}, {"date": "2026-09-05", "bill": 25212600, "cus": 235308, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-05", "bill": 25212845, "cus": 1707241, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-05", "bill": 25213470, "cus": 6002104, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-05", "bill": 25214073, "cus": 3339043, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-06", "bill": 25219984, "cus": 5813896, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-06", "bill": 25219947, "cus": 5416360, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-06", "bill": 25219292, "cus": 3213090, "stylist": "12256-Phạm Văn Phát", "skinner": "", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "39p / chuẩn 12p = 325% quá lâu"}, {"date": "2026-09-06", "bill": 25218676, "cus": 432967, "stylist": "3503-Trần Nhất Duyên", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thời gian lệch chuẩn", "tnote": "26p / chuẩn 45p = 58% quá nhanh"}, {"date": "2026-09-06", "bill": 25218289, "cus": 965287, "stylist": "3503-Trần Nhất Duyên", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Thời gian lệch chuẩn", "tnote": "64p / chuẩn 117p = 55% quá nhanh"}, {"date": "2026-09-07", "bill": 25225151, "cus": 6003264, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-08", "bill": 25227817, "cus": 5620428, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-08", "bill": 25226458, "cus": 5574145, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-08", "bill": 25225796, "cus": 2307134, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-08", "bill": 25225575, "cus": 4847686, "stylist": "12256-Phạm Văn Phát", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "85p / chuẩn 20p = 425% quá lâu"}, {"date": "2026-09-09", "bill": 25229689, "cus": 2562071, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-09", "bill": 25232572, "cus": 2411362, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-09", "bill": 25232500, "cus": 101206, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-09", "bill": 25232195, "cus": 1797029, "stylist": "3503-Trần Nhất Duyên", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thời gian lệch chuẩn", "tnote": "19p / chuẩn 40p = 48% quá nhanh"}, {"date": "2026-09-09", "bill": 25231376, "cus": 6004003, "stylist": "3503-Trần Nhất Duyên", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-09", "bill": 25229958, "cus": 1648381, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-09-10", "bill": 25235155, "cus": 4661759, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-10", "bill": 25236296, "cus": 3399558, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thời gian lệch chuẩn", "tnote": "26p / chuẩn 50p = 52% quá nhanh"}, {"date": "2026-09-11", "bill": 25238344, "cus": 5335704, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-11", "bill": 25239942, "cus": 5371622, "stylist": "21126-Huỳnh Văn Kha", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Ảnh sai + Thời gian lệch chuẩn", "tnote": "24p / chuẩn 50p = 48% quá nhanh"}, {"date": "2026-09-12", "bill": 25243058, "cus": 5022780, "stylist": "(trống)", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "15p / chuẩn 30p = 50% quá nhanh"}, {"date": "2026-09-12", "bill": 25244589, "cus": 2853778, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-12", "bill": 25245340, "cus": 5822428, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 30p = 0% quá nhanh"}, {"date": "2026-09-12", "bill": 25245320, "cus": 3352006, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 36p = 0% quá nhanh"}, {"date": "2026-09-12", "bill": 25244680, "cus": 3599547, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-12", "bill": 25244633, "cus": 6005333, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-12", "bill": 25245480, "cus": 5738715, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Thời gian lệch chuẩn", "tnote": "31p / chuẩn 50p = 62% quá nhanh"}, {"date": "2026-09-12", "bill": 25244503, "cus": 1362745, "stylist": "3503-Trần Nhất Duyên", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thời gian lệch chuẩn", "tnote": "118p / chuẩn 230p = 51% quá nhanh"}, {"date": "2026-09-12", "bill": 25240875, "cus": 2331399, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "1p / chuẩn 20p = 5% quá nhanh"}, {"date": "2026-09-12", "bill": 25242714, "cus": 4427810, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thời gian lệch chuẩn", "tnote": "27p / chuẩn 40p = 68% quá nhanh"}, {"date": "2026-09-13", "bill": 25246359, "cus": 481232, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-13", "bill": 25251819, "cus": 1269679, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 70p = 0% quá nhanh"}, {"date": "2026-09-13", "bill": 25250474, "cus": 5649205, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-13", "bill": 25250392, "cus": 1618791, "stylist": "21280-Huỳnh Bá Thành", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Thời gian lệch chuẩn", "tnote": "28p / chuẩn 45p = 62% quá nhanh"}, {"date": "2026-09-13", "bill": 25247960, "cus": 5511322, "stylist": "21280-Huỳnh Bá Thành", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thời gian lệch chuẩn", "tnote": "22p / chuẩn 38p = 58% quá nhanh"}, {"date": "2026-09-13", "bill": 25248790, "cus": 3210951, "stylist": "21403-Võ Quốc Trọng", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "9p / chuẩn 20p = 45% quá nhanh"}, {"date": "2026-09-13", "bill": 25251032, "cus": 5979655, "stylist": "3503-Trần Nhất Duyên", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thời gian lệch chuẩn", "tnote": "176p / chuẩn 255p = 69% quá nhanh"}, {"date": "2026-09-13", "bill": 25249295, "cus": 3924443, "stylist": "3850-Trương Phúc Tỷ", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thời gian lệch chuẩn", "tnote": "31p / chuẩn 50p = 62% quá nhanh"}, {"date": "2026-09-14", "bill": 25254402, "cus": 6006605, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-14", "bill": 25255559, "cus": 3872789, "stylist": "12256-Phạm Văn Phát", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thời gian lệch chuẩn", "tnote": "20p / chuẩn 40p = 50% quá nhanh"}, {"date": "2026-09-15", "bill": 25256556, "cus": 5764079, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-15", "bill": 25256597, "cus": 5950006, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-15", "bill": 25259690, "cus": 1671634, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 45p = 0% quá nhanh"}, {"date": "2026-09-15", "bill": 25259015, "cus": 3497316, "stylist": "2014-Võ Văn Trí", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "12p / chuẩn 20p = 60% quá nhanh"}, {"date": "2026-09-16", "bill": 25260906, "cus": 4690779, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-16", "bill": 25261131, "cus": 4185895, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 70p = 0% quá nhanh"}, {"date": "2026-09-16", "bill": 25263805, "cus": 4065486, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 45p = 0% quá nhanh"}, {"date": "2026-09-17", "bill": 25266713, "cus": 5437644, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "48p / chuẩn 90p = 53% quá nhanh"}, {"date": "2026-09-17", "bill": 25264923, "cus": 1963771, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 45p = 0% quá nhanh"}, {"date": "2026-09-17", "bill": 25266578, "cus": 5954861, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-17", "bill": 25265831, "cus": 1240681, "stylist": "12256-Phạm Văn Phát", "skinner": "5866-Đỗ Thị Linh", "reason": "Thời gian lệch chuẩn", "tnote": "19p / chuẩn 40p = 48% quá nhanh"}, {"date": "2026-09-18", "bill": 25269729, "cus": 6007643, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-18", "bill": 25271252, "cus": 4912979, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-18", "bill": 25271134, "cus": 5647823, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-18", "bill": 25268937, "cus": 5416360, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-18", "bill": 25272136, "cus": 5634706, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-18", "bill": 25272451, "cus": 5413766, "stylist": "12256-Phạm Văn Phát", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thời gian lệch chuẩn", "tnote": "28p / chuẩn 75p = 37% quá nhanh"}, {"date": "2026-09-19", "bill": 25276489, "cus": 5636356, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-19", "bill": 25278111, "cus": 6009199, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-19", "bill": 25272680, "cus": 1707241, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-19", "bill": 25276116, "cus": 5980332, "stylist": "21126-Huỳnh Văn Kha", "skinner": "21607-Phó Nguyễn Thanh Thanh ", "reason": "Thời gian lệch chuẩn", "tnote": "25p / chuẩn 50p = 50% quá nhanh"}, {"date": "2026-09-19", "bill": 25278913, "cus": 6009360, "stylist": "21280-Huỳnh Bá Thành", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-09-19", "bill": 25277954, "cus": 514250, "stylist": "21280-Huỳnh Bá Thành", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thời gian lệch chuẩn", "tnote": "17p / chuẩn 40p = 42% quá nhanh"}, {"date": "2026-09-19", "bill": 25275071, "cus": 1624585, "stylist": "3850-Trương Phúc Tỷ", "skinner": "21607-Phó Nguyễn Thanh Thanh ", "reason": "Thời gian lệch chuẩn", "tnote": "24p / chuẩn 40p = 60% quá nhanh"}, {"date": "2026-09-20", "bill": 25283098, "cus": 1010301, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-20", "bill": 25285570, "cus": 1741677, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 32p = 0% quá nhanh"}, {"date": "2026-09-20", "bill": 25283156, "cus": 6009859, "stylist": "12256-Phạm Văn Phát", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thời gian lệch chuẩn", "tnote": "26p / chuẩn 45p = 58% quá nhanh"}, {"date": "2026-09-20", "bill": 25281613, "cus": 857043, "stylist": "12256-Phạm Văn Phát", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thời gian lệch chuẩn", "tnote": "19p / chuẩn 40p = 48% quá nhanh"}, {"date": "2026-09-20", "bill": 25282025, "cus": 5750303, "stylist": "21126-Huỳnh Văn Kha", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thời gian lệch chuẩn", "tnote": "29p / chuẩn 45p = 64% quá nhanh"}, {"date": "2026-09-21", "bill": 25287693, "cus": 2853778, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-21", "bill": 25287311, "cus": 5660553, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-21", "bill": 25289012, "cus": 5740831, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-21", "bill": 25288849, "cus": 4902646, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thời gian lệch chuẩn", "tnote": "38p / chuẩn 61p = 62% quá nhanh"}, {"date": "2026-09-22", "bill": 25290658, "cus": 1324852, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 30p = 0% quá nhanh"}, {"date": "2026-09-22", "bill": 25292091, "cus": 3604856, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-22", "bill": 25292831, "cus": 2780281, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-23", "bill": 25294310, "cus": 940255, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-23", "bill": 25295913, "cus": 1256023, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-23", "bill": 25296186, "cus": 684211, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-23", "bill": 25294364, "cus": 6011154, "stylist": "3850-Trương Phúc Tỷ", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Thời gian lệch chuẩn", "tnote": "25p / chuẩn 40p = 62% quá nhanh"}, {"date": "2026-09-23", "bill": 25294644, "cus": 5970343, "stylist": "3850-Trương Phúc Tỷ", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "10p / chuẩn 20p = 50% quá nhanh"}, {"date": "2026-09-24", "bill": 25297904, "cus": 3860344, "stylist": "(trống)", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "20p / chuẩn 30p = 67% quá nhanh"}, {"date": "2026-09-24", "bill": 25299075, "cus": 6011698, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-24", "bill": 25299167, "cus": 5365920, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-24", "bill": 25298186, "cus": 3106181, "stylist": "2014-Võ Văn Trí", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "98p / chuẩn 32p = 306% quá lâu"}, {"date": "2026-09-24", "bill": 25297489, "cus": 652696, "stylist": "21403-Võ Quốc Trọng", "skinner": "19735-Cao Thị Kim Chi", "reason": "Ảnh sai + Thời gian lệch chuẩn", "tnote": "89p / chuẩn 131p = 68% quá nhanh"}, {"date": "2026-09-25", "bill": 25300385, "cus": 3097620, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-25", "bill": 25300599, "cus": 4183321, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-25", "bill": 25301445, "cus": 5150984, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-25", "bill": 25302083, "cus": 4200010, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-25", "bill": 25302084, "cus": 6012064, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-25", "bill": 25302085, "cus": 5892847, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-25", "bill": 25303562, "cus": 334918, "stylist": "12256-Phạm Văn Phát", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thời gian lệch chuẩn", "tnote": "20p / chuẩn 40p = 50% quá nhanh"}, {"date": "2026-09-26", "bill": 25305903, "cus": 6012461, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-26", "bill": 25306877, "cus": 2460835, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-26", "bill": 25308647, "cus": 5256454, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-26", "bill": 25304277, "cus": 2995583, "stylist": "21126-Huỳnh Văn Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-09-26", "bill": 25306323, "cus": 3333865, "stylist": "3503-Trần Nhất Duyên", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "12p / chuẩn 20p = 60% quá nhanh"}, {"date": "2026-09-26", "bill": 25310190, "cus": 5560695, "stylist": "3850-Trương Phúc Tỷ", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thời gian lệch chuẩn", "tnote": "110p / chuẩn 165p = 67% quá nhanh"}, {"date": "2026-09-27", "bill": 25314668, "cus": 1294871, "stylist": "2014-Võ Văn Trí", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "13p / chuẩn 20p = 65% quá nhanh"}, {"date": "2026-09-27", "bill": 25316291, "cus": 1250520, "stylist": "21126-Huỳnh Văn Kha", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thời gian lệch chuẩn", "tnote": "16p / chuẩn 45p = 36% quá nhanh"}, {"date": "2026-09-28", "bill": 25318311, "cus": 4569974, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-28", "bill": 25319830, "cus": 788823, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-28", "bill": 25320197, "cus": 5827442, "stylist": "(trống)", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-28", "bill": 25320967, "cus": 553851, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thời gian lệch chuẩn", "tnote": "27p / chuẩn 69p = 39% quá nhanh"}, {"date": "2026-09-29", "bill": 25322006, "cus": 4511700, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "17p / chuẩn 30p = 57% quá nhanh"}, {"date": "2026-09-29", "bill": 25322037, "cus": 4661759, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-29", "bill": 25322560, "cus": 2508194, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-29", "bill": 25323369, "cus": 5620428, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-29", "bill": 25324796, "cus": 6014577, "stylist": "21403-Võ Quốc Trọng", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thời gian lệch chuẩn", "tnote": "24p / chuẩn 50p = 48% quá nhanh"}, {"date": "2026-09-29", "bill": 25322834, "cus": 2203212, "stylist": "3503-Trần Nhất Duyên", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thời gian lệch chuẩn", "tnote": "95p / chuẩn 165p = 58% quá nhanh"}, {"date": "2026-09-30", "bill": 25325206, "cus": 6014695, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-30", "bill": 25325782, "cus": 4870838, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-30", "bill": 25326269, "cus": 6014787, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 45p = 0% quá nhanh"}, {"date": "2026-09-30", "bill": 25326270, "cus": 288086, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-30", "bill": 25327526, "cus": 6002502, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 45p = 0% quá nhanh"}, {"date": "2026-09-30", "bill": 25328301, "cus": 5752373, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-30", "bill": 25328437, "cus": 2221635, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-09-30", "bill": 25327665, "cus": 5112429, "stylist": "2014-Võ Văn Trí", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "12p / chuẩn 20p = 60% quá nhanh"}, {"date": "2026-09-30", "bill": 25325977, "cus": 789306, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Ảnh sai + Thời gian lệch chuẩn", "tnote": "20p / chuẩn 40p = 50% quá nhanh"}, {"date": "2026-09-30", "bill": 25328417, "cus": 2044726, "stylist": "21280-Huỳnh Bá Thành", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "161p / chuẩn 50p = 322% quá lâu"}, {"date": "2026-10-01", "bill": 25329954, "cus": 4185895, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 70p = 0% quá nhanh"}, {"date": "2026-10-01", "bill": 25331238, "cus": 5660553, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-01", "bill": 25331685, "cus": 4346150, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-02", "bill": 25332935, "cus": 2766582, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-02", "bill": 25333421, "cus": 4568511, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-02", "bill": 25335504, "cus": 234682, "stylist": "(trống)", "skinner": "942-PHÙ THỊ HOÀNG UYÊN", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-02", "bill": 25336284, "cus": 4170204, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-02", "bill": 25336614, "cus": 5162219, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thời gian lệch chuẩn", "tnote": "14p / chuẩn 40p = 35% quá nhanh"}, {"date": "2026-10-02", "bill": 25334472, "cus": 4780371, "stylist": "21126-Huỳnh Văn Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-10-03", "bill": 25341486, "cus": 5600793, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-03", "bill": 25341826, "cus": 5909062, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-03", "bill": 25342152, "cus": 3135385, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-03", "bill": 25342297, "cus": 5120860, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-03", "bill": 25342708, "cus": 810299, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-03", "bill": 25343846, "cus": 4065486, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 70p = 0% quá nhanh"}, {"date": "2026-10-03", "bill": 25341793, "cus": 6016464, "stylist": "2014-Võ Văn Trí", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "13p / chuẩn 20p = 65% quá nhanh"}, {"date": "2026-10-03", "bill": 25342122, "cus": 3135385, "stylist": "3503-Trần Nhất Duyên", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thời gian lệch chuẩn", "tnote": "48p / chuẩn 215p = 22% quá nhanh"}, {"date": "2026-10-04", "bill": 25349695, "cus": 1768453, "stylist": "(trống)", "skinner": "21466-Nguyễn Ngọc Bích Trâm ", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-04", "bill": 25350243, "cus": 1326994, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-04", "bill": 25350381, "cus": 5896935, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-04", "bill": 25348063, "cus": 3164413, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "13p / chuẩn 20p = 65% quá nhanh"}, {"date": "2026-10-04", "bill": 25349412, "cus": 1861553, "stylist": "3850-Trương Phúc Tỷ", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thời gian lệch chuẩn", "tnote": "120p / chuẩn 172p = 70% quá nhanh"}, {"date": "2026-10-04", "bill": 25347228, "cus": 4712845, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 50p = 0% quá nhanh"}, {"date": "2026-10-04", "bill": 25350726, "cus": 267827, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thời gian lệch chuẩn", "tnote": "20p / chuẩn 65p = 31% quá nhanh"}, {"date": "2026-10-05", "bill": 25351685, "cus": 6002502, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-05", "bill": 25351741, "cus": 5636356, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-05", "bill": 25352051, "cus": 4185895, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 70p = 0% quá nhanh"}, {"date": "2026-10-05", "bill": 25352560, "cus": 4778680, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-06", "bill": 25357753, "cus": 1741677, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 30p = 0% quá nhanh"}, {"date": "2026-10-06", "bill": 25356147, "cus": 5277953, "stylist": "21280-Huỳnh Bá Thành", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "0p / chuẩn 20p = 0% quá nhanh"}, {"date": "2026-10-06", "bill": 25358080, "cus": 6018240, "stylist": "3850-Trương Phúc Tỷ", "skinner": "9341-Nguyễn Thị Thúy Hằng", "reason": "Thời gian lệch chuẩn", "tnote": "24p / chuẩn 45p = 53% quá nhanh"}, {"date": "2026-10-07", "bill": 25359909, "cus": 4214061, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-07", "bill": 25361778, "cus": 776594, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-08", "bill": 25362686, "cus": 5512064, "stylist": "(trống)", "skinner": "20143-Nguyễn Hoàng Triệu Vy", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-08", "bill": 25363800, "cus": 5636356, "stylist": "(trống)", "skinner": "19933-Ngô Thị Ngọc Ánh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-08", "bill": 25364366, "cus": 6018955, "stylist": "(trống)", "skinner": "20878-Ngô Thuỳ Phương ", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 75p = 0% quá nhanh"}, {"date": "2026-10-08", "bill": 25365740, "cus": 3427566, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-08", "bill": 25364436, "cus": 5437644, "stylist": "2014-Võ Văn Trí", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thời gian lệch chuẩn", "tnote": "86p / chuẩn 135p = 64% quá nhanh"}, {"date": "2026-10-08", "bill": 25364247, "cus": 235364, "stylist": "9809-Nguyễn Chí Khanh", "skinner": "21607-Phó Nguyễn Thanh Thanh ", "reason": "Thời gian lệch chuẩn", "tnote": "25p / chuẩn 40p = 62% quá nhanh"}, {"date": "2026-10-09", "bill": 25366370, "cus": 6019716, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-09", "bill": 25367463, "cus": 1963771, "stylist": "(trống)", "skinner": "21590-Võ Thành Ngọc Anh", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 30p = 0% quá nhanh"}, {"date": "2026-10-09", "bill": 25368473, "cus": 1331303, "stylist": "(trống)", "skinner": "", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-09", "bill": 25369791, "cus": 5574145, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-09", "bill": 25370111, "cus": 5416360, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-09", "bill": 25370347, "cus": 5634706, "stylist": "(trống)", "skinner": "5866-Đỗ Thị Linh", "reason": "Thiếu ảnh", "tnote": ""}, {"date": "2026-10-09", "bill": 25370476, "cus": 1741677, "stylist": "(trống)", "skinner": "19735-Cao Thị Kim Chi", "reason": "Thiếu ảnh + Thời gian lệch chuẩn", "tnote": "0p / chuẩn 30p = 0% quá nhanh"}, {"date": "2026-10-09", "bill": 25368506, "cus": 5425204, "stylist": "20172-Nguyễn Hoàng Kha", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "8p / chuẩn 20p = 40% quá nhanh"}, {"date": "2026-10-09", "bill": 25370711, "cus": 5743171, "stylist": "3503-Trần Nhất Duyên", "skinner": "", "reason": "Thời gian lệch chuẩn", "tnote": "38p / chuẩn 72p = 53% quá nhanh"}]};
+</script>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const nf=n=>Number(n).toLocaleString('vi-VN');
+  const d=DATA;
+  const css=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+  function fmtD(s){const p=s.split('-');return p[2]+'/'+p[1];}
+
+  // header
+  $('hdRange').textContent=fmtD(d.range[0])+' – '+fmtD(d.range[1])+'/'+d.range[1].slice(0,4);
+
+  // KPI
+  const failPct=(d.fail/d.tot*100);
+  $('kpis').innerHTML=[
+    {c:'',lab:'Tổng lượt khách',val:nf(d.tot),sub:d.daily.length+' ngày dữ liệu'},
+    {c:'k-good',lab:'Đạt chuẩn',val:d.rate.toFixed(1)+'%',sub:nf(d.dat)+' lượt'},
+    {c:'k-crit',lab:'Chưa đạt',val:failPct.toFixed(1)+'%',sub:nf(d.fail)+' lượt cần xử lý'},
+    {c:'k-warn',lab:'Lỗi phổ biến nhất',val:'Thiếu ảnh',sub:nf(d.reasons.img_miss)+' bill'},
+  ].map(k=>`<div class="kpi ${k.c}"><div class="lab">${k.lab}</div><div class="val tnum">${k.val}</div><div class="sub">${k.sub}</div></div>`).join('');
+
+  // reason bars
+  const R=[
+    {nm:'Thiếu ảnh phục vụ',v:d.reasons.img_miss,col:css('--warn')},
+    {nm:'Thời gian lệch chuẩn',v:d.reasons.time,col:css('--crit')},
+    {nm:'Ảnh phục vụ sai',v:d.reasons.img_bad,col:css('--accent')},
+    {nm:'Giá dịch vụ <50K',v:d.reasons.svc,col:css('--muted')},
+  ];
+  const rmax=Math.max(...R.map(r=>r.v),1);
+  $('reasonBars').innerHTML=R.map(r=>`<div class="rbar"><div class="nm">${r.nm}</div><div class="track"><div class="fill" style="width:${Math.max(r.v/rmax*100,2)}%;background:${r.col}"></div></div><div class="vv tnum">${nf(r.v)} bill</div></div>`).join('');
+
+  // donut
+  new Chart($('cDonut'),{type:'doughnut',data:{labels:['Đạt','Chưa đạt'],datasets:[{data:[d.dat,d.fail],backgroundColor:[css('--good'),css('--crit')],borderWidth:2,borderColor:css('--surface')}]},
+    options:{cutout:'66%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.label+': '+nf(c.parsed)+' ('+(c.parsed/d.tot*100).toFixed(1)+'%)'}}}}});
+
+  // trend
+  $('trendTag').textContent='Trung bình '+d.rate.toFixed(1)+'%';
+  const ink=css('--ink-2'), grid=css('--line');
+  new Chart($('cTrend'),{type:'line',data:{labels:d.daily.map(x=>fmtD(x.date)),datasets:[{
+    data:d.daily.map(x=>x.rate),borderColor:css('--accent'),borderWidth:2,
+    fill:true,backgroundColor:(ctx=>{const c=ctx.chart.ctx;const g=c.createLinearGradient(0,0,0,240);const a=css('--accent');g.addColorStop(0,a+'44');g.addColorStop(1,a+'00');return g;}),
+    tension:.3,pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:css('--accent'),pointHoverBorderColor:css('--surface'),pointHoverBorderWidth:2}]},
+    options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{callbacks:{title:items=>'Ngày '+items[0].label,label:c=>'Tỷ lệ đạt: '+c.parsed.y.toFixed(1)+'%'}}},
+    scales:{y:{min:Math.max(0,Math.floor(Math.min(...d.daily.map(x=>x.rate))/5)*5-2),max:100,ticks:{color:ink,callback:v=>v+'%'},grid:{color:grid}},
+    x:{ticks:{color:ink,maxTicksLimit:12,autoSkip:true},grid:{display:false}}}}});
+
+  // staff
+  $('staffList').innerHTML=d.stylists.map((s,i)=>`<div class="staff"><div class="rank">${i+1}</div><div class="nm">${s.name}</div><div class="meta tnum">${nf(s.tot)} lượt · ${s.rate}% rớt · ảnh ${s.img} · TG ${s.time}</div><div class="cnt tnum">${s.fail}</div></div>`).join('');
+
+  // bill table
+  const cols=[['date','Ngày'],['bill','BillId'],['cus','CustomerId'],['stylist','Stylist'],['skinner','Skinner'],['reason','Lý do'],['tnote','Chi tiết thời gian']];
+  let state={sort:'date',dir:'asc',page:0,ps:20,q:'',reason:''};
+  function zClass(r){if(r.indexOf('+')>-1)return'both';if(r.indexOf('Thời gian')>-1)return'time';if(r.indexOf('ảnh')>-1||r.indexOf('Ảnh')>-1)return'img';return'other';}
+  function rows(){
+    let a=d.bills.slice();
+    if(state.reason)a=a.filter(r=>r.reason.indexOf(state.reason)>-1);
+    if(state.q){const q=state.q.toLowerCase();a=a.filter(r=>[r.date,r.bill,r.cus,r.stylist,r.skinner,r.reason].join(' ').toLowerCase().indexOf(q)>-1);}
+    a.sort((x,y)=>{let vx=x[state.sort],vy=y[state.sort];if(typeof vx==='number'){return state.dir==='asc'?vx-vy:vy-vx;}vx=String(vx||'');vy=String(vy||'');return state.dir==='asc'?vx.localeCompare(vy):vy.localeCompare(vx);});
+    return a;
+  }
+  function render(){
+    const all=rows();const pages=Math.max(1,Math.ceil(all.length/state.ps));state.page=Math.min(state.page,pages-1);
+    const pg=all.slice(state.page*state.ps,state.page*state.ps+state.ps);
+    let h='<thead><tr>'+cols.map(c=>`<th data-k="${c[0]}">${c[1]}${state.sort===c[0]?(state.dir==='asc'?' ▲':' ▼'):''}</th>`).join('')+'</tr></thead><tbody>';
+    h+=pg.map(r=>'<tr>'+cols.map(c=>{
+      let v=r[c[0]];
+      if(c[0]==='reason')return`<td><span class="rz ${zClass(v)}">${v}</span></td>`;
+      if(c[0]==='stylist'&&v==='(trống)')return`<td class="empty-cell">(trống)</td>`;
+      if(c[0]==='skinner'&&!v)return`<td class="muted-cell">—</td>`;
+      if(c[0]==='tnote'&&!v)return`<td class="muted-cell">—</td>`;
+      return`<td class="${['date','bill','cus'].indexOf(c[0])>-1?'tnum':''}">${v!=null&&v!==''?v:'—'}</td>`;
+    }).join('')+'</tr>').join('');
+    h+='</tbody>';
+    $('billTbl').innerHTML=h;
+    $('billPager').innerHTML=`<span>${all.length} bill</span><button ${state.page<=0?'disabled':''} data-d="-1">‹ Trước</button><span>Trang ${state.page+1}/${pages}</span><button ${state.page>=pages-1?'disabled':''} data-d="1">Sau ›</button>`;
+    $('billTbl').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(state.sort===k)state.dir=state.dir==='asc'?'desc':'asc';else{state.sort=k;state.dir='asc';}render();});
+    $('billPager').querySelectorAll('button').forEach(b=>b.onclick=()=>{state.page+=+b.dataset.d;render();});
+  }
+  $('fSearch').oninput=e=>{state.q=e.target.value;state.page=0;render();};
+  $('fReason').onchange=e=>{state.reason=e.target.value;state.page=0;render();};
+  render();
+
+  $('foot').innerHTML='Nguồn: hệ thống báo cáo sale 30Shine · Dữ liệu '+fmtD(d.range[0])+'/'+d.range[0].slice(0,4)+' – '+fmtD(d.range[1])+'/'+d.range[1].slice(0,4)+'<br>Báo cáo nội bộ — Salon 927 HG';
+})();
+</script>
