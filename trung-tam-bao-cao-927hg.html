@@ -1,0 +1,160 @@
+<title>Trung Tâm Báo Cáo 927 HG</title>
+<style>
+/* Layout: brand header → process cards (status chip, schedule, action link) → management note. Navy brand, status colors. */
+:root{
+  --plane:#f4f6f9; --surface:#ffffff; --surface-2:#f8fafc;
+  --ink:#0f1b2d; --ink-2:#51607a; --muted:#8a97ab;
+  --line:#e3e8f0; --line-2:#eef2f7;
+  --navy:#0b3a82; --navy-2:#1559b8; --accent:#2a78d6;
+  --good:#0ca30c; --good-ink:#077a07; --warn:#e08a00; --crit:#d03b3b;
+  --good-bg:#e8f6e8; --warn-bg:#fdf3e0; --crit-bg:#fbe9e9;
+  --r:14px; --sh:0 1px 2px rgba(15,27,45,.06),0 4px 16px rgba(15,27,45,.05);
+  --font:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --plane:#0c0f14; --surface:#161b24; --surface-2:#1b222d;
+  --ink:#eef2f8; --ink-2:#b2bdcf; --muted:#7e8aa0;
+  --line:#28303d; --line-2:#20272f;
+  --navy:#5a9bf0; --navy-2:#4a8ae8; --accent:#3987e5;
+  --good:#2bbd2b; --good-ink:#5fd25f; --warn:#f0a929; --crit:#e66767;
+  --good-bg:#102a10; --warn-bg:#2a2010; --crit-bg:#2d1414;
+  --sh:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.35); color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --plane:#0c0f14; --surface:#161b24; --surface-2:#1b222d;
+  --ink:#eef2f8; --ink-2:#b2bdcf; --muted:#7e8aa0;
+  --line:#28303d; --line-2:#20272f;
+  --navy:#5a9bf0; --navy-2:#4a8ae8; --accent:#3987e5;
+  --good:#2bbd2b; --good-ink:#5fd25f; --warn:#f0a929; --crit:#e66767;
+  --good-bg:#102a10; --warn-bg:#2a2010; --crit-bg:#2d1414;
+  --sh:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.35); color-scheme:dark;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--plane);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%;}
+.wrap{max-width:820px;margin:0 auto;padding-inline:16px;padding-block:0 48px;}
+h1,h2,h3{margin:0;text-wrap:balance;}
+
+header{background:linear-gradient(100deg,var(--navy),var(--navy-2));color:#fff;box-shadow:0 2px 12px rgba(11,58,130,.25);}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header{background:linear-gradient(100deg,#13233c,#1a3356);}}
+:root[data-theme="dark"] header{background:linear-gradient(100deg,#13233c,#1a3356);}
+.hd{max-width:820px;margin:0 auto;padding:18px 16px;display:flex;align-items:center;gap:14px;}
+.hd .logo{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;}
+.hd .t1{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.82;font-weight:600;}
+.hd .t2{font-size:20px;font-weight:800;line-height:1.15;}
+
+.intro{color:var(--ink-2);font-size:13.5px;margin-top:18px;}
+.seclabel{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:24px 0 10px;}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin-top:14px;position:relative;overflow:hidden;}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);}
+.card.c-good::before{background:var(--good);}
+.ctop{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+.ctop .icon{width:40px;height:40px;border-radius:11px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;}
+.ctop .h{flex:1;min-width:0;}
+.ctop h3{font-size:16px;font-weight:800;}
+.ctop .desc{font-size:13.5px;color:var(--ink-2);margin-top:3px;}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;flex:none;}
+.chip.on{background:var(--good-bg);color:var(--good-ink);}
+.chip .d{width:7px;height:7px;border-radius:50%;background:currentColor;}
+
+.rows{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:13.5px;align-items:baseline;}
+.rows .k{color:var(--muted);font-weight:600;white-space:nowrap;}
+.rows .v{color:var(--ink);min-width:0;}
+.rows .v b{font-variant-numeric:tabular-nums;}
+code.id{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;background:var(--surface-2);border:1px solid var(--line-2);border-radius:6px;padding:1px 6px;color:var(--ink-2);word-break:break-all;}
+
+.actions{margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;text-decoration:none;padding:9px 15px;border-radius:10px;border:1px solid var(--line);color:var(--ink);background:var(--surface-2);transition:.15s;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff;}
+.btn.primary:hover{opacity:.92;color:#fff;}
+
+.flag{background:var(--warn-bg);border:1px solid var(--warn);border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:var(--ink);}
+.flag b{color:var(--warn);}
+.flag code.id{background:rgba(0,0,0,.04);}
+
+.manage{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin-top:22px;}
+.manage h2{font-size:15px;font-weight:800;margin-bottom:10px;}
+.manage ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:13.5px;line-height:1.85;}
+.manage ul b{color:var(--ink);}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:24px;line-height:1.7;}
+
+@media(max-width:560px){
+  .rows{grid-template-columns:1fr;gap:3px 0;}
+  .rows .k{margin-top:8px;}
+  .rows .k:first-child{margin-top:0;}
+}
+</style>
+
+<header>
+  <div class="hd">
+    <div class="logo">🗂️</div>
+    <div>
+      <div class="t1">Trung tâm điều khiển</div>
+      <div class="t2">Báo cáo tự động — Salon 927 HG</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="intro">Tất cả quy trình chạy tự động của bạn ở một chỗ — xem lịch, trạng thái và mở nhanh từng báo cáo. Muốn bật/tắt/đổi giờ, chỉ cần nhắn Claude.</p>
+
+  <div class="seclabel">⚙️ Quy trình đang chạy</div>
+
+  <!-- 1. Dashboard khách tiêu chuẩn -->
+  <div class="card c-good">
+    <div class="ctop">
+      <div class="icon">📊</div>
+      <div class="h">
+        <h3>Cập nhật dashboard Khách tiêu chuẩn</h3>
+        <div class="desc">Tải dữ liệu mới nhất từ 30Shine → dựng lại báo cáo (tỷ lệ đạt, lỗi thật, nhân sự, danh sách bill) → tự đăng lên đúng link.</div>
+      </div>
+      <span class="chip on"><span class="d"></span> Đang chạy</span>
+    </div>
+    <div class="rows">
+      <div class="k">🕐 Lịch chạy</div><div class="v"><b>8:51 sáng</b> — mỗi ngày</div>
+      <div class="k">📲 Thông báo</div><div class="v">Push về điện thoại khi xong (kèm tóm tắt)</div>
+      <div class="k">🔗 Dạng</div><div class="v">Trang online (dashboard tương tác)</div>
+      <div class="k">🆔 Mã lịch</div><div class="v"><code class="id">trig_017BnHFbEWfYNnjsMopXMH6M</code></div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="https://claude.ai/artifact/4pxh1ss79WycCoZXVuLqhA" target="_blank" rel="noopener">Mở dashboard →</a>
+    </div>
+  </div>
+
+  <!-- 2. Bảng điểm năng suất -->
+  <div class="card c-good">
+    <div class="ctop">
+      <div class="icon">📈</div>
+      <div class="h">
+        <h3>Điền Bảng điểm năng suất (sắp ca)</h3>
+        <div class="desc">Lấy năng suất nhân viên (Mỹ phẩm · Topup · UND) từ 30Shine và điền vào Google Sheet "Bảng điểm" để sắp ca.</div>
+      </div>
+      <span class="chip on"><span class="d"></span> Đang chạy</span>
+    </div>
+    <div class="rows">
+      <div class="k">🕐 Lịch chạy</div><div class="v"><b>11:30 trưa</b> — Thứ 3, Thứ 5, Chủ nhật</div>
+      <div class="k">📊 Số liệu</div><div class="v">T3: lấy T3+T4 · T5: lấy T5+T6 (*) · CN: lấy T5+T6+T7</div>
+      <div class="k">📲 Thông báo</div><div class="v">Push + email khi xong</div>
+      <div class="k">✅ Lần gần nhất</div><div class="v">11/10 — thành công</div>
+      <div class="k">🆔 Mã lịch</div><div class="v"><code class="id">trig_01MSwF3NNErdjLDLfeUcExBk</code></div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="https://docs.google.com/spreadsheets/d/1-F12RqlqV6YAT6mIws61K5OtjvEHR1TEMZ0SkNY1DFs/edit" target="_blank" rel="noopener">Mở Bảng điểm →</a>
+    </div>
+    <div class="flag">⚠️ <b>Đang có 2 bản trùng</b> của quy trình này (cùng việc, cùng giờ). Nên xóa bớt 1 để tránh chạy 2 lần. Bản cũ: <code class="id">trig_01EShQa7dpGqjXFRk5JiELkn</code>. Nhắn Claude "xóa lịch sắp ca trùng" là xong.</div>
+  </div>
+
+  <div class="manage">
+    <h2>🛠️ Quản lý &amp; làm việc</h2>
+    <ul>
+      <li><b>Cập nhật thủ công ngay:</b> nhắn Claude <b>"cập nhật"</b> → tải lại số liệu mới nhất.</li>
+      <li><b>Đổi giờ / tạm dừng / bật lại:</b> nhắn Claude (vd "đổi dashboard sang 8h", "tắt lịch sắp ca").</li>
+      <li><b>Xóa bản trùng:</b> nhắn "xóa lịch sắp ca trùng".</li>
+      <li><b>Thêm báo cáo mới:</b> mô tả báo cáo &amp; lịch mong muốn, Claude dựng và gắn lịch, rồi thêm vào trang này.</li>
+      <li><b>Xem/sửa trực tiếp:</b> vào <b>claude.ai → Routines</b> để xem toàn bộ lịch của bạn.</li>
+    </ul>
+  </div>
+
+  <div class="foot">(*) Quy tắc ngày lấy số liệu theo script sắp ca hiện tại.<br>Trang tổng hợp nội bộ · Cập nhật thủ công bởi Claude khi lịch thay đổi.</div>
+</div>
