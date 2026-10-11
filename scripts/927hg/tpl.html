@@ -1,0 +1,438 @@
+<title>Khách Tiêu Chuẩn 927 HG</title>
+<style>
+/* Layout: sticky brand header + date filter bar → KPI tiles → trend → reasons → staff → bill table. Navy brand accent, reserved status colors. */
+:root{
+  --plane:#f4f6f9; --surface:#ffffff; --surface-2:#f8fafc;
+  --ink:#0f1b2d; --ink-2:#51607a; --muted:#8a97ab;
+  --line:#e3e8f0; --line-2:#eef2f7;
+  --navy:#0b3a82; --navy-2:#1559b8; --accent:#2a78d6;
+  --good:#0ca30c; --good-ink:#077a07; --warn:#e08a00; --crit:#d03b3b;
+  --good-bg:#e8f6e8; --crit-bg:#fbe9e9; --warn-bg:#fdf3e0;
+  --r:14px; --sh:0 1px 2px rgba(15,27,45,.06),0 4px 16px rgba(15,27,45,.05);
+  --font:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --plane:#0c0f14; --surface:#161b24; --surface-2:#1b222d;
+  --ink:#eef2f8; --ink-2:#b2bdcf; --muted:#7e8aa0;
+  --line:#28303d; --line-2:#20272f;
+  --navy:#5a9bf0; --navy-2:#4a8ae8; --accent:#3987e5;
+  --good:#2bbd2b; --good-ink:#5fd25f; --warn:#f0a929; --crit:#e66767;
+  --good-bg:#102a10; --crit-bg:#2d1414; --warn-bg:#2a2010;
+  --sh:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.35);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --plane:#0c0f14; --surface:#161b24; --surface-2:#1b222d;
+  --ink:#eef2f8; --ink-2:#b2bdcf; --muted:#7e8aa0;
+  --line:#28303d; --line-2:#20272f;
+  --navy:#5a9bf0; --navy-2:#4a8ae8; --accent:#3987e5;
+  --good:#2bbd2b; --good-ink:#5fd25f; --warn:#f0a929; --crit:#e66767;
+  --good-bg:#102a10; --crit-bg:#2d1414; --warn-bg:#2a2010;
+  --sh:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--plane);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%;}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:0 48px;}
+h1,h2,h3{margin:0;text-wrap:balance;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(100deg,var(--navy),var(--navy-2));color:#fff;box-shadow:0 2px 12px rgba(11,58,130,.25);}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header{background:linear-gradient(100deg,#13233c,#1a3356);}}
+:root[data-theme="dark"] header{background:linear-gradient(100deg,#13233c,#1a3356);}
+.hd{max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:21px;flex:none;}
+.hd .t1{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.82;font-weight:600;}
+.hd .t2{font-size:19px;font-weight:800;line-height:1.15;}
+.hd .meta{margin-left:auto;text-align:right;font-size:12px;opacity:.9;line-height:1.5;}
+.hd .pill{display:inline-block;background:rgba(255,255,255,.16);border-radius:999px;padding:3px 10px;font-weight:700;font-size:12px;}
+
+/* date filter bar */
+.filterbar{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);margin-top:16px;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.filterbar .flab{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-2);display:flex;align-items:center;gap:7px;}
+.filterbar .dates{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.filterbar input[type=date]{font:inherit;font-size:13.5px;padding:7px 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);color:var(--ink);}
+.filterbar input[type=date]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,120,214,.16);}
+.filterbar .arrow{color:var(--muted);font-weight:700;}
+.quick{display:flex;gap:7px;flex-wrap:wrap;margin-left:auto;}
+.quick button{font:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);color:var(--ink-2);cursor:pointer;transition:.15s;}
+.quick button:hover{border-color:var(--accent);color:var(--accent);}
+.quick button.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);}
+.kpi.k-good::before{background:var(--good);} .kpi.k-crit::before{background:var(--crit);} .kpi.k-warn::before{background:var(--warn);}
+.kpi .lab{font-size:12px;color:var(--ink-2);font-weight:700;letter-spacing:.02em;text-transform:uppercase;}
+.kpi .val{font-size:clamp(22px,3vw,30px);font-weight:800;margin-top:6px;line-height:1;letter-spacing:-.01em;}
+.kpi .sub{font-size:12px;color:var(--muted);margin-top:6px;}
+.kpi.k-good .val{color:var(--good-ink);} .kpi.k-crit .val{color:var(--crit);}
+
+/* sections */
+section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);margin-top:16px;overflow:hidden;}
+.sh{padding:14px 18px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.sh h2{font-size:15px;font-weight:800;color:var(--ink);letter-spacing:.01em;}
+.sh .tag{font-size:12px;color:var(--muted);font-weight:600;}
+.sh .sp{margin-left:auto;}
+.sb{padding:16px 18px;}
+.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center;}
+.chart-box{position:relative;width:100%;}
+canvas{max-width:100%;}
+.nodata{text-align:center;color:var(--muted);font-size:13.5px;padding:26px 10px;}
+
+/* reason bars */
+.rbar{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-2);}
+.rbar:last-child{border-bottom:0;}
+.rbar .nm{flex:none;width:150px;font-size:13.5px;font-weight:600;color:var(--ink);}
+.rbar .track{flex:1;height:14px;background:var(--line-2);border-radius:7px;overflow:hidden;min-width:0;}
+.rbar .fill{height:100%;border-radius:7px;transition:width .3s;}
+.rbar .vv{flex:none;width:92px;text-align:right;font-size:13px;font-weight:700;color:var(--ink-2);}
+
+.rsum{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;display:flex;gap:12px;flex-wrap:wrap;}
+.rsum .box{flex:1;min-width:190px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--surface-2);}
+.rsum .box.hl{border-color:var(--crit);background:var(--crit-bg);}
+.rsum .box.sp{border-color:#6250d6;background:#efe6fb;}
+.rsum .box.sp .bl,.rsum .box.sp .bv{color:#6250d6;}
+:root[data-theme="dark"] .rsum .box.sp{background:#241d3d;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rsum .box.sp{background:#241d3d;}}
+:root[data-theme="dark"] .rsum .box.sp .bl,:root[data-theme="dark"] .rsum .box.sp .bv{color:#9085e9;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rsum .box.sp .bl,:root:not([data-theme="light"]) .rsum .box.sp .bv{color:#9085e9;}}
+.rsum .box .bl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-2);}
+.rsum .box.hl .bl{color:var(--crit);}
+.rsum .box .bv{font-size:24px;font-weight:800;margin-top:4px;line-height:1;}
+.rsum .box.hl .bv{color:var(--crit);}
+.rsum .box .bd{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5;}
+.lg{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:12.5px;color:var(--ink-2);}
+.lg span{display:inline-flex;align-items:center;gap:6px;}
+.dot{width:11px;height:11px;border-radius:3px;flex:none;}
+
+/* table */
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.tools input,.tools select{font:inherit;font-size:13px;padding:7px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);color:var(--ink);}
+.tools input{min-width:150px;}
+.tools input:focus,.tools select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,120,214,.16);}
+.tscroll{overflow-x:auto;}
+table.dt{width:100%;border-collapse:collapse;font-size:13px;min-width:680px;}
+table.dt th,table.dt td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap;}
+table.dt th{position:sticky;top:0;background:var(--surface-2);color:var(--ink-2);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;z-index:1;cursor:pointer;user-select:none;}
+table.dt tbody tr:hover{background:var(--surface-2);}
+.rz{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap;}
+.rz.img{background:var(--warn-bg);color:var(--warn);} .rz.time{background:var(--crit-bg);color:var(--crit);} .rz.both,.rz.sp{background:#efe6fb;color:#6250d6;} .rz.other{background:var(--line-2);color:var(--ink-2);}
+:root[data-theme="dark"] .rz.both,:root[data-theme="dark"] .rz.sp{background:#241d3d;color:#9085e9;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rz.both,:root:not([data-theme="light"]) .rz.sp{background:#241d3d;color:#9085e9;}}
+.muted-cell{color:var(--muted);}
+.empty-cell{color:var(--crit);font-weight:600;}
+.pager{display:flex;align-items:center;gap:12px;justify-content:flex-end;padding:11px 18px;font-size:13px;color:var(--ink-2);flex-wrap:wrap;}
+.pager button{font:inherit;font-size:13px;padding:6px 13px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--ink);cursor:pointer;}
+.pager button:disabled{opacity:.4;cursor:default;}
+
+/* staff */
+.staff{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-2);}
+.staff:last-child{border-bottom:0;}
+.staff .rank{flex:none;width:26px;height:26px;border-radius:8px;background:var(--surface-2);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;}
+.staff .nm{flex:1;min-width:0;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.staff .meta{flex:none;font-size:12px;color:var(--muted);}
+.staff .cnt{flex:none;width:58px;text-align:right;font-weight:800;color:var(--crit);}
+.rolebadge{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);vertical-align:middle;}
+.rolebadge.sk{background:#efe6fb;color:#6250d6;border-color:transparent;}
+:root[data-theme="dark"] .rolebadge.sk{background:#241d3d;color:#9085e9;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rolebadge.sk{background:#241d3d;color:#9085e9;}}
+
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.act{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--surface-2);}
+.act .n{width:24px;height:24px;border-radius:7px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin-bottom:9px;}
+.act h3{font-size:14px;margin-bottom:5px;}
+.act p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.55;}
+
+details.def{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);}
+details.def summary{padding:14px 18px;font-weight:800;font-size:14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;}
+details.def summary::-webkit-details-marker{display:none;}
+details.def summary::after{content:"▸";margin-left:auto;color:var(--muted);transition:transform .2s;}
+details.def[open] summary::after{transform:rotate(90deg);}
+details.def .dc{padding:4px 18px 18px;font-size:13.5px;line-height:1.75;color:var(--ink-2);}
+details.def .dc b{color:var(--ink);}
+.note{font-size:12px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;padding:9px 13px;margin-top:10px;line-height:1.5;}
+.note b{color:var(--ink);}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px;line-height:1.7;}
+
+@media(max-width:760px){
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .grid2{grid-template-columns:1fr;}
+  .acts{grid-template-columns:1fr;}
+  .rbar .nm{width:120px;font-size:12.5px;}
+  .rbar .vv{width:78px;}
+  .hd .meta{margin-left:0;text-align:left;width:100%;}
+  .quick{margin-left:0;width:100%;}
+}
+</style>
+
+<header>
+  <div class="hd">
+    <div class="logo">✂️</div>
+    <div>
+      <div class="t1">Báo cáo khách tiêu chuẩn</div>
+      <div class="t2">Salon 927 HG</div>
+    </div>
+    <div class="meta">
+      <span class="pill" id="hdRange">—</span><br>
+      <span>Dữ liệu nội bộ 30Shine</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="filterbar">
+    <span class="flab">📅 Khoảng ngày</span>
+    <div class="dates">
+      <input type="date" id="dFrom"><span class="arrow">→</span><input type="date" id="dTo">
+    </div>
+    <div class="quick" id="quick">
+      <button data-q="7">7 ngày</button>
+      <button data-q="14">14 ngày</button>
+      <button data-q="30">30 ngày</button>
+      <button data-q="all">Tất cả</button>
+    </div>
+  </div>
+  <div class="note">ℹ️ Mỗi lượt = <b>1 hóa đơn</b> (đã gộp các dòng dịch vụ trùng BillId). Số có thể chênh nhẹ với trang Tổng quan do trang đó lấy từ nguồn doanh thu.</div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <div class="sh"><h2>Xu hướng tỷ lệ đạt theo ngày</h2><span class="tag" id="trendTag"></span></div>
+    <div class="sb"><div class="chart-box" style="height:260px"><canvas id="cTrend"></canvas></div></div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Lý do khiến bill chưa đạt</h2><span class="tag">Một bill có thể dính nhiều lỗi</span></div>
+    <div class="sb">
+      <div class="grid2">
+        <div id="reasonBars"></div>
+        <div>
+          <div class="chart-box" style="height:200px"><canvas id="cDonut"></canvas></div>
+          <div class="lg">
+            <span><i class="dot" style="background:var(--good)"></i> Đạt chuẩn</span>
+            <span><i class="dot" style="background:var(--crit)"></i> Chưa đạt</span>
+          </div>
+        </div>
+      </div>
+      <div class="rsum" id="reasonSummary"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Người chịu trách nhiệm lỗi</h2><span class="tag">Thợ cắt (hoặc skinner nếu bill chỉ gội) · chỉ lỗi thật</span></div>
+    <div class="sb" id="staffList"></div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <h2>Danh sách bill chưa đạt</h2>
+      <div class="sp"></div>
+      <div class="tools">
+        <select id="fReason">
+          <option value="">Tất cả lý do</option>
+          <option value="Thời gian">Thời gian lệch chuẩn</option>
+          <option value="Ảnh không đạt">Ảnh không đạt</option>
+          <option value="SP">Chỉ bán SP (loại)</option>
+          <option value="LRT">Chỉ LRT (loại)</option>
+        </select>
+        <input id="fSearch" placeholder="Tìm BillId / thợ / ngày...">
+      </div>
+    </div>
+    <div class="tscroll"><table class="dt" id="billTbl"></table></div>
+    <div class="pager" id="billPager"></div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Việc cần làm để cải thiện</h2></div>
+    <div class="sb">
+      <div class="acts">
+        <div class="act"><div class="n">1</div><h3>Bấm đủ giờ phục vụ</h3><p>Thời gian là lỗi lớn nhất (~97% lỗi thật). Rất nhiều bill ghi "0 phút" do quên bấm giờ bắt đầu/kết thúc — nhắc thợ bấm đủ cả 2 mốc.</p></div>
+        <div class="act"><div class="n">2</div><h3>Gán đúng thợ cắt / skinner</h3><p>Bill không gán thợ sẽ mất dữ liệu giờ và không quy được trách nhiệm. Bill chỉ gội thì gán skinner.</p></div>
+        <div class="act"><div class="n">3</div><h3>Ảnh phục vụ (bill có cắt)</h3><p>Chỉ còn số ít bill lỗi ảnh. Bill có cắt nhớ chụp &amp; up ảnh; bill chỉ gội không bắt buộc ảnh.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <details class="def">
+    <summary>📋 Điều kiện để 1 bill được tính là khách tiêu chuẩn</summary>
+    <div class="dc">
+      <p><b>Có Topup trả trước</b> → luôn tính là tiêu chuẩn, không xét thêm.</p>
+      <p><b>Bị loại:</b> chỉ bán sản phẩm (không dịch vụ); chỉ có dịch vụ LRT; hoặc LRT kèm dịch vụ khác nhưng tổng dịch vụ khác &lt; 50.000đ.</p>
+      <p><b>Các trường hợp còn lại</b> phải đủ cả 3 điều kiện:</p>
+      <p>• <b>Giá trị bill:</b> tổng tiền dịch vụ (trước giảm, không tính sản phẩm &amp; LRT) ≥ <b>50.000đ</b>.<br>
+      • <b>Ảnh phục vụ:</b> bill có <b>cắt</b> bắt buộc có ảnh; chỉ gội / dịch vụ khác thì không bắt buộc.<br>
+      • <b>Thời gian phục vụ:</b> tổng thời gian thực tế nằm trong <b>70%–300%</b> so với thời gian chuẩn của các dịch vụ trong bill.</p>
+    </div>
+  </details>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+/*__DATA__*/
+</script>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const nf=n=>Number(n).toLocaleString('vi-VN');
+  const css=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+  const d=DATA, DATES=d.dates, STYL=d.styl;
+  const fmtD=s=>{const p=s.split('-');return p[2]+'/'+p[1];};
+  const lastD=DATES[DATES.length-1];
+
+  // ---- date filter state ----
+  let from=DATES[0], to=lastD;
+  $('dFrom').min=DATES[0]; $('dFrom').max=lastD; $('dFrom').value=from;
+  $('dTo').min=DATES[0]; $('dTo').max=lastD; $('dTo').value=to;
+
+  let donut=null, trend=null;
+
+  function inRange(di){const ds=DATES[di];return ds>=from && ds<=to;}
+  function reasonOf(f){
+    if(f.ex===1)return 'Chỉ bán SP / không DV';
+    if(f.ex===2)return 'Chỉ LRT (không cắt)';
+    const p=[];
+    if(f.tm===2)p.push('Thời gian lệch chuẩn');
+    if(f.im===2)p.push('Ảnh không đạt');
+    if(f.sv===2)p.push('Giá DV <50K');
+    return p.length?p.join(' + '):'Khác';
+  }
+
+  function recompute(){
+    const agg=d.agg.filter(a=>inRange(a[0]));
+    const fails=d.fails.filter(f=>inRange(f.di));
+    const tot=agg.length, dat=agg.reduce((s,a)=>s+a[1],0), fail=tot-dat;
+    const rate=tot?dat/tot*100:0;
+    // reasons
+    // tách bill nên loại (chỉ bán SP / chỉ LRT) khỏi các lỗi thật
+    const sp=fails.filter(f=>f.ex===1).length;
+    const lrt=fails.filter(f=>f.ex===2).length;
+    const excl=sp+lrt;
+    const realFails=fails.filter(f=>f.ex===0);
+    const rc={img_bad:0,time:0,svc:0};
+    realFails.forEach(f=>{if(f.im===2)rc.img_bad++;if(f.tm===2)rc.time++;if(f.sv===2)rc.svc++;});
+    // người chịu trách nhiệm (lỗi thật): stylist nếu có cắt, nếu không là skinner
+    const rpm={};
+    realFails.forEach(f=>{const o=rpm[f.rp]=rpm[f.rp]||{n:0,tm:0,im:0,role:f.role};o.n++;if(f.tm===2)o.tm++;if(f.im===2)o.im++;});
+    const resp=Object.keys(rpm).map(k=>({name:k,...rpm[k]})).sort((a,b)=>b.n-a.n);
+    // daily
+    const dayMap={};
+    agg.forEach(a=>{const k=a[0];(dayMap[k]=dayMap[k]||[0,0]);dayMap[k][0]++;dayMap[k][1]+=a[1];});
+    const days=Object.keys(dayMap).map(Number).sort((x,y)=>x-y).map(k=>({date:DATES[k],tot:dayMap[k][0],rate:+(dayMap[k][1]/dayMap[k][0]*100).toFixed(1)}));
+    return {tot,dat,fail,rate,rc,sp,lrt,excl,realFail:realFails.length,resp,days,fails};
+  }
+
+  function render(){
+    const m=recompute();
+    $('hdRange').textContent=fmtD(from)+' – '+fmtD(to)+'/'+to.slice(0,4);
+
+    if(m.tot===0){
+      $('kpis').innerHTML='<div class="kpi" style="grid-column:1/-1"><div class="nodata">Không có dữ liệu trong khoảng ngày đã chọn.</div></div>';
+    } else {
+      const biggest=[['Thời gian',m.rc.time],['Ảnh không đạt',m.rc.img_bad],['Giá DV<50K',m.rc.svc]].sort((a,b)=>b[1]-a[1])[0];
+      $('kpis').innerHTML=[
+        {c:'',lab:'Lượt khách (hóa đơn)',val:nf(m.tot),sub:m.days.length+' ngày có khách'},
+        {c:'k-good',lab:'Khách đạt chuẩn',val:nf(m.dat),sub:m.rate.toFixed(1)+'% tổng lượt'},
+        {c:'k-crit',lab:'LỖI THẬT cần xử lý',val:nf(m.realFail),sub:(m.excl?'loại '+nf(m.excl)+' bill SP/LRT · tổng "chưa đạt" '+nf(m.fail):(100-m.rate).toFixed(1)+'% · cần xử lý')},
+        {c:'k-warn',lab:'Lỗi phổ biến nhất',val:biggest[0],sub:nf(biggest[1])+' bill'},
+      ].map(k=>`<div class="kpi ${k.c}"><div class="lab">${k.lab}</div><div class="val tnum">${k.val}</div><div class="sub">${k.sub}</div></div>`).join('');
+    }
+
+    // reason bars
+    const R=[
+      {nm:'Thời gian lệch chuẩn',v:m.rc.time,col:css('--crit')},
+      {nm:'Ảnh không đạt',v:m.rc.img_bad,col:css('--warn')},
+      {nm:'Giá dịch vụ <50K',v:m.rc.svc,col:css('--muted')},
+      {nm:'Chỉ bán SP (loại)',v:m.sp,col:'#6250d6'},
+      {nm:'Chỉ LRT (loại)',v:m.lrt,col:'#9085e9'},
+    ];
+    const rmax=Math.max(...R.map(r=>r.v),1);
+    $('reasonBars').innerHTML=R.map(r=>`<div class="rbar"><div class="nm">${r.nm}</div><div class="track"><div class="fill" style="width:${r.v?Math.max(r.v/rmax*100,2):0}%;background:${r.col}"></div></div><div class="vv tnum">${nf(r.v)} bill</div></div>`).join('');
+
+    // tổng lỗi ngoài thiếu ảnh
+    $('reasonSummary').innerHTML=
+      `<div class="box hl"><div class="bl">✅ LỖI THẬT cần xử lý</div><div class="bv tnum">${nf(m.realFail)}</div><div class="bd">thời gian ${nf(m.rc.time)} · ảnh không đạt ${nf(m.rc.img_bad)} · giá DV ${nf(m.rc.svc)}</div></div>`
+      +`<div class="box sp"><div class="bl">🧴 Chỉ bán SP (loại)</div><div class="bv tnum">${nf(m.sp)}</div><div class="bd">bill chỉ bán sản phẩm, không có dịch vụ — quy tắc không tính là lỗi.</div></div>`
+      +`<div class="box sp"><div class="bl">👂 Chỉ LRT (loại)</div><div class="bv tnum">${nf(m.lrt)}</div><div class="bd">bill chỉ lấy ráy tai (LRT), không có cắt — quy tắc không tính là lỗi.</div></div>`;
+
+    // donut
+    const dd=[m.dat,m.fail];
+    if(donut){donut.data.datasets[0].data=dd;donut.update();}
+    else donut=new Chart($('cDonut'),{type:'doughnut',data:{labels:['Đạt','Chưa đạt'],datasets:[{data:dd,backgroundColor:[css('--good'),css('--crit')],borderWidth:2,borderColor:css('--surface')}]},
+      options:{cutout:'66%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.label+': '+nf(c.parsed)+' ('+(m.tot?c.parsed/m.tot*100:0).toFixed(1)+'%)'}}}}});
+
+    // trend
+    $('trendTag').textContent='Trung bình '+m.rate.toFixed(1)+'%';
+    const ink=css('--ink-2'), grid=css('--line'), acc=css('--accent');
+    const labels=m.days.map(x=>fmtD(x.date)), vals=m.days.map(x=>x.rate);
+    const ymin=vals.length?Math.max(0,Math.floor(Math.min(...vals)/5)*5-2):0;
+    if(trend){trend.data.labels=labels;trend.data.datasets[0].data=vals;trend.options.scales.y.min=ymin;trend.update();}
+    else trend=new Chart($('cTrend'),{type:'line',data:{labels,datasets:[{data:vals,borderColor:acc,borderWidth:2,
+      fill:true,backgroundColor:ctx=>{const c=ctx.chart.ctx;const g=c.createLinearGradient(0,0,0,240);g.addColorStop(0,acc+'44');g.addColorStop(1,acc+'00');return g;},
+      tension:.3,pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:acc,pointHoverBorderColor:css('--surface'),pointHoverBorderWidth:2}]},
+      options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:it=>'Ngày '+it[0].label,label:c=>'Tỷ lệ đạt: '+c.parsed.y.toFixed(1)+'%'}}},
+      scales:{y:{min:ymin,max:100,ticks:{color:ink,callback:v=>v+'%'},grid:{color:grid}},x:{ticks:{color:ink,maxTicksLimit:12,autoSkip:true},grid:{display:false}}}}});
+
+    // staff
+    $('staffList').innerHTML=m.resp.length?m.resp.map((s,i)=>`<div class="staff"><div class="rank">${i+1}</div><div class="nm">${s.name==='(trống)'?'<span style="color:var(--crit)">(trống)</span>':s.name}<span class="rolebadge ${s.role==='Skinner'?'sk':''}">${s.role}</span></div><div class="meta tnum">TG ${s.tm} · ảnh ${s.im}</div><div class="cnt tnum">${s.n}</div></div>`).join(''):'<div class="nodata">Không có lỗi thật trong khoảng này. 🎉</div>';
+
+    renderBills(m.fails);
+    $('foot').innerHTML='Nguồn: hệ thống báo cáo sale 30Shine · Toàn bộ dữ liệu '+fmtD(DATES[0])+' – '+fmtD(lastD)+'/'+lastD.slice(0,4)+'<br>Báo cáo nội bộ — Salon 927 HG';
+  }
+
+  // ---- bill table ----
+  const cols=[['date','Ngày'],['bill','BillId'],['cus','CustomerId'],['stylist','Stylist'],['skinner','Skinner'],['reason','Lý do'],['tnote','Chi tiết thời gian']];
+  let tstate={sort:'date',dir:'asc',page:0,ps:20,q:'',reason:''}, curFails=[];
+  const zClass=r=>(r.indexOf('SP')>-1||r.indexOf('LRT')>-1)?'sp':(r.indexOf('+')>-1?'both':(r.indexOf('Thời gian')>-1?'time':((r.indexOf('ảnh')>-1||r.indexOf('Ảnh')>-1)?'img':'other')));
+  function mapBill(f){return {date:DATES[f.di],bill:f.b,cus:f.c,stylist:STYL[f.s],skinner:f.k,reason:reasonOf(f),tnote:f.tn};}
+  function renderBills(fails){curFails=fails.map(mapBill);tstate.page=0;drawBills();}
+  function drawBills(){
+    let a=curFails.slice();
+    if(tstate.reason)a=a.filter(r=>r.reason.indexOf(tstate.reason)>-1);
+    if(tstate.q){const q=tstate.q.toLowerCase();a=a.filter(r=>[r.date,r.bill,r.cus,r.stylist,r.skinner,r.reason].join(' ').toLowerCase().indexOf(q)>-1);}
+    a.sort((x,y)=>{let vx=x[tstate.sort],vy=y[tstate.sort];if(typeof vx==='number')return tstate.dir==='asc'?vx-vy:vy-vx;vx=String(vx||'');vy=String(vy||'');return tstate.dir==='asc'?vx.localeCompare(vy):vy.localeCompare(vx);});
+    const pages=Math.max(1,Math.ceil(a.length/tstate.ps));tstate.page=Math.min(tstate.page,pages-1);
+    const pg=a.slice(tstate.page*tstate.ps,tstate.page*tstate.ps+tstate.ps);
+    let h='<thead><tr>'+cols.map(c=>`<th data-k="${c[0]}">${c[1]}${tstate.sort===c[0]?(tstate.dir==='asc'?' ▲':' ▼'):''}</th>`).join('')+'</tr></thead><tbody>';
+    h+=pg.length?pg.map(r=>'<tr>'+cols.map(c=>{
+      let v=r[c[0]];
+      if(c[0]==='reason')return`<td><span class="rz ${zClass(v)}">${v}</span></td>`;
+      if(c[0]==='stylist'&&v==='(trống)')return`<td class="empty-cell">(trống)</td>`;
+      if((c[0]==='skinner'||c[0]==='tnote')&&!v)return`<td class="muted-cell">—</td>`;
+      return`<td class="${['date','bill','cus'].indexOf(c[0])>-1?'tnum':''}">${v!=null&&v!==''?v:'—'}</td>`;
+    }).join('')+'</tr>').join(''):`<tr><td colspan="${cols.length}" class="nodata">Không có bill chưa đạt.</td></tr>`;
+    h+='</tbody>';
+    $('billTbl').innerHTML=h;
+    $('billPager').innerHTML=`<span>${a.length} bill</span><button ${tstate.page<=0?'disabled':''} data-d="-1">‹ Trước</button><span>Trang ${tstate.page+1}/${pages}</span><button ${tstate.page>=pages-1?'disabled':''} data-d="1">Sau ›</button>`;
+    $('billTbl').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(tstate.sort===k)tstate.dir=tstate.dir==='asc'?'desc':'asc';else{tstate.sort=k;tstate.dir='asc';}drawBills();});
+    $('billPager').querySelectorAll('button').forEach(b=>b.onclick=()=>{tstate.page+=+b.dataset.d;drawBills();});
+  }
+  $('fSearch').oninput=e=>{tstate.q=e.target.value;tstate.page=0;drawBills();};
+  $('fReason').onchange=e=>{tstate.reason=e.target.value;tstate.page=0;drawBills();};
+
+  // ---- date controls ----
+  function setQuickActive(q){document.querySelectorAll('#quick button').forEach(b=>b.classList.toggle('on',b.dataset.q===q));}
+  function addDays(iso,n){const t=new Date(iso+'T00:00:00');t.setDate(t.getDate()+n);return t.toISOString().slice(0,10);}
+  $('quick').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const q=b.dataset.q;
+    if(q==='all'){from=DATES[0];to=lastD;}
+    else{to=lastD;let f=addDays(lastD,-(+q-1));from=f<DATES[0]?DATES[0]:f;}
+    $('dFrom').value=from;$('dTo').value=to;setQuickActive(q);render();
+  });
+  function onManual(){
+    from=$('dFrom').value||DATES[0];to=$('dTo').value||lastD;
+    if(from>to){const t=from;from=to;to=t;$('dFrom').value=from;$('dTo').value=to;}
+    setQuickActive(null);render();
+  }
+  $('dFrom').onchange=onManual;$('dTo').onchange=onManual;
+
+  setQuickActive('all');
+  render();
+})();
+</script>
