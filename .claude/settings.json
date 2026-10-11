@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["Bash(bash scripts/927hg/build.sh)"]
+  }
+}
