@@ -22,12 +22,18 @@
       thoi_gian: e.querySelector('.rsqaWe')?.textContent.trim(),
       noi_dung: (e.querySelector('.wiI7pd')?.textContent || '').trim().slice(0, 80),
     }));
+  // Điểm tổng trên Google Maps (ô to "4,5" và "1.228 bài viết" ở đầu tab Bài đánh giá)
+  const leaves = [...document.querySelectorAll('div, span')].filter(e => e.children.length === 0 && visible(e));
+  const rEl = leaves.find(e => /^[1-5][,.]\d$/.test(e.textContent.trim()));
+  const nEl = leaves.find(e => /^[\d.,]+\s*(bài viết|bài đánh giá|đánh giá|reviews?)$/i.test(e.textContent.trim()));
+  const rating_map = rEl ? +rEl.textContent.trim().replace(',', '.') : null;
+  const tong_review = nEl ? +nEl.textContent.replace(/[^\d]/g, '') : null;
   const moi = rows.filter(r => /phút|giờ|ngày/.test(r.thoi_gian || ''));
   const tb = moi.length ? +(moi.reduce((a, r) => a + r.sao, 0) / moi.length).toFixed(2) : 0;
   console.log(`📍 ${salon}`); console.table(moi);
   let all = {}; try { all = JSON.parse(localStorage.getItem('dem_review') || '{}'); } catch {}
-  all[salon] = {bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
+  all[salon] = {rating_map, tong_review, bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
   try { localStorage.setItem('dem_review', JSON.stringify(all)); } catch {}
   console.log('📊 Tổng hợp các salon:'); console.table(all);
-  alert(`${salon}\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm trung bình: ${tb} sao`);
+  alert(`${salon}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao`);
 })();
