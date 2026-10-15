@@ -1,7 +1,12 @@
 // Đếm đánh giá Google Maps mới trong 7 ngày (chạy trên trang salon, tab "Bài đánh giá", sắp xếp "Mới nhất")
 (async () => {
-  const salon = document.title.replace(/\s*-\s*Google Maps.*$/i, '').trim() || 'Không rõ tên';
   const visible = el => el.getClientRects().length > 0 && el.offsetParent !== null;
+  const h1 = [...document.querySelectorAll('h1')].find(e => visible(e) && e.textContent.trim());
+  const salon = (h1?.textContent || document.title.replace(/\s*-\s*Google Maps.*$/i, '')).trim() || 'Không rõ tên';
+  // Địa chỉ + mã địa điểm để phân biệt các salon trùng tên
+  const addrEl = document.querySelector('button[data-item-id="address"]');
+  const dia_chi = (addrEl?.getAttribute('aria-label') || addrEl?.textContent || '').replace(/^Địa chỉ:\s*/i, '').trim();
+  const placeId = (location.href.match(/!1s(0x[0-9a-f]+:0x[0-9a-f]+)/i) || [])[1] || dia_chi || salon;
   const getItems = () => [...document.querySelectorAll('div.jftiEf')].filter(visible);
   const first = getItems()[0];
   if (!first) { alert(`${salon}\nChưa thấy đánh giá. Bấm tab "Bài đánh giá", chọn Sắp xếp › Mới nhất rồi chạy lại.`); return; }
@@ -32,8 +37,9 @@
   const tb = moi.length ? +(moi.reduce((a, r) => a + r.sao, 0) / moi.length).toFixed(2) : 0;
   console.log(`📍 ${salon}`); console.table(moi);
   let all = {}; try { all = JSON.parse(localStorage.getItem('dem_review') || '{}'); } catch {}
-  all[salon] = {rating_map, tong_review, bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
+  for (const k of Object.keys(all)) if (k === salon && !all[k].ten) delete all[k]; // bỏ dòng cũ lưu theo tên
+  all[placeId] = {ten: salon, dia_chi, rating_map, tong_review, bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
   try { localStorage.setItem('dem_review', JSON.stringify(all)); } catch {}
-  console.log('📊 Tổng hợp các salon:'); console.table(all);
-  alert(`${salon}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao`);
+  console.log('📊 Tổng hợp các salon:'); console.table(Object.values(all));
+  alert(`${salon}\n${dia_chi}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao`);
 })();
