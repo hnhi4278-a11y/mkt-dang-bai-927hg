@@ -7,6 +7,7 @@ Bộ 3 lệnh để đếm số đánh giá mới trong 7 ngày của từng sal
 | **⭐ Đếm review** | Đếm bài mới trong 7 ngày, ghi điểm Google Maps + tổng số đánh giá của salon đang mở, lưu vào bảng |
 | **📊 Xem bảng** | Mở bảng báo cáo trên trang: tên + địa chỉ từng salon, rating TB, xếp hạng, nút copy sang Excel/Sheets |
 | **🗑 Xóa bảng** | Xóa bảng để đếm tuần mới |
+| **📖 Đọc 2 ngày** (`doc2.js`) | Hiện toàn bộ nội dung đánh giá 2 ngày gần nhất của salon đang mở, tô đỏ bài dưới 5★, có nút copy |
 
 ---
 
