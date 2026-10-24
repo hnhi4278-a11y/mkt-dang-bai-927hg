@@ -9,8 +9,11 @@
   const getItems = () => [...document.querySelectorAll('div.jftiEf')].filter(visible);
   const first = getItems()[0];
   if (!first) { alert(`${salon}\nChưa thấy đánh giá. Bấm tab "Bài đánh giá", chọn Sắp xếp › Mới nhất rồi chạy lại.`); return; }
-  const trongKhoang = t => /phút|giờ/.test(t) || (+(t.match(/(\d+)\s*ngày/) || [])[1] <= SO_NGAY);
-  const quaKhoang = t => /tuần|tháng|năm/.test(t) || (+(t.match(/(\d+)\s*ngày/) || [])[1] > SO_NGAY);
+  // Đổi "5 ngày trước" / "một tuần trước" thành số ngày ("năm ngày" = 5 ngày, "năm trước" = 1 năm)
+  const NUM = {'một': 1, 'hai': 2, 'ba': 3, 'bốn': 4, 'năm': 5, 'sáu': 6};
+  const soNgay = t => { t = (t || '').toLowerCase(); if (/phút|giờ|giây/.test(t)) return 0; const m = t.match(/(\d+|một|hai|ba|bốn|năm|sáu)\s*ngày/); if (m) return +m[1] || NUM[m[1]]; return /tuần|tháng|năm trước/.test(t) ? 99 : NaN; };
+  const trongKhoang = t => soNgay(t) <= SO_NGAY;
+  const quaKhoang = t => soNgay(t) > SO_NGAY;
   let box = first.parentElement;
   while (box && box.scrollHeight <= box.clientHeight + 5) box = box.parentElement;
   const sleep = ms => new Promise(r => setTimeout(r, ms));

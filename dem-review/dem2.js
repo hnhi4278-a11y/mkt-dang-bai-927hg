@@ -12,10 +12,13 @@
   if (!first) { alert(`${salon}\nChưa thấy đánh giá. Bấm tab "Bài đánh giá", chọn Sắp xếp › Mới nhất rồi chạy lại.`); return; }
   let box = first.parentElement;
   while (box && box.scrollHeight <= box.clientHeight + 5) box = box.parentElement;
+  // Đổi "5 ngày trước" / "một tuần trước" thành số ngày ("năm ngày" = 5 ngày, "năm trước" = 1 năm)
+  const NUM = {'một': 1, 'hai': 2, 'ba': 3, 'bốn': 4, 'năm': 5, 'sáu': 6};
+  const soNgay = t => { t = (t || '').toLowerCase(); if (/phút|giờ|giây/.test(t)) return 0; const m = t.match(/(\d+|một|hai|ba|bốn|năm|sáu)\s*ngày/); if (m) return +m[1] || NUM[m[1]]; return /tuần|tháng|năm trước/.test(t) ? 99 : NaN; };
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   for (let i = 0; i < 60; i++) {
     const dates = getItems().map(e => e.querySelector('.rsqaWe')?.textContent || '');
-    if (dates.some(d => (/tuần|tháng|năm/.test(d) || +(d.match(/(\d+)\s*ngày/) || [])[1] > 2))) break;
+    if (dates.some(d => soNgay(d) > 2)) break;
     box.scrollBy(0, 3000);
     await sleep(1200);
   }
@@ -33,7 +36,7 @@
   const nEl = leaves.find(e => /^[\d.,]+\s*(bài viết|bài đánh giá|đánh giá|reviews?)$/i.test(e.textContent.trim()));
   const rating_map = rEl ? +rEl.textContent.trim().replace(',', '.') : null;
   const tong_review = nEl ? +nEl.textContent.replace(/[^\d]/g, '') : null;
-  const moi = rows.filter(r => (/phút|giờ/.test(r.thoi_gian || '') || +((r.thoi_gian || '').match(/(\d+)\s*ngày/) || [])[1] <= 2));
+  const moi = rows.filter(r => soNgay(r.thoi_gian) <= 2);
   const tb = moi.length ? +(moi.reduce((a, r) => a + r.sao, 0) / moi.length).toFixed(2) : 0;
   console.log(`📍 ${salon}`); console.table(moi);
   let all = {}; try { all = JSON.parse(localStorage.getItem('dem_review_2ngay') || '{}'); } catch {}
