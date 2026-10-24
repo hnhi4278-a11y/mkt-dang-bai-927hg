@@ -2,6 +2,9 @@
 
 Trao đổi với người dùng bằng tiếng Việt, ngắn gọn, dễ hiểu (người dùng không rành kỹ thuật).
 
+**Đầu mỗi phiên: đọc `NHAT-KY.md`** (tóm tắt việc gần nhất), không cần hỏi lại người dùng.
+**Khi người dùng nhắn "ok"/xác nhận xong một việc:** thêm mục tóm tắt mới lên đầu `NHAT-KY.md` (ngày, việc đã làm, trạng thái, việc còn mở), commit và push.
+
 ## dem-review/ — lệnh đếm/đọc đánh giá Google Maps (chạy trong Console Chrome máy tính)
 - Trang copy lệnh (artifact): https://claude.ai/artifact/5N6HqYqo9irgqeRDd1oDdK — nguồn là `dem-review/page.html`.
 - Lệnh: `dem.js` đếm 7 ngày (localStorage `dem_review`), `xem.js` báo cáo, `xoa.js` xóa; `dem2/xem2/xoa2.js` bản 2 ngày (`dem_review_2ngay`); `doc7.js`, `doc2.js` đọc nội dung.
