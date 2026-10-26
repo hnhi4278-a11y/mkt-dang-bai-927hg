@@ -5,6 +5,7 @@
 - Sửa cả 4 lệnh (dem, dem2, doc2, doc7): tìm đúng khung cuộn (overflow auto/scroll), kéo tới bài cuối, đợi bài mới tải xong mới kéo tiếp, dừng khi gặp bài quá hạn hoặc 4 lần không có bài mới.
 - Thêm cảnh báo ⚠️ khi chưa kéo tới bài quá hạn ("số có thể bị THIẾU").
 - Thử trên trang giả lập tải 10 bài/lần: 25 bài 7 ngày → đếm đúng 25.
+- Bỏ giới hạn số lần kéo theo yêu cầu: kéo tới khi gặp "một tuần trước"; chỉ dừng sớm nếu Google hết bài (5 lần liền không tải thêm). Thử 137 bài → đếm đủ 137.
 - Còn chờ: người dùng chạy lại trên Maps thật để xác nhận.
 
 ## 24/10/2026 — Đếm review Google Maps

@@ -17,15 +17,15 @@
   const NUM = {'một': 1, 'hai': 2, 'ba': 3, 'bốn': 4, 'năm': 5, 'sáu': 6};
   const soNgay = t => { t = (t || '').toLowerCase(); if (/phút|giờ|giây/.test(t)) return 0; const m = t.match(/(\d+|một|hai|ba|bốn|năm|sáu)\s*ngày/); if (m) return +m[1] || NUM[m[1]]; return /tuần|tháng|năm trước/.test(t) ? 99 : NaN; };
   const sleep = ms => new Promise(r => setTimeout(r, ms));
-  // Kéo xuống từng đợt (Google tải 10 bài/lần), đợi bài mới hiện ra; dừng khi gặp bài quá hạn hoặc hết bài
+  // Kéo xuống từng đợt (Google tải 10 bài/lần), đợi bài mới hiện ra; dừng khi gặp bài quá hạn hoặc hết bài (5 lần liền không có bài mới)
   let toiHan = false;
-  for (let i = 0, dung = 0; i < 40 && dung < 4; i++) {
+  for (let dung = 0; dung < 5; ) { // không giới hạn số lần kéo; chỉ dừng khi tới hạn hoặc Google hết bài
     const items = getItems();
     if (items.some(e => (d => soNgay(d) > 2)(e.querySelector('.rsqaWe')?.textContent || ''))) { toiHan = true; break; }
     const truoc = items.length;
     items[items.length - 1]?.scrollIntoView({block: 'end'});
     box.scrollTop = box.scrollHeight;
-    for (let w = 0; w < 10 && getItems().length === truoc; w++) await sleep(400);
+    for (let w = 0; w < 20 && getItems().length === truoc; w++) await sleep(400);
     dung = getItems().length === truoc ? dung + 1 : 0;
   }
   const seen = new Set();
