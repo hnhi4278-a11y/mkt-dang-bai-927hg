@@ -18,9 +18,19 @@
   const soNgay = t => { t = (t || '').toLowerCase(); if (/phút|giờ|giây/.test(t)) return 0; const m = t.match(/(\d+|một|hai|ba|bốn|năm|sáu)\s*ngày/); if (m) return +m[1] || NUM[m[1]]; return /tuần|tháng|năm trước/.test(t) ? 99 : NaN; };
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   // Kéo xuống từng đợt (Google tải 10 bài/lần), đợi bài mới hiện ra; dừng khi gặp bài quá hạn hoặc hết bài (5 lần liền không có bài mới)
+  // Ẩn ảnh trong bài đánh giá cho kéo nhanh hơn, và hiện bảng tiến độ để biết lệnh đang chạy
+  document.getElementById('dr-hide')?.remove(); document.getElementById('dr-badge')?.remove();
+  const st = document.createElement('style'); st.id = 'dr-hide';
+  st.textContent = 'div.jftiEf .KtCyie, div.jftiEf button.Tya61d, div.jftiEf button[data-photo-index] {display:none!important}';
+  document.head.appendChild(st);
+  const badge = document.createElement('div'); badge.id = 'dr-badge';
+  badge.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:2147483647;background:#0f766e;color:#fff;padding:10px 18px;border-radius:999px;font:600 15px system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.3)';
+  badge.textContent = '⏳ Đang đếm…'; document.body.appendChild(badge);
+  const xong = () => { badge.remove(); st.remove(); };
   let toiHan = false;
   for (let dung = 0; dung < 5; ) { // không giới hạn số lần kéo; chỉ dừng khi tới hạn hoặc Google hết bài
     const items = getItems();
+    badge.textContent = `⏳ Đang đếm ${salon}… đã đọc ${items.length} bài · tới: ${items[items.length - 1]?.querySelector('.rsqaWe')?.textContent || '…'}`;
     if (items.some(e => (d => soNgay(d) > 2)(e.querySelector('.rsqaWe')?.textContent || ''))) { toiHan = true; break; }
     const truoc = items.length;
     items[items.length - 1]?.scrollIntoView({block: 'end'});
@@ -28,6 +38,7 @@
     for (let w = 0; w < 20 && getItems().length === truoc; w++) await sleep(400);
     dung = getItems().length === truoc ? dung + 1 : 0;
   }
+  xong();
   const seen = new Set();
   const rows = getItems().filter(e => { const id = e.getAttribute('data-review-id'); if (seen.has(id)) return false; seen.add(id); return true; })
     .map(e => ({
