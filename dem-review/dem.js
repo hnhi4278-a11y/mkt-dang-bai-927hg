@@ -2,10 +2,14 @@
 (async () => {
   const visible = el => el.getClientRects().length > 0 && el.offsetParent !== null;
   const h1 = [...document.querySelectorAll('h1')].find(e => visible(e) && e.textContent.trim());
-  const salon = (h1?.textContent || document.title.replace(/\s*-\s*Google Maps.*$/i, '')).trim() || 'Không rõ tên';
+  // Tên + địa chỉ: lấy từ tiêu đề trang, link Maps, thẻ meta (dạng "Tên · Địa chỉ") để luôn có
+  const metaTxt = document.querySelector('meta[itemprop="name"]')?.content || document.querySelector('meta[property="og:title"]')?.content || '';
+  const [metaTen, ...metaRest] = metaTxt.split(' · ');
+  const urlTen = decodeURIComponent(((location.pathname.match(/\/place\/([^/]+)/) || [])[1] || '').replace(/\+/g, ' '));
+  const salon = (h1?.textContent || urlTen || metaTen || document.title.replace(/\s*-\s*Google Maps.*$/i, '')).trim() || 'Không rõ tên';
   // Địa chỉ + mã địa điểm để phân biệt các salon trùng tên
   const addrEl = document.querySelector('button[data-item-id="address"]');
-  const dia_chi = (addrEl?.getAttribute('aria-label') || addrEl?.textContent || '').replace(/^Địa chỉ:\s*/i, '').trim();
+  const dia_chi = (addrEl?.getAttribute('aria-label') || addrEl?.textContent || metaRest.join(' · ') || '').replace(/^Địa chỉ:\s*/i, '').trim();
   const placeId = (location.href.match(/!1s(0x[0-9a-f]+:0x[0-9a-f]+)/i) || [])[1] || dia_chi || salon;
   const getItems = () => [...document.querySelectorAll('div.jftiEf')].filter(visible);
   const first = getItems()[0];

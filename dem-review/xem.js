@@ -34,7 +34,7 @@
           ${['#', 'Salon', 'Địa chỉ', 'Rating Maps', 'Tổng ĐG', 'Mới 7 ngày', 'TB 7 ngày', 'Dưới 5★', 'Ngày đếm'].map(h => `<th style="${td};font-weight:700">${h}</th>`).join('')}
         </tr></thead>
         <tbody>${list.map((x, i) => `<tr>
-          <td style="${td}">${i + 1}</td><td style="${td}"><b>${esc(x.ten)}</b></td><td style="${td};color:#5b6b67">${esc(x.dia_chi) || '—'}</td>
+          <td style="${td}">${i + 1}</td><td style="${td}"><b>${esc(x.ten)}</b></td><td style="${td};color:#5b6b67">${esc(x.dia_chi) || '<i style="color:#b91c1c">chưa có – bấm tab Tổng quan rồi đếm lại</i>'}</td>
           <td style="${td}">${x.rating_map ?? '?'}★</td><td style="${td}">${x.tong_review ?? '?'}</td><td style="${td}">${x.bai_moi_7_ngay ?? 0}</td>
           <td style="${td}">${x.diem_tb ?? ''}</td><td style="${td};${x.duoi_5_sao ? 'color:#b91c1c;font-weight:700' : ''}">${x.duoi_5_sao ?? 0}</td><td style="${td}">${esc(x.ngay_dem)}</td>
         </tr>`).join('')}</tbody>

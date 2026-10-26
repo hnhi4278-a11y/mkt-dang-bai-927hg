@@ -3,9 +3,13 @@
   const SO_NGAY = 6; // tới "6 ngày trước", gặp "một tuần trước" thì dừng
   const visible = el => el.getClientRects().length > 0 && el.offsetParent !== null;
   const h1 = [...document.querySelectorAll('h1')].find(e => visible(e) && e.textContent.trim());
-  const salon = (h1?.textContent || document.title.replace(/\s*-\s*Google Maps.*$/i, '')).trim() || 'Không rõ tên';
+  // Tên + địa chỉ: lấy từ tiêu đề trang, link Maps, thẻ meta (dạng "Tên · Địa chỉ") để luôn có
+  const metaTxt = document.querySelector('meta[itemprop="name"]')?.content || document.querySelector('meta[property="og:title"]')?.content || '';
+  const [metaTen, ...metaRest] = metaTxt.split(' · ');
+  const urlTen = decodeURIComponent(((location.pathname.match(/\/place\/([^/]+)/) || [])[1] || '').replace(/\+/g, ' '));
+  const salon = (h1?.textContent || urlTen || metaTen || document.title.replace(/\s*-\s*Google Maps.*$/i, '')).trim() || 'Không rõ tên';
   const addrEl = document.querySelector('button[data-item-id="address"]');
-  const dia_chi = (addrEl?.getAttribute('aria-label') || addrEl?.textContent || '').replace(/^Địa chỉ:\s*/i, '').trim();
+  const dia_chi = (addrEl?.getAttribute('aria-label') || addrEl?.textContent || metaRest.join(' · ') || '').replace(/^Địa chỉ:\s*/i, '').trim();
   const getItems = () => [...document.querySelectorAll('div.jftiEf')].filter(visible);
   const first = getItems()[0];
   if (!first) { alert(`${salon}\nChưa thấy đánh giá. Bấm tab "Bài đánh giá", chọn Sắp xếp › Mới nhất rồi chạy lại.`); return; }
