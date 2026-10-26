@@ -9,6 +9,7 @@
 - Thêm bảng tiến độ "⏳ Đang đếm… đã đọc N bài · tới: …" ở đầu trang và ẩn ảnh trong bài đánh giá khi đang kéo (giảm lỗi ảnh 404 đỏ trong Console, kéo nhanh hơn). Lỗi 404 ảnh googleusercontent là vô hại.
 - Báo cáo 7 ngày thiếu tên/địa chỉ salon: thêm nguồn dự phòng (link /place/<tên>, thẻ meta "Tên · Địa chỉ"); báo cáo ghi đỏ "chưa có – bấm tab Tổng quan rồi đếm lại" nếu vẫn thiếu.
 - Báo cáo ra toàn "30shine", rating đều 4.8, địa chỉ trống: lệnh đọc nhầm danh sách kết quả tìm kiếm "30shine" còn bên cạnh. Sửa: chỉ đọc trong khung salon đang mở (div[role=main], tên lấy từ aria-label), địa chỉ thiếu thì tự bấm tab Tổng quan để đọc sau khi đếm xong. Rating trước đó có thể sai (lấy của kết quả tìm kiếm).
+- 927 vẫn ra 10 bài: thêm dòng "Đã đọc N bài, dừng ở bài thứ k: <tên> – <thời gian>" vào thông báo để kiểm tra lệnh dừng đúng chỗ không. Chờ người dùng gửi thông báo này của 927.
 - Còn chờ: người dùng chạy lại trên Maps thật để xác nhận.
 
 ## 24/10/2026 — Đếm review Google Maps

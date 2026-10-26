@@ -57,6 +57,8 @@
   const rating_map = rEl ? +rEl.textContent.trim().replace(',', '.') : null;
   const tong_review = nEl ? +nEl.textContent.replace(/[^\d]/g, '') : null;
   const moi = rows.filter(r => soNgay(r.thoi_gian) <= 6);
+  const dungIdx = rows.findIndex(r => soNgay(r.thoi_gian) > 6);
+  const dungO = dungIdx >= 0 ? `\nĐã đọc ${rows.length} bài, dừng ở bài thứ ${dungIdx + 1}: ${rows[dungIdx].ten} – "${rows[dungIdx].thoi_gian}"` : '';
   const tb = moi.length ? +(moi.reduce((a, r) => a + r.sao, 0) / moi.length).toFixed(2) : 0;
   console.log(`📍 ${salon}`); console.table(moi);
   // Chưa có địa chỉ: mở tab "Tổng quan" để đọc (đếm xong rồi nên không ảnh hưởng)
@@ -69,5 +71,5 @@
   all[placeId] = {ten: salon, dia_chi, rating_map, tong_review, bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
   try { localStorage.setItem('dem_review', JSON.stringify(all)); } catch {}
   console.log('📊 Tổng hợp các salon:'); console.table(Object.values(all));
-  alert(`${salon}\n${dia_chi}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao${toiHan ? '' : '\n\n⚠️ Chưa kéo tới bài cũ hơn 7 ngày (đã đọc ${rows.length} bài). Số có thể bị THIẾU, hãy chạy lại.'}`);
+  alert(`${salon}\n${dia_chi}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao${dungO}${toiHan ? '' : '\n\n⚠️ Chưa kéo tới bài cũ hơn 7 ngày (đã đọc ${rows.length} bài). Số có thể bị THIẾU, hãy chạy lại.'}`);
 })();
