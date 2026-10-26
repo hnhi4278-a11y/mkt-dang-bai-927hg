@@ -11,6 +11,7 @@ Trao đổi với người dùng bằng tiếng Việt, ngắn gọn, dễ hiể
 - Sửa lệnh xong: `python3 dem-review/build-page.py` rồi publish `dem-review/page.html` vào đúng URL artifact trên (truyền `url`).
 - Selector Maps: review `div.jftiEf`, tên `.d4r55`, sao `.kvMYJc[aria-label]`, thời gian `.rsqaWe`, nội dung `.wiI7pd`, nút Thêm `button.w8nwRe`, địa chỉ `button[data-item-id="address"]`.
 - Thời gian Google ghi cả số và chữ ("một tuần trước", "năm ngày trước"); dùng hàm `soNgay`. "năm trước" = 1 năm.
+- Luôn đọc trong khung salon `div[role="main"]` (aria-label = tên salon); ngoài khung còn danh sách kết quả tìm kiếm cũ.
 - Môi trường cloud bị Google chặn (403/CAPTCHA): không tự mở Maps được, thử bằng trang giả lập.
 
 ## video-moc-nhi/ — video Remotion chỉ đường tới Tiệm Gội Đầu Mộc Nhi (1065 Lò Gốm, Q6)
