@@ -1,5 +1,11 @@
 # Nhật ký làm việc (mới nhất ở trên)
 
+## 26/10/2026 — ✅ Lệnh đếm 7 ngày chạy đúng trên Maps thật (người dùng xác nhận "ok")
+**Cách dùng hiện tại:** mở salon (tab mới) → Cmd+Option+J → dán lệnh đếm 7 ngày → Enter. Lệnh tự bấm "Bài đánh giá", tự chọn "Mới nhất", kéo không giới hạn tới "một tuần trước", hiện thanh tiến độ, lấy đúng tên/địa chỉ/rating trong khung salon. Thông báo có dòng "dừng ở bài thứ…" để tự kiểm tra.
+**Báo cáo:** nút "📊 Báo cáo 7 ngày" (bảng có tên, địa chỉ, rating, nút copy sang Excel). Đầu tuần bấm "🗑 Xóa bảng 7 ngày".
+**Bản 2 ngày và lệnh đọc nội dung** dùng chung các sửa đổi trên (chưa được người dùng thử lại).
+**Việc còn mở:** so sánh tuần này với tuần trước; câu trả lời mẫu cho bài dưới 5★.
+
 ## 26/10/2026 — Sửa lệnh đếm bị thiếu (927 Hậu Giang báo 10 bài)
 - Nghi nguyên nhân: Google tải 10 bài/lần, lệnh kéo sai khung nên chỉ đọc được đợt đầu (10 bài).
 - Sửa cả 4 lệnh (dem, dem2, doc2, doc7): tìm đúng khung cuộn (overflow auto/scroll), kéo tới bài cuối, đợi bài mới tải xong mới kéo tiếp, dừng khi gặp bài quá hạn hoặc 4 lần không có bài mới.
