@@ -1,5 +1,12 @@
 # Nhật ký làm việc (mới nhất ở trên)
 
+## 26/10/2026 — Sửa lệnh đếm bị thiếu (927 Hậu Giang báo 10 bài)
+- Nghi nguyên nhân: Google tải 10 bài/lần, lệnh kéo sai khung nên chỉ đọc được đợt đầu (10 bài).
+- Sửa cả 4 lệnh (dem, dem2, doc2, doc7): tìm đúng khung cuộn (overflow auto/scroll), kéo tới bài cuối, đợi bài mới tải xong mới kéo tiếp, dừng khi gặp bài quá hạn hoặc 4 lần không có bài mới.
+- Thêm cảnh báo ⚠️ khi chưa kéo tới bài quá hạn ("số có thể bị THIẾU").
+- Thử trên trang giả lập tải 10 bài/lần: 25 bài 7 ngày → đếm đúng 25.
+- Còn chờ: người dùng chạy lại trên Maps thật để xác nhận.
+
 ## 24/10/2026 — Đếm review Google Maps
 **Trạng thái:** Người dùng đã dùng được. Trang lệnh: https://claude.ai/artifact/5N6HqYqo9irgqeRDd1oDdK (tải lại trang để lấy lệnh mới).
 

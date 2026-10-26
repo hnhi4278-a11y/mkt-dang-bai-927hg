@@ -15,13 +15,19 @@
   const trongKhoang = t => soNgay(t) <= SO_NGAY;
   const quaKhoang = t => soNgay(t) > SO_NGAY;
   let box = first.parentElement;
-  while (box && box.scrollHeight <= box.clientHeight + 5) box = box.parentElement;
+  while (box && !(/(auto|scroll)/.test(getComputedStyle(box).overflowY) && box.scrollHeight > box.clientHeight + 5)) box = box.parentElement;
+  box = box || document.scrollingElement;
   const sleep = ms => new Promise(r => setTimeout(r, ms));
-  for (let i = 0; i < 80; i++) {
-    const dates = getItems().map(e => e.querySelector('.rsqaWe')?.textContent || '');
-    if (dates.some(quaKhoang)) break;
-    box.scrollBy(0, 3000);
-    await sleep(1200);
+  // Kéo xuống từng đợt (Google tải 10 bài/lần), đợi bài mới hiện ra; dừng khi gặp bài quá hạn hoặc hết bài
+  let toiHan = false;
+  for (let i = 0, dung = 0; i < 80 && dung < 4; i++) {
+    const items = getItems();
+    if (items.some(e => quaKhoang(e.querySelector('.rsqaWe')?.textContent || ''))) { toiHan = true; break; }
+    const truoc = items.length;
+    items[items.length - 1]?.scrollIntoView({block: 'end'});
+    box.scrollTop = box.scrollHeight;
+    for (let w = 0; w < 10 && getItems().length === truoc; w++) await sleep(400);
+    dung = getItems().length === truoc ? dung + 1 : 0;
   }
   // mở hết các nút "Thêm" để đọc đủ nội dung
   getItems().forEach(e => e.querySelector('button.w8nwRe')?.click());
@@ -50,7 +56,7 @@
     </div>
     <div style="padding:12px 20px;display:flex;gap:24px;flex-wrap:wrap;background:#f2f7f5">
       <div>Số bài: <b>${rows.length}</b></div><div>Điểm TB: <b>${tb}★</b></div>
-      <div style="${xau ? 'color:#b91c1c;font-weight:700' : ''}">Dưới 5★: ${xau}</div>
+      <div style="${xau ? 'color:#b91c1c;font-weight:700' : ''}">Dưới 5★: ${xau}</div>${toiHan ? '' : '<div style="color:#b91c1c;font-weight:700">⚠️ Chưa kéo tới bài cũ hơn, danh sách có thể THIẾU. Hãy chạy lại.</div>'}
     </div>
     <div style="overflow:auto;flex:1;padding:8px 20px 20px">
       ${rows.length ? rows.map((r, i) => `
