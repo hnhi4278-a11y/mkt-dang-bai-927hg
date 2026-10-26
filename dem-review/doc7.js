@@ -2,6 +2,23 @@
 (async () => {
   const SO_NGAY = 6; // tới "6 ngày trước", gặp "một tuần trước" thì dừng
   const visible = el => el.getClientRects().length > 0 && el.offsetParent !== null;
+  // Tự mở danh sách "Bài đánh giá" đầy đủ và chọn "Mới nhất" (khỏi phải bấm tay)
+  const ngu = ms => new Promise(r => setTimeout(r, ms));
+  const chu = e => (e.textContent || '').trim();
+  const nut = re => [...document.querySelectorAll('button, [role="tab"]')].filter(visible).find(b => re.test(chu(b)) || re.test(b.getAttribute('aria-label') || ''));
+  const tabDG = [...document.querySelectorAll('[role="tab"]')].filter(visible).find(b => /^(Bài đánh giá|Reviews)/i.test(chu(b)));
+  if (tabDG && tabDG.getAttribute('aria-selected') !== 'true') { tabDG.click(); await ngu(2500); }
+  else if (!tabDG) { const them = nut(/Bài đánh giá khác|More reviews/i); if (them) { them.click(); await ngu(2500); } }
+  const nhanMoiNhat = () => [...document.querySelectorAll('button, div, span')].some(e => e.children.length === 0 && visible(e) && /^(Mới nhất|Newest)$/i.test(chu(e)));
+  if (!nhanMoiNhat()) {
+    const sx = nut(/^(Sắp xếp|Sort|Phù hợp nhất|Most relevant)/i);
+    if (sx) {
+      sx.click(); await ngu(1200);
+      const opt = [...document.querySelectorAll('[role="menuitemradio"], [role="option"], [role="menuitem"]')].find(o => /Mới nhất|Newest/i.test(chu(o)));
+      if (opt) { opt.click(); await ngu(3000); } else document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}));
+    }
+  }
+  const daSapXep = nhanMoiNhat();
   // Chỉ đọc trong khung của salon đang mở (bỏ qua danh sách kết quả tìm kiếm "30shine" còn sót bên cạnh)
   const firstR = [...document.querySelectorAll('div.jftiEf')].find(visible);
   const main = firstR?.closest('div[role="main"]') || document;
@@ -36,7 +53,7 @@
   for (let dung = 0; dung < 5; ) { // không giới hạn số lần kéo; chỉ dừng khi tới hạn hoặc Google hết bài
     const items = getItems();
     badge.textContent = `⏳ Đang đếm ${salon}… đã đọc ${items.length} bài · tới: ${items[items.length - 1]?.querySelector('.rsqaWe')?.textContent || '…'}`;
-    if (items.some(e => quaKhoang(e.querySelector('.rsqaWe')?.textContent || ''))) { toiHan = true; break; }
+    if (items.length && quaKhoang(items[items.length - 1].querySelector('.rsqaWe')?.textContent || '')) { toiHan = true; break; }
     const truoc = items.length;
     items[items.length - 1]?.scrollIntoView({block: 'end'});
     box.scrollTop = box.scrollHeight;

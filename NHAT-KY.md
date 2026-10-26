@@ -10,6 +10,8 @@
 - Báo cáo 7 ngày thiếu tên/địa chỉ salon: thêm nguồn dự phòng (link /place/<tên>, thẻ meta "Tên · Địa chỉ"); báo cáo ghi đỏ "chưa có – bấm tab Tổng quan rồi đếm lại" nếu vẫn thiếu.
 - Báo cáo ra toàn "30shine", rating đều 4.8, địa chỉ trống: lệnh đọc nhầm danh sách kết quả tìm kiếm "30shine" còn bên cạnh. Sửa: chỉ đọc trong khung salon đang mở (div[role=main], tên lấy từ aria-label), địa chỉ thiếu thì tự bấm tab Tổng quan để đọc sau khi đếm xong. Rating trước đó có thể sai (lấy của kết quả tìm kiếm).
 - 927 vẫn ra 10 bài: thêm dòng "Đã đọc N bài, dừng ở bài thứ k: <tên> – <thời gian>" vào thông báo để kiểm tra lệnh dừng đúng chỗ không. Chờ người dùng gửi thông báo này của 927.
+- Ảnh 927 (11:30 26/10): người dùng mở salon từ danh sách đã lưu, đang ở Tổng quan (chỉ vài bài trích + "Bài đánh giá khác (624)"), bài đầu là bài nổi bật "một năm trước" → lệnh dừng ngay, chỉ đếm 3. Tên/địa chỉ/rating đã đúng.
+- Sửa: lệnh tự bấm tab "Bài đánh giá" (hoặc "Bài đánh giá khác") và tự chọn Sắp xếp › Mới nhất; chỉ dừng khi bài CUỐI đã quá hạn (bỏ qua bài nổi bật lệch thứ tự); cảnh báo nếu không chọn được "Mới nhất". Thử giả lập bắt đầu từ Tổng quan → đếm đúng 14.
 - Còn chờ: người dùng chạy lại trên Maps thật để xác nhận.
 
 ## 24/10/2026 — Đếm review Google Maps

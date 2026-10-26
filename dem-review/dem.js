@@ -1,6 +1,23 @@
 // Đếm đánh giá Google Maps mới trong 7 ngày (chạy trên trang salon, tab "Bài đánh giá", sắp xếp "Mới nhất")
 (async () => {
   const visible = el => el.getClientRects().length > 0 && el.offsetParent !== null;
+  // Tự mở danh sách "Bài đánh giá" đầy đủ và chọn "Mới nhất" (khỏi phải bấm tay)
+  const ngu = ms => new Promise(r => setTimeout(r, ms));
+  const chu = e => (e.textContent || '').trim();
+  const nut = re => [...document.querySelectorAll('button, [role="tab"]')].filter(visible).find(b => re.test(chu(b)) || re.test(b.getAttribute('aria-label') || ''));
+  const tabDG = [...document.querySelectorAll('[role="tab"]')].filter(visible).find(b => /^(Bài đánh giá|Reviews)/i.test(chu(b)));
+  if (tabDG && tabDG.getAttribute('aria-selected') !== 'true') { tabDG.click(); await ngu(2500); }
+  else if (!tabDG) { const them = nut(/Bài đánh giá khác|More reviews/i); if (them) { them.click(); await ngu(2500); } }
+  const nhanMoiNhat = () => [...document.querySelectorAll('button, div, span')].some(e => e.children.length === 0 && visible(e) && /^(Mới nhất|Newest)$/i.test(chu(e)));
+  if (!nhanMoiNhat()) {
+    const sx = nut(/^(Sắp xếp|Sort|Phù hợp nhất|Most relevant)/i);
+    if (sx) {
+      sx.click(); await ngu(1200);
+      const opt = [...document.querySelectorAll('[role="menuitemradio"], [role="option"], [role="menuitem"]')].find(o => /Mới nhất|Newest/i.test(chu(o)));
+      if (opt) { opt.click(); await ngu(3000); } else document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}));
+    }
+  }
+  const daSapXep = nhanMoiNhat();
   // Chỉ đọc trong khung của salon đang mở (bỏ qua danh sách kết quả tìm kiếm "30shine" còn sót bên cạnh)
   const firstR = [...document.querySelectorAll('div.jftiEf')].find(visible);
   const main = firstR?.closest('div[role="main"]') || document;
@@ -34,7 +51,7 @@
   for (let dung = 0; dung < 5; ) { // không giới hạn số lần kéo; chỉ dừng khi tới hạn hoặc Google hết bài
     const items = getItems();
     badge.textContent = `⏳ Đang đếm ${salon}… đã đọc ${items.length} bài · tới: ${items[items.length - 1]?.querySelector('.rsqaWe')?.textContent || '…'}`;
-    if (items.some(e => (d => soNgay(d) > 6)(e.querySelector('.rsqaWe')?.textContent || ''))) { toiHan = true; break; }
+    if (items.length && (d => soNgay(d) > 6)(items[items.length - 1].querySelector('.rsqaWe')?.textContent || '')) { toiHan = true; break; }
     const truoc = items.length;
     items[items.length - 1]?.scrollIntoView({block: 'end'});
     box.scrollTop = box.scrollHeight;
@@ -57,7 +74,8 @@
   const rating_map = rEl ? +rEl.textContent.trim().replace(',', '.') : null;
   const tong_review = nEl ? +nEl.textContent.replace(/[^\d]/g, '') : null;
   const moi = rows.filter(r => soNgay(r.thoi_gian) <= 6);
-  const dungIdx = rows.findIndex(r => soNgay(r.thoi_gian) > 6);
+  const lastOk = rows.map(r => soNgay(r.thoi_gian) <= 6).lastIndexOf(true);
+  const dungIdx = rows.findIndex((r, i) => i > lastOk && soNgay(r.thoi_gian) > 6);
   const dungO = dungIdx >= 0 ? `\nĐã đọc ${rows.length} bài, dừng ở bài thứ ${dungIdx + 1}: ${rows[dungIdx].ten} – "${rows[dungIdx].thoi_gian}"` : '';
   const tb = moi.length ? +(moi.reduce((a, r) => a + r.sao, 0) / moi.length).toFixed(2) : 0;
   console.log(`📍 ${salon}`); console.table(moi);
@@ -71,5 +89,5 @@
   all[placeId] = {ten: salon, dia_chi, rating_map, tong_review, bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
   try { localStorage.setItem('dem_review', JSON.stringify(all)); } catch {}
   console.log('📊 Tổng hợp các salon:'); console.table(Object.values(all));
-  alert(`${salon}\n${dia_chi}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao${dungO}${toiHan ? '' : '\n\n⚠️ Chưa kéo tới bài cũ hơn 7 ngày (đã đọc ${rows.length} bài). Số có thể bị THIẾU, hãy chạy lại.'}`);
+  alert(`${salon}\n${dia_chi}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao${dungO}${daSapXep ? '' : '\n\n⚠️ Chưa chọn được "Mới nhất". Hãy bấm Sắp xếp › Mới nhất rồi chạy lại.'}${toiHan ? '' : '\n\n⚠️ Chưa kéo tới bài cũ hơn 7 ngày (đã đọc ${rows.length} bài). Số có thể bị THIẾU, hãy chạy lại.'}`);
 })();
