@@ -9,7 +9,7 @@ Trao đổi với người dùng bằng tiếng Việt, ngắn gọn, dễ hiể
 - Trang copy lệnh (artifact): https://claude.ai/artifact/5N6HqYqo9irgqeRDd1oDdK — nguồn là `dem-review/page.html`.
 - Lệnh: `dem.js` đếm 7 ngày (localStorage `dem_review`), `xem.js` báo cáo, `xoa.js` xóa; `dem2/xem2/xoa2.js` bản 2 ngày (`dem_review_2ngay`); `doc7.js`, `doc2.js` đọc nội dung.
 - Sửa lệnh xong: `python3 dem-review/build-page.py` rồi publish `dem-review/page.html` vào đúng URL artifact trên (truyền `url`).
-- Selector Maps: review `div.jftiEf`, tên `.d4r55`, sao `.kvMYJc[aria-label]`, thời gian `.rsqaWe`, nội dung `.wiI7pd`, nút Thêm `button.w8nwRe`, địa chỉ `button[data-item-id="address"]`.
+- Selector Maps: review `div.jftiEf`, tên `.d4r55`, sao `.kvMYJc[aria-label]`, thời gian `.rsqaWe`, nội dung `.wiI7pd`, nút Thêm `button.w8nwRe`, ảnh trong bài `button[data-photo-index]`/`button.Tya61d`/`.KtCyie`, địa chỉ `button[data-item-id="address"]`.
 - Thời gian Google ghi cả số và chữ ("một tuần trước", "năm ngày trước"); dùng hàm `soNgay`. "năm trước" = 1 năm.
 - Luôn đọc trong khung salon `div[role="main"]` (aria-label = tên salon); ngoài khung còn danh sách kết quả tìm kiếm cũ.
 - Môi trường cloud bị Google chặn (403/CAPTCHA): không tự mở Maps được, thử bằng trang giả lập.

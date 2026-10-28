@@ -1,5 +1,10 @@
 # Nhật ký làm việc (mới nhất ở trên)
 
+## 28/10/2026 — Thêm đếm bài có ảnh / không ảnh
+- Người dùng xác nhận các lệnh đang đúng hết. Thêm: thông báo đếm có dòng "📷 Có ảnh · Không ảnh"; báo cáo 7 ngày & 2 ngày thêm cột "Có ảnh", "Không ảnh" + tổng; lệnh đọc đánh vào bài có ảnh.
+- Nhận biết ảnh: trong bài có `button[data-photo-index]`, `button.Tya61d` hoặc `.KtCyie` (vẫn còn trong trang dù lệnh ẩn ảnh lúc kéo).
+- Thử giả lập: 14 bài, 5 có ảnh → đúng. Chờ người dùng thử trên Maps thật; salon đếm trước hôm nay hiện "?" ở cột ảnh, cần đếm lại.
+
 ## 26/10/2026 — ✅ Lệnh đếm 7 ngày chạy đúng trên Maps thật (người dùng xác nhận "ok")
 **Cách dùng hiện tại:** mở salon (tab mới) → Cmd+Option+J → dán lệnh đếm 7 ngày → Enter. Lệnh tự bấm "Bài đánh giá", tự chọn "Mới nhất", kéo không giới hạn tới "một tuần trước", hiện thanh tiến độ, lấy đúng tên/địa chỉ/rating trong khung salon. Thông báo có dòng "dừng ở bài thứ…" để tự kiểm tra.
 **Báo cáo:** nút "📊 Báo cáo 7 ngày" (bảng có tên, địa chỉ, rating, nút copy sang Excel). Đầu tuần bấm "🗑 Xóa bảng 7 ngày".

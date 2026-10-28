@@ -10,6 +10,7 @@
   const tongRv = w.reduce((a, x) => a + x.tong_review, 0);
   const tbTrongSo = tongRv ? (w.reduce((a, x) => a + x.rating_map * x.tong_review, 0) / tongRv).toFixed(2) : '?';
   const moi = list.reduce((a, x) => a + (x.bai_moi_7_ngay || 0), 0);
+  const coAnh = list.reduce((a, x) => a + (x.co_anh || 0), 0), khongAnh = list.reduce((a, x) => a + (x.khong_anh || 0), 0);
   const esc = t => String(t ?? '').replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c]));
   document.getElementById('dem-review-report')?.remove();
   const box = document.createElement('div');
@@ -27,15 +28,16 @@
       <div>⭐ Rating TB theo số đánh giá: <b>${tbTrongSo}</b></div>
       <div>Tổng đánh giá trên Maps: <b>${tongRv.toLocaleString('vi-VN')}</b></div>
       <div>Bài mới 7 ngày: <b>${moi}</b></div>
+      <div>📷 Có ảnh: <b>${coAnh}</b> · Không ảnh: <b>${khongAnh}</b></div>
     </div>
     <div style="overflow:auto;flex:1">
       <table style="border-collapse:collapse;width:100%">
         <thead style="position:sticky;top:0;background:#fff"><tr>
-          ${['#', 'Salon', 'Địa chỉ', 'Rating Maps', 'Tổng ĐG', 'Mới 7 ngày', 'TB 7 ngày', 'Dưới 5★', 'Ngày đếm'].map(h => `<th style="${td};font-weight:700">${h}</th>`).join('')}
+          ${['#', 'Salon', 'Địa chỉ', 'Rating Maps', 'Tổng ĐG', 'Mới 7 ngày', 'Có ảnh', 'Không ảnh', 'TB 7 ngày', 'Dưới 5★', 'Ngày đếm'].map(h => `<th style="${td};font-weight:700">${h}</th>`).join('')}
         </tr></thead>
         <tbody>${list.map((x, i) => `<tr>
           <td style="${td}">${i + 1}</td><td style="${td}"><b>${esc(x.ten)}</b></td><td style="${td};color:#5b6b67">${esc(x.dia_chi) || '<i style="color:#b91c1c">chưa có – bấm tab Tổng quan rồi đếm lại</i>'}</td>
-          <td style="${td}">${x.rating_map ?? '?'}★</td><td style="${td}">${x.tong_review ?? '?'}</td><td style="${td}">${x.bai_moi_7_ngay ?? 0}</td>
+          <td style="${td}">${x.rating_map ?? '?'}★</td><td style="${td}">${x.tong_review ?? '?'}</td><td style="${td}">${x.bai_moi_7_ngay ?? 0}</td><td style="${td}">${x.co_anh ?? '?'}</td><td style="${td}">${x.khong_anh ?? '?'}</td>
           <td style="${td}">${x.diem_tb ?? ''}</td><td style="${td};${x.duoi_5_sao ? 'color:#b91c1c;font-weight:700' : ''}">${x.duoi_5_sao ?? 0}</td><td style="${td}">${esc(x.ngay_dem)}</td>
         </tr>`).join('')}</tbody>
       </table>
@@ -43,9 +45,9 @@
   document.body.appendChild(box);
   box.querySelector('#drr-close').onclick = () => box.remove();
   box.querySelector('#drr-copy').onclick = e => {
-    const rows = [['Salon', 'Địa chỉ', 'Rating Maps', 'Tổng ĐG', 'Mới 7 ngày', 'TB 7 ngày', 'Dưới 5 sao', 'Ngày đếm'],
-      ...list.map(x => [x.ten, x.dia_chi, x.rating_map ?? '', x.tong_review ?? '', x.bai_moi_7_ngay ?? 0, x.diem_tb ?? '', x.duoi_5_sao ?? 0, x.ngay_dem]),
-      [], ['Rating TB các salon', tbThuong], ['Rating TB theo số đánh giá', tbTrongSo], ['Tổng đánh giá', tongRv], ['Bài mới 7 ngày', moi]];
+    const rows = [['Salon', 'Địa chỉ', 'Rating Maps', 'Tổng ĐG', 'Mới 7 ngày', 'Có ảnh', 'Không ảnh', 'TB 7 ngày', 'Dưới 5 sao', 'Ngày đếm'],
+      ...list.map(x => [x.ten, x.dia_chi, x.rating_map ?? '', x.tong_review ?? '', x.bai_moi_7_ngay ?? 0, x.co_anh ?? '', x.khong_anh ?? '', x.diem_tb ?? '', x.duoi_5_sao ?? 0, x.ngay_dem]),
+      [], ['Rating TB các salon', tbThuong], ['Rating TB theo số đánh giá', tbTrongSo], ['Tổng đánh giá', tongRv], ['Bài mới 7 ngày', moi], ['Có ảnh', coAnh], ['Không ảnh', khongAnh]];
     const tsv = rows.map(r => r.map(c => String(c).replace(/\t|\n/g, ' ')).join('\t')).join('\n');
     navigator.clipboard.writeText(tsv).then(() => { e.target.textContent = '✅ Đã copy, dán vào Excel/Sheets'; }, () => { e.target.textContent = 'Không copy được'; });
   };

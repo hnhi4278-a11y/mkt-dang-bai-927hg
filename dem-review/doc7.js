@@ -71,6 +71,7 @@
       sao: +((e.querySelector('.kvMYJc')?.getAttribute('aria-label') || '').match(/\d/)?.[0] || 0),
       thoi_gian: e.querySelector('.rsqaWe')?.textContent.trim() || '',
       noi_dung: (e.querySelector('.wiI7pd')?.textContent || '').trim(),
+      co_anh: !!e.querySelector('button[data-photo-index], button.Tya61d, .KtCyie'),
     }))
     .filter(r => trongKhoang(r.thoi_gian));
   const tb = rows.length ? (rows.reduce((a, r) => a + r.sao, 0) / rows.length).toFixed(2) : '–';
@@ -87,13 +88,13 @@
       <button id="doc7-close" style="padding:8px 14px;border-radius:10px;border:1px solid #cfd9d5;background:#fff;cursor:pointer">Đóng</button>
     </div>
     <div style="padding:12px 20px;display:flex;gap:24px;flex-wrap:wrap;background:#f2f7f5">
-      <div>Số bài: <b>${rows.length}</b></div><div>Điểm TB: <b>${tb}★</b></div>
+      <div>Số bài: <b>${rows.length}</b></div><div>📷 Có ảnh: <b>${rows.filter(r => r.co_anh).length}</b> · Không ảnh: <b>${rows.filter(r => !r.co_anh).length}</b></div><div>Điểm TB: <b>${tb}★</b></div>
       <div style="${xau ? 'color:#b91c1c;font-weight:700' : ''}">Dưới 5★: ${xau}</div>${toiHan ? '' : '<div style="color:#b91c1c;font-weight:700">⚠️ Chưa kéo tới bài cũ hơn, danh sách có thể THIẾU. Hãy chạy lại.</div>'}
     </div>
     <div style="overflow:auto;flex:1;padding:8px 20px 20px">
       ${rows.length ? rows.map((r, i) => `
         <div style="padding:12px 0;border-bottom:1px solid #e3ebe8;${r.sao < 5 ? 'background:#fef2f2;margin:0 -20px;padding:12px 20px' : ''}">
-          <div><b>${i + 1}. ${esc(r.ten)}</b> · <span style="color:#d97706">${'★'.repeat(r.sao)}${'☆'.repeat(5 - r.sao)}</span> · <span style="color:#5b6b67">${esc(r.thoi_gian)}</span></div>
+          <div><b>${i + 1}. ${esc(r.ten)}</b> · <span style="color:#d97706">${'★'.repeat(r.sao)}${'☆'.repeat(5 - r.sao)}</span> · <span style="color:#5b6b67">${esc(r.thoi_gian)}</span>${r.co_anh ? ' · 📷 có ảnh' : ''}</div>
           <div style="margin-top:4px;white-space:pre-wrap">${esc(r.noi_dung) || '<i style="color:#8a9a96">(không viết nội dung)</i>'}</div>
         </div>`).join('') : '<p>Không có đánh giá nào trong 7 ngày gần nhất.</p>'}
     </div>`;
@@ -101,7 +102,7 @@
   panel.querySelector('#doc7-close').onclick = () => panel.remove();
   panel.querySelector('#doc7-copy').onclick = e => {
     const txt = `${salon}\n${dia_chi}\n7 ngày gần nhất: ${rows.length} bài · TB ${tb}★ · dưới 5★: ${xau}\n\n`
-      + rows.map((r, i) => `${i + 1}. ${r.ten} – ${r.sao}★ – ${r.thoi_gian}\n${r.noi_dung || '(không viết nội dung)'}`).join('\n\n');
+      + rows.map((r, i) => `${i + 1}. ${r.ten} – ${r.sao}★ – ${r.thoi_gian}${r.co_anh ? ' – có ảnh' : ''}\n${r.noi_dung || '(không viết nội dung)'}`).join('\n\n');
     navigator.clipboard.writeText(txt).then(() => { e.target.textContent = '✅ Đã copy'; }, () => { e.target.textContent = 'Không copy được'; });
   };
   console.table(rows);

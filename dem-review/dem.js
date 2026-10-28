@@ -66,6 +66,7 @@
       sao: +((e.querySelector('.kvMYJc')?.getAttribute('aria-label') || '').match(/\d/)?.[0] || 0),
       thoi_gian: e.querySelector('.rsqaWe')?.textContent.trim(),
       noi_dung: (e.querySelector('.wiI7pd')?.textContent || '').trim().slice(0, 80),
+      co_anh: !!e.querySelector('button[data-photo-index], button.Tya61d, .KtCyie'),
     }));
   // Điểm tổng trên Google Maps (ô to "4,5" và "1.228 bài viết" ở đầu tab Bài đánh giá)
   const leaves = [...main.querySelectorAll('div, span')].filter(e => e.children.length === 0 && visible(e));
@@ -86,8 +87,8 @@
   }
   let all = {}; try { all = JSON.parse(localStorage.getItem('dem_review') || '{}'); } catch {}
   for (const k of Object.keys(all)) if (k === salon && !all[k].ten) delete all[k]; // bỏ dòng cũ lưu theo tên
-  all[placeId] = {ten: salon, dia_chi, rating_map, tong_review, bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
+  all[placeId] = {ten: salon, dia_chi, rating_map, tong_review, bai_moi_7_ngay: moi.length, diem_tb: tb, duoi_5_sao: moi.filter(r => r.sao < 5).length, co_anh: moi.filter(r => r.co_anh).length, khong_anh: moi.filter(r => !r.co_anh).length, ngay_dem: new Date().toLocaleDateString('vi-VN')};
   try { localStorage.setItem('dem_review', JSON.stringify(all)); } catch {}
   console.log('📊 Tổng hợp các salon:'); console.table(Object.values(all));
-  alert(`${salon}\n${dia_chi}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao${dungO}${daSapXep ? '' : '\n\n⚠️ Chưa chọn được "Mới nhất". Hãy bấm Sắp xếp › Mới nhất rồi chạy lại.'}${toiHan ? '' : '\n\n⚠️ Chưa kéo tới bài cũ hơn 7 ngày (đã đọc ${rows.length} bài). Số có thể bị THIẾU, hãy chạy lại.'}`);
+  alert(`${salon}\n${dia_chi}\nĐiểm Google Maps: ${rating_map ?? '?'}★ (${tong_review ?? '?'} đánh giá)\nĐánh giá mới trong 7 ngày: ${moi.length} bài\nĐiểm TB 7 ngày: ${tb} sao\n📷 Có ảnh: ${moi.filter(r => r.co_anh).length} · Không ảnh: ${moi.filter(r => !r.co_anh).length}${dungO}${daSapXep ? '' : '\n\n⚠️ Chưa chọn được "Mới nhất". Hãy bấm Sắp xếp › Mới nhất rồi chạy lại.'}${toiHan ? '' : '\n\n⚠️ Chưa kéo tới bài cũ hơn 7 ngày (đã đọc ${rows.length} bài). Số có thể bị THIẾU, hãy chạy lại.'}`);
 })();
