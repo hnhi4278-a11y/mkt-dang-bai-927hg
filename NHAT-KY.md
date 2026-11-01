@@ -1,5 +1,10 @@
 # Nhật ký làm việc (mới nhất ở trên)
 
+## 01/11/2026 — Thêm bộ lệnh 1 tháng
+- Bộ mới (nút cam): đếm 1 tháng `demt.js` (localStorage `dem_review_thang`), báo cáo `xemt.js`, xóa `xoat.js`, đọc nội dung `doct.js`. Tính tới "4 tuần trước" (≤28 ngày), dừng ở "một tháng trước". Có đủ ảnh/không ảnh, địa chỉ, rating như bộ 7 ngày.
+- `soNgay` giờ hiểu tuần (×7) và tháng (×30), "năm trước" = 365.
+- Thử giả lập: cùng salon 7 ngày = 14, 1 tháng = 29 → đúng. Chờ người dùng thử trên Maps thật.
+
 ## 28/10/2026 — Thêm đếm bài có ảnh / không ảnh
 - Người dùng xác nhận các lệnh đang đúng hết. Thêm: thông báo đếm có dòng "📷 Có ảnh · Không ảnh"; báo cáo 7 ngày & 2 ngày thêm cột "Có ảnh", "Không ảnh" + tổng; lệnh đọc đánh vào bài có ảnh.
 - Nhận biết ảnh: trong bài có `button[data-photo-index]`, `button.Tya61d` hoặc `.KtCyie` (vẫn còn trong trang dù lệnh ẩn ảnh lúc kéo).

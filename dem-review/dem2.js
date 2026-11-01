@@ -35,7 +35,7 @@
   box = box || document.scrollingElement;
   // Đổi "5 ngày trước" / "một tuần trước" thành số ngày ("năm ngày" = 5 ngày, "năm trước" = 1 năm)
   const NUM = {'một': 1, 'hai': 2, 'ba': 3, 'bốn': 4, 'năm': 5, 'sáu': 6};
-  const soNgay = t => { t = (t || '').toLowerCase(); if (/phút|giờ|giây/.test(t)) return 0; const m = t.match(/(\d+|một|hai|ba|bốn|năm|sáu)\s*ngày/); if (m) return +m[1] || NUM[m[1]]; return /tuần|tháng|năm trước/.test(t) ? 99 : NaN; };
+  const soNgay = t => { t = (t || '').toLowerCase(); if (/phút|giờ|giây/.test(t)) return 0; const m = t.match(/(\d+|một|hai|ba|bốn|năm|sáu)\s*ngày/); if (m) return +m[1] || NUM[m[1]]; const so = w => +w || NUM[w] || 1; let k = t.match(/(\d+|một|hai|ba|bốn)\s*tuần/); if (k) return so(k[1]) * 7; k = t.match(/(\d+|một|hai|ba|bốn|năm|sáu)\s*tháng/); if (k) return so(k[1]) * 30; return /năm trước/.test(t) ? 365 : NaN; };
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   // Kéo xuống từng đợt (Google tải 10 bài/lần), đợi bài mới hiện ra; dừng khi gặp bài quá hạn hoặc hết bài (5 lần liền không có bài mới)
   // Ẩn ảnh trong bài đánh giá cho kéo nhanh hơn, và hiện bảng tiến độ để biết lệnh đang chạy
