@@ -3,7 +3,7 @@
 import json, pathlib
 d = pathlib.Path(__file__).parent
 strip = lambda f: '\n'.join(l for l in (d / f).read_text().split('\n') if not l.strip().startswith('//'))
-keys = ['dem', 'xem', 'xoa', 'dem2', 'xem2', 'xoa2', 'demt', 'xemt', 'xoat', 'doc2', 'doc7', 'doct']
+keys = ['dem', 'xem', 'xoa', 'dem2', 'xem2', 'xoa2', 'demt', 'xemt', 'xoat', 'demtt', 'xemtt', 'xoatt', 'doc2', 'doc7', 'doct']
 codes = {k: strip(k + '.js') for k in keys}
 p = d / 'page.html'
 s = p.read_text()

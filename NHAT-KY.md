@@ -1,5 +1,11 @@
 # Nhật ký làm việc (mới nhất ở trên)
 
+## 01/11/2026 — Đếm "tháng 9" → bộ lệnh "tháng trước"
+- Google chỉ ghi thời gian tương đối ("một tháng trước", "2 tháng trước"), không có ngày chính xác → không đếm đúng theo tháng dương lịch được.
+- Thêm bộ "Tháng trước" (nút cam): `demtt.js` đếm bài ghi "một tháng trước" (30–59 ngày), localStorage `dem_review_thangtruoc`; `xemtt.js` báo cáo; `xoatt.js` xóa. Chạy ngày 1/11 ≈ đầu tháng 9 tới đầu tháng 10.
+- Muốn số chính xác theo tháng: dùng Google Business Profile (chủ quán xem được ngày cụ thể), hoặc cuối mỗi tháng chạy bộ "1 tháng".
+- Thử giả lập: 8 bài "một tháng trước" → đếm 8.
+
 ## 01/11/2026 — Thêm bộ lệnh 1 tháng
 - Bộ mới (nút cam): đếm 1 tháng `demt.js` (localStorage `dem_review_thang`), báo cáo `xemt.js`, xóa `xoat.js`, đọc nội dung `doct.js`. Tính tới "4 tuần trước" (≤28 ngày), dừng ở "một tháng trước". Có đủ ảnh/không ảnh, địa chỉ, rating như bộ 7 ngày.
 - `soNgay` giờ hiểu tuần (×7) và tháng (×30), "năm trước" = 365.
