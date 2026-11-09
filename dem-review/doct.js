@@ -13,9 +13,13 @@
   if (!nhanMoiNhat()) {
     const sx = nut(/^(Sắp xếp|Sort|Phù hợp nhất|Most relevant)/i);
     if (sx) {
+      const timOpt = () => [...document.querySelectorAll('[role="menuitemradio"], [role="option"], [role="menuitem"]')].find(o => /Mới nhất|Newest/i.test(chu(o)));
+      // iPad/Safari: nếu bấm thường không mở menu thì giả lập nhấn chuột
+      const nhan = el => ['mousedown', 'mouseup'].forEach(t => el.dispatchEvent(new MouseEvent(t, {bubbles: true, cancelable: true, view: window})));
       sx.click(); await ngu(1200);
-      const opt = [...document.querySelectorAll('[role="menuitemradio"], [role="option"], [role="menuitem"]')].find(o => /Mới nhất|Newest/i.test(chu(o)));
-      if (opt) { opt.click(); await ngu(3000); } else document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}));
+      if (!timOpt()) { nhan(sx); await ngu(1200); }
+      const opt = timOpt();
+      if (opt) { opt.click(); await ngu(2000); if (!nhanMoiNhat()) { nhan(opt); await ngu(2000); } await ngu(1000); } else document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}));
     }
   }
   const daSapXep = nhanMoiNhat();
@@ -64,6 +68,7 @@
   getItems().forEach(e => e.querySelector('button.w8nwRe')?.click());
   await sleep(400);
   xong();
+  const tongDoc = getItems().length, baiCuoi = getItems().slice(-1)[0]?.querySelector('.rsqaWe')?.textContent || '';
   const seen = new Set();
   const rows = getItems().filter(e => { const id = e.getAttribute('data-review-id'); if (seen.has(id)) return false; seen.add(id); return true; })
     .map(e => ({
@@ -89,7 +94,7 @@
     </div>
     <div style="padding:12px 20px;display:flex;gap:24px;flex-wrap:wrap;background:#f2f7f5">
       <div>Số bài: <b>${rows.length}</b></div><div>📷 Có ảnh: <b>${rows.filter(r => r.co_anh).length}</b> · Không ảnh: <b>${rows.filter(r => !r.co_anh).length}</b></div><div>Điểm TB: <b>${tb}★</b></div>
-      <div style="${xau ? 'color:#b91c1c;font-weight:700' : ''}">Dưới 5★: ${xau}</div>${toiHan ? '' : '<div style="color:#b91c1c;font-weight:700">⚠️ Chưa kéo tới bài cũ hơn, danh sách có thể THIẾU. Hãy chạy lại.</div>'}
+      <div style="${xau ? 'color:#b91c1c;font-weight:700' : ''}">Dưới 5★: ${xau}</div>${toiHan ? '' : '<div style="color:#b91c1c;font-weight:700">⚠️ Chưa kéo tới bài cũ hơn, danh sách có thể THIẾU. Hãy chạy lại.</div>'}${daSapXep ? '' : '<div style="color:#b91c1c;font-weight:700">⚠️ Chưa chọn được "Mới nhất".</div>'}<div style="color:#5b6b67;font-size:13px;width:100%">Kiểm tra: đã đọc ${tongDoc} bài · bài cuối: "${esc(baiCuoi)}" · Mới nhất: ${daSapXep ? 'có' : 'không'}</div>
     </div>
     <div style="overflow:auto;flex:1;padding:8px 20px 20px">
       ${rows.length ? rows.map((r, i) => `

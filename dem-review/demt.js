@@ -12,9 +12,13 @@
   if (!nhanMoiNhat()) {
     const sx = nut(/^(Sắp xếp|Sort|Phù hợp nhất|Most relevant)/i);
     if (sx) {
+      const timOpt = () => [...document.querySelectorAll('[role="menuitemradio"], [role="option"], [role="menuitem"]')].find(o => /Mới nhất|Newest/i.test(chu(o)));
+      // iPad/Safari: nếu bấm thường không mở menu thì giả lập nhấn chuột
+      const nhan = el => ['mousedown', 'mouseup'].forEach(t => el.dispatchEvent(new MouseEvent(t, {bubbles: true, cancelable: true, view: window})));
       sx.click(); await ngu(1200);
-      const opt = [...document.querySelectorAll('[role="menuitemradio"], [role="option"], [role="menuitem"]')].find(o => /Mới nhất|Newest/i.test(chu(o)));
-      if (opt) { opt.click(); await ngu(3000); } else document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}));
+      if (!timOpt()) { nhan(sx); await ngu(1200); }
+      const opt = timOpt();
+      if (opt) { opt.click(); await ngu(2000); if (!nhanMoiNhat()) { nhan(opt); await ngu(2000); } await ngu(1000); } else document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', bubbles: true}));
     }
   }
   const daSapXep = nhanMoiNhat();
