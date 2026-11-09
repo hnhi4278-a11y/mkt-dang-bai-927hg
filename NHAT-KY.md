@@ -1,5 +1,10 @@
 # Nhật ký làm việc (mới nhất ở trên)
 
+## 09/11/2026 — Dùng trên iPad (thử nghiệm)
+- iPad không có Console → thêm phần "Dùng trên iPad" trên trang lệnh: nút "Copy dấu trang" (javascript:… chỉ mã hóa ký tự bắt buộc, ~11KB) cho Đọc 7 ngày, Đếm 7 ngày, Báo cáo 7 ngày, Xóa bảng 7 ngày + hướng dẫn tạo/sửa dấu trang Safari.
+- Đã thử dạng dấu trang chạy đúng trên Chromium (trang giả lập). CHƯA thử trên iPad thật; nếu Maps hiện giao diện điện thoại thì bật "Yêu cầu trang web cho máy tính".
+- Dự phòng: người dùng chụp màn hình gửi để Claude đọc.
+
 ## 01/11/2026 — Đếm "tháng 9" → bộ lệnh "tháng trước"
 - Google chỉ ghi thời gian tương đối ("một tháng trước", "2 tháng trước"), không có ngày chính xác → không đếm đúng theo tháng dương lịch được.
 - Thêm bộ "Tháng trước" (nút cam): `demtt.js` đếm bài ghi "một tháng trước" (30–59 ngày), localStorage `dem_review_thangtruoc`; `xemtt.js` báo cáo; `xoatt.js` xóa. Chạy ngày 1/11 ≈ đầu tháng 9 tới đầu tháng 10.
